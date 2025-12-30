@@ -84,7 +84,7 @@ temp/
 *.draft.md
 *.wip.md
 personal-notes/
-private/
+**/private/
 
 # Environment variables
 .env
