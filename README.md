@@ -1,6 +1,6 @@
 # Agent Stuff
 
-Personal prompts, skills, and commands I use with Claude and Cursor. Some are highly specific to my own setup (like my Obsidian vault). Sharing publicly in case any of it's useful—or just interesting—to others.
+Personal prompts, skills, and commands I use with Claude and Cursor. Some are highly specific to my own setup (like my Obsidian vault). Sharing publicly in case any of it's useful or interesting to others.
 
 ## What's here
 

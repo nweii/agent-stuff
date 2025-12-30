@@ -46,7 +46,7 @@ The vault uses frontmatter properties to organize notes. These properties are op
 
 Here are some of the most common ones:
 
-- **`categories`**: Answers "What _is_ this note?" Fundamental nature (e.g., `[[Projects]]`, `[[Clippings]]`), sometimes corresponds to a note template in `00-Admin/Templates`
+- **`categories`**: Answers "What _is_ this note?" Fundamental nature (e.g., `[[Projects]]`, `[[Clippings]]`), sometimes corresponds to a note template in `99-Admin/Templates`
 - **`type`**: Sub-classification or "flavor" of a category (e.g., "Job interviews", "AI Chats"). Use plain text strings. If it needs a hub page, it's a category, not a type.
 - **`tags`**: Answers "What does this note _do_?" Functional roles and topical keywords
 - **`related`**: Flexible multi-directional connections between notes
@@ -60,7 +60,7 @@ When renaming notes that have `publish: true`, add the old title as an alias in 
 The system uses reusable Base files to create self-updating dashboards:
 
 - **Periodic dashboards**: Each daily note embeds a "relative base" using `this.file` filter to link related notes and journal entries
-- **Category/type hubs**: Hub notes in `98-Spaces` embed master Bases that auto-populate views by type
+- **Category/type hubs**: Hub notes in `98-Spaces` embed master Bases that auto-populate views
 - **Entity backlinking**: Author pages, project pages, etc. automatically display all notes that reference them
 
 The pattern works because `categories` serves as the central link between templates → notes → hubs → dashboards.
