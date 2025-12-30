@@ -1,0 +1,988 @@
+{
+  "general_settings": {
+    "betaFeatures": false,
+    "legacyMode": false,
+    "openBehavior": "popup",
+    "saveBehavior": "addToObsidian",
+    "showMoreActionsButton": false,
+    "silentOpen": false
+  },
+  "highlighter_settings": {
+    "alwaysShowHighlights": true,
+    "highlightBehavior": "highlight-inline",
+    "highlighterEnabled": true
+  },
+  "interpreter_settings": {
+    "defaultPromptContext": "",
+    "interpreterAutoRun": false,
+    "interpreterEnabled": true,
+    "interpreterModel": "1766095547037",
+    "models": [],
+    "providers": []
+  },
+  "migrationVersion": 1,
+  "property_types": [
+    {
+      "name": "author",
+      "type": "multitext"
+    },
+    {
+      "name": "published",
+      "type": "date"
+    },
+    {
+      "name": "created",
+      "type": "date"
+    },
+    {
+      "name": "description",
+      "type": "text"
+    },
+    {
+      "name": "tags",
+      "type": "multitext"
+    },
+    {
+      "name": "publish",
+      "type": "checkbox"
+    },
+    {
+      "name": "icon",
+      "type": "text"
+    },
+    {
+      "name": "url",
+      "type": "text"
+    },
+    {
+      "name": "categories",
+      "type": "multitext"
+    },
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "aliases",
+      "type": "multitext"
+    },
+    {
+      "name": "related",
+      "type": "multitext"
+    },
+    {
+      "name": "excerpt",
+      "type": "text"
+    },
+    {
+      "name": "urls",
+      "type": "multitext"
+    },
+    {
+      "defaultValue": "{{schema:releasedEvent[*].startDate|date:\\\"YYYY\\\"}}",
+      "name": "year",
+      "type": "number"
+    },
+    {
+      "defaultValue": "{{schema:genre|wikilink|join}}",
+      "name": "genre",
+      "type": "multitext"
+    },
+    {
+      "name": "rating",
+      "type": "number"
+    },
+    {
+      "defaultValue": "{{schema:aggregateRating.ratingValue}}",
+      "name": "scoreLB",
+      "type": "number"
+    },
+    {
+      "name": "last",
+      "type": "date"
+    },
+    {
+      "defaultValue": "{{schema:director[*].name|join|schema:actors[*].name|slice:0,5|wikilink|join}}",
+      "name": "people",
+      "type": "multitext"
+    },
+    {
+      "defaultValue": "{{schema:image}}",
+      "name": "cover",
+      "type": "text"
+    },
+    {
+      "name": "status",
+      "type": "text"
+    }
+  ],
+  "reader_settings": {
+    "fontSize": 1.5,
+    "lineHeight": 1.6,
+    "maxWidth": 38,
+    "theme": "default",
+    "themeMode": "auto"
+  },
+  "stats": {
+    "addToObsidian": 299,
+    "copyToClipboard": 5,
+    "saveFile": 16,
+    "share": 0
+  },
+  "template_173133919759160h66un2d": {
+    "id": "173133919759160h66un2d",
+    "name": "Link to Daily Note",
+    "behavior": "append-daily",
+    "noteNameFormat": "{{title}}",
+    "path": "Clippings",
+    "noteContentFormat": "[{{title}}]({{url}}) - *“{{\"Single-sentence tight, telegraphic description (drop articles like 'the', 'a', 'an’; semicolons over conjunctions; no filler words or transitions; only use articles if too vague without) for easy recall. For content with insights or arguments (articles, posts, discussions): summarize what it says—capture the main point or notable insights and perspectives. For reference material (guides, documentation, resources) or metadata-only sources: describe what it is and include utility context—how or when it's useful, what it helps with, what to reference it for.\"}}*",
+    "properties": [],
+    "triggers": [],
+    "context": "<link_details>\nThe following fields might be empty or unavailable depending on the link.\nTitle: \"{{title}}\"\nAuthor: {{author}}\nPublished {{published}} on {{site}}\nToday's date: {{date}}\n</link_details>\n<link_content>\n{{content}}\n</link_content>",
+    "vault": "Brain"
+  },
+  "template_1739042221340xrn92ysm4": {
+    "schemaVersion": "0.1.0",
+    "name": "Full text",
+    "behavior": "create",
+    "noteContentFormat": "{{content}}",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise alternative titles to aid later retrieval, summarizing the main topic, question, or point of the content. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiSquareBottomDashedScissors",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "{{\\\"Try to identify and use the author's full name. If there is no full name, fallback to their social media handle. Otherwise, output nothing. If multiple authors, use an array\\\"|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, full-text, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": [],
+    "noteNameFormat": "{{title}} - {{site}}",
+    "path": "03-Records/Clippings",
+    "id": "1739042221340xrn92ysm4",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_1758348799376ionbag3d1": {
+    "schemaVersion": "0.1.0",
+    "name": "Excerpts",
+    "behavior": "create",
+    "noteContentFormat": "Summary: {{\"Read and analyze the provided text, noting key points, facts, arguments, counterarguments, complications, novel insights, nuances, and supporting details. Write one concise 3-4 sentence paragraph capturing key ideas in plain, simple language. Be economical - express ideas in the shortest clear way possible. Skip redundant phrases like 'the text shows' or 'the article argues' - jump straight to ideas (ex. 'the article argues' 'Argues…' instead of 'the article argues'). Use natural sentence structures and contractions where they help concision. Skip 'the' and 'a/an' when meaning stays clear. Skip publication details and author names. Keep language approachable while preserving nuance. Write in an objective style. Present in plain text without formatting. Don't add any external facts.\"}}\n\n- Source: [{{title}}]({{url}})\n- Saved [[{{date|date:\"YYYY-MM-DD-ddd\"}}]].\n\n## Excerpts\n\n{{highlights|map:item => item.text|join:\"\\n\\n\\[…]\\n\\n\"|blockquote}}\n",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise alternative titles to aid later retrieval, summarizing the main topic, question, or point of the content. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiHighlighter",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "[[{{author}}]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, posts, threads, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": ["schema:@NewsArticle"],
+    "noteNameFormat": "{{title}} - {{site}}",
+    "path": "03-Records/Clippings",
+    "id": "1758348799376ionbag3d1",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_17583490244618p1w73dkm": {
+    "schemaVersion": "0.1.0",
+    "name": "Discussion",
+    "behavior": "create",
+    "noteContentFormat": "{{content}}",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise titles to aid later retrieval, summarizing the main topic or discussion. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]], [[Commentary]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiMessagesSquare",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "[[{{author}}]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, discussion, posts, threads, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": ["schema:@SocialMediaPosting", "schema:@Conversation"],
+    "noteNameFormat": "‎{{\"Summarize the main topic or discussion as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "path": "03-Records/Clippings",
+    "id": "17583490244618p1w73dkm",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_1758349589086qz7l6usiu": {
+    "schemaVersion": "0.1.0",
+    "name": "X thread",
+    "behavior": "create",
+    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines\"}}",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise alternative titles to aid later retrieval, summarizing the main topic, question, or point of the content. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]], [[Commentary]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiMessageSquareQuote",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "{{\\\"Try to identify and use the author's full name. If there is no full name, fallback to their social media handle. Otherwise, output nothing. If multiple authors, use an array\\\"|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, posts, threads, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": ["https://x.com", "https://twitter.com"],
+    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "path": "03-Records/Clippings",
+    "id": "1758349589086qz7l6usiu",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_1758351986230q27qbusfd": {
+    "schemaVersion": "0.1.0",
+    "name": "Post",
+    "behavior": "create",
+    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines\"}}",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise alternative titles to aid later retrieval, summarizing the main topic, question, or point of the content. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]], [[Commentary]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiMessageSquareQuote",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "{{\\\"Try to identify and use the author's full name. If there is no full name, fallback to their social media handle. Otherwise, output nothing. If multiple authors, use an array\\\"|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, posts, threads, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": [],
+    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "path": "03-Records/Clippings",
+    "id": "1758351986230q27qbusfd",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_1761595129089g41bcmj": {
+    "schemaVersion": "0.1.0",
+    "name": "Letterboxd",
+    "behavior": "create",
+    "noteContentFormat": "\n![[Related.base#All]]",
+    "properties": [
+      {
+        "id": "17615951291003b6mwlj",
+        "name": "aliases",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1761595129100931zp16",
+        "name": "categories",
+        "value": "[[Movies]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1761595129100t2vnkn4",
+        "name": "icon",
+        "value": "LiFilm",
+        "type": "text"
+      },
+      {
+        "id": "1761595129100q9b2gk6",
+        "name": "cover",
+        "value": "{{schema:image}}",
+        "type": "text"
+      },
+      {
+        "id": "1761595129100fniuhsd",
+        "name": "description",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1761595129100otokqg6",
+        "name": "urls",
+        "value": "{{url}}",
+        "type": "text"
+      },
+      {
+        "id": "1761595129100diyuyr4",
+        "name": "year",
+        "value": "{{schema:releasedEvent[*].startDate|date:\\\"YYYY\\\"}}",
+        "type": "number"
+      },
+      {
+        "id": "1761595129100ahq61yq",
+        "name": "genre",
+        "value": "{{schema:genre|wikilink|join}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17615951291009gb6xa9",
+        "name": "rating",
+        "value": "",
+        "type": "number"
+      },
+      {
+        "id": "1761595129100871apb7",
+        "name": "scoreLB",
+        "value": "{{schema:aggregateRating.ratingValue}}",
+        "type": "number"
+      },
+      {
+        "id": "17615951291005l45um7",
+        "name": "last",
+        "value": "",
+        "type": "date"
+      },
+      {
+        "id": "1761595129100igxrhdc",
+        "name": "people",
+        "value": "{{schema:director[0].name|wikilink}},{{schema:actors[*].name|wikilink|slice:0,4|join}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1761595129100qdtdlil",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1761595129100e10jgrt",
+        "name": "tags",
+        "value": "movies, entities",
+        "type": "multitext"
+      },
+      {
+        "id": "17615951291002vr07qa",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": ["https://letterboxd.com/film/"],
+    "noteNameFormat": "{{schema:@Movie:name}}",
+    "path": "04-Entities",
+    "id": "1761595129089g41bcmj",
+    "context": ""
+  },
+  "template_1761600938337k91o05gie": {
+    "id": "1761600938337k91o05gie",
+    "name": "App",
+    "behavior": "create",
+    "noteNameFormat": "{{title}}",
+    "path": "04-Entities",
+    "noteContentFormat": "{{content}}",
+    "properties": [
+      {
+        "id": "1761600951951ctqnzsswe",
+        "name": "aliases",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1761600954078wi539hbav",
+        "name": "description",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1761600956430n0oa4drxh",
+        "name": "urls",
+        "value": "{{url}}",
+        "type": "text"
+      },
+      {
+        "id": "1761600958172n88m4pvz5",
+        "name": "rating",
+        "value": "",
+        "type": "number"
+      },
+      {
+        "id": "1761600959971db2vychq4",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1761600962904a6euc383f",
+        "name": "tags",
+        "value": "",
+        "type": "multitext"
+      }
+    ],
+    "triggers": [],
+    "context": ""
+  },
+  "template_1763156278384lc8yrgse8": {
+    "schemaVersion": "0.1.0",
+    "name": "Form",
+    "behavior": "create",
+    "noteContentFormat": "{{\"Convert this form into a markdown body, intended for use in a note where the user can draft responses. With that in mind, ignore questions that have very basic or routine answers where drafting is not necessary, such as requests for name, email, current location, etc., or procedural yes/no questions (Unless the question involves some level of interpretation or custom answer that would necessitate a more thoughtful answer). Consider form labels, subtitles, etc. Convert top-level questions into headings starting at H2 level. If the question is very long (>2 sentences), come up with a shorthand version of the question or rephrase it as a title summarizing the question's topic, and include the full question in its section body. If applicable, use an empty code block to provide a space for the user to draft their response to the question. Convert multi-select, single-select, and dropdowns into checkbox lists so the user can make selections in markdown (only if you have access to the options. Otherwise, just show a code block). Strip out any body text that is irrelevant to the questions being asked unless it provides context about the form, submission content instructions/context, or the intention of the form (e.g., informational text about disabilities or military status such as those in a job application form).\"}}",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]], [[Applications]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiSquareBottomDashedScissors",
+        "type": "text"
+      },
+      {
+        "id": "1763156341425qfzzw9hir",
+        "name": "status",
+        "value": "draft",
+        "type": "text"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence plain-language description of this form written in telegraphic, shorthand/telegraphic style with no filler, weighed toward essential details like who's hosting the form, what it's for, and what's being requested.\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "{{schema:@JobPosting:hiringOrganization.name|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1763157046730vnyq4mmd6",
+        "name": "published",
+        "value": "{{schema:@JobPosting:datePosted}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, full-text, applications, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": [
+      "schema:@JobPosting",
+      "/^https?://airtable\\.com/.*\\/form/",
+      "/^https?://docs\\.google\\.com/forms/d/[^/]+/viewform/",
+      "/^https?://[a-z0-9-]+\\.typeform\\.com/to/[a-zA-Z0-9]+/",
+      "/^https?://www\\.surveymonkey\\.com/r/[a-zA-Z0-9_-]+/",
+      "/^https?://job-boards\\.greenhouse\\.io/[a-z0-9-]+/jobs/",
+      "/^https?://jobs.ashbyhq.com/",
+      "/^https?://[a-z0-9-]+\\.wd[1-5]\\.myworkdayjobs\\.com/[a-z0-9-]+/job/",
+      "/^https?://www\\.linkedin\\.com/jobs/view/[0-9]+/"
+    ],
+    "noteNameFormat": "Submission - {{\"Concisely state who this is being submitted to and what it's for (e.g.,. Product designer at Netflix, Mentor volunteer for Ember, Arc feedback survey, NYU financial aid application)\"}} {{date:\"YYYY-MM\"}}",
+    "path": "03-Records/Working notes/Drafts",
+    "id": "1763156278384lc8yrgse8",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_1764086067041sxhuo9jp5": {
+    "id": "1764086067041sxhuo9jp5",
+    "name": "HTML",
+    "behavior": "create",
+    "noteNameFormat": "{{title}}",
+    "path": "03-Records/Clippings",
+    "noteContentFormat": "{{fullHtml}}",
+    "properties": [],
+    "triggers": [],
+    "context": ""
+  },
+  "template_1764131159278083mvtumh": {
+    "id": "1764131159278083mvtumh",
+    "name": "Person",
+    "behavior": "create",
+    "noteNameFormat": "{{\"The full name of the person or entity, if available. Fallback to just first name or alias if not found\"}}",
+    "path": "04-Entities",
+    "noteContentFormat": "\n{{\"Prepare content for this note to save information about a person or group. Look for anything that could serve as a bio or overview of who/what this entity is, ideally directly from the page. Include this under an appropriately named simple markdown H2 heading like \"Bio\", as a blockquote. If and only if you can't find a bio from the source, try to put together your own bio (max 1 paragraph if generated) based on the information you have, written report style in shorthand, and not in a blockquote since you're generating it in this case.\"}}\n\n![[Related.base#Person]]",
+    "properties": [
+      {
+        "id": "1764131449245dti02nv2m",
+        "name": "aliases",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "1764131453014tz8rksokt",
+        "name": "categories",
+        "value": "[[People]]",
+        "type": "multitext"
+      },
+      {
+        "id": "17641314595224r4ncyhki",
+        "name": "icon",
+        "value": "LiPersonStanding",
+        "type": "text"
+      },
+      {
+        "id": "1764131464232ldkfupuva",
+        "name": "description",
+        "value": "{{\\\"1 sentence plain-language summary of the person or entity written in telegraphic, shorthand/telegraphic style with no filler, weight toward essentials like who/what/why etc. and notable details about them\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1764131468114laijm9lc4",
+        "name": "urls",
+        "value": "{{url}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17641314845135tri8wzpy",
+        "name": "related",
+        "value": "{{\\\"comma-separated list of 1-3 companies or entities this person is related to, only if available. If you don't identify any, return nothing.\\\"|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17641314879940bty8xwg5",
+        "name": "tags",
+        "value": "people, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the type, occupation, or related topics of the person or entity. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example tags: `people/bloggers, philosophy, people/thought-leaders, people/design-leaders, culture, ai, design`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17641314938418fk7bfckd",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": ["https://www.linkedin.com/in/"],
+    "context": "{{contentHtml}}",
+    "vault": "Brain"
+  },
+  "template_176696476352980boicsz3": {
+    "schemaVersion": "0.1.0",
+    "name": "Meta only",
+    "behavior": "create",
+    "noteContentFormat": "Summary: {{\"Read and analyze the provided text, noting key points, facts, arguments, counterarguments, complications, novel insights, nuances, and supporting details. Write 4-5 sentences capturing key ideas in plain, simple language. Be economical - express ideas in the shortest clear way possible. Skip redundant phrases like 'the text shows' or 'the article argues' - jump straight to ideas (ex. 'the article argues' 'Argues…' instead of 'the article argues'). Use natural sentence structures and contractions where they help concision. Skip 'the' and 'a/an' when meaning stays clear. Skip publication details and author names. Keep language approachable while preserving nuance. Write in an objective style. Present in plain text without formatting. Don't add any external facts.\"}}\n\n- Source: [{{title}}]({{url}})\n- Saved [[{{date|date:\"YYYY-MM-DD-ddd\"}}]].",
+    "properties": [
+      {
+        "id": "175834842559473el1wrdu",
+        "name": "aliases",
+        "value": "{{\\\"Comma-separated list of 1-2 concise alternative titles to aid later retrieval, summarizing the main topic, question, or point of the content. Avoid special characters, punctuation, and keep it under 70 characters. Be highly specific. Write in sentence case.\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1758348334758ecfotdl4m",
+        "name": "categories",
+        "value": "[[Clippings]], [[Web]]",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926mu7bj8e",
+        "name": "icon",
+        "value": "LiSquareBottomDashedScissors",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926vvr166f",
+        "name": "publish",
+        "value": "false",
+        "type": "checkbox"
+      },
+      {
+        "id": "1758348514627eshklu3nm",
+        "name": "description",
+        "value": "{{\\\"1-2 sentence telegraphic description that's easy to skim for easy recall (drop articles; semicolons over conjunctions; no filler). Capture essence over exhaustive detail. For insights-based content (articles, posts, discussions): what it says—key point(s) or notable take(s). For reference material (guides, docs, resources) or metadata-only: what it is + its utility / why it’s useful\\\"}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926rc12awg",
+        "name": "excerpt",
+        "value": "{{description}}",
+        "type": "text"
+      },
+      {
+        "id": "1739042209926b2l6xvy",
+        "name": "url",
+        "value": "{{url|split:\\\"?\\\"|slice:0,1}}",
+        "type": "text"
+      },
+      {
+        "id": "1758348668109ejhlg1az6",
+        "name": "author",
+        "value": "{{\\\"Try to identify and use the author's full name. If there is no full name, fallback to their social media handle. Otherwise, output nothing. If multiple authors, use an array\\\"|wikilink}}",
+        "type": "multitext"
+      },
+      {
+        "id": "1739042209926aj7mdir",
+        "name": "published",
+        "value": "{{published}}",
+        "type": "date"
+      },
+      {
+        "id": "1758348698323a46io42hz",
+        "name": "related",
+        "value": "",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099263u43fx5",
+        "name": "tags",
+        "value": "clippings, full-text, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "type": "multitext"
+      },
+      {
+        "id": "17390422099262ceaky7",
+        "name": "created",
+        "value": "{{date}}",
+        "type": "date"
+      }
+    ],
+    "triggers": [],
+    "noteNameFormat": "{{title}} - {{site}}",
+    "path": "03-Records/Clippings",
+    "id": "176696476352980boicsz3",
+    "context": "",
+    "vault": "Brain"
+  },
+  "template_list": [
+    "1758348799376ionbag3d1",
+    "1739042221340xrn92ysm4",
+    "1758351986230q27qbusfd",
+    "1758349589086qz7l6usiu",
+    "17583490244618p1w73dkm",
+    "1761595129089g41bcmj",
+    "1764131159278083mvtumh",
+    "1761600938337k91o05gie",
+    "1763156278384lc8yrgse8",
+    "176696476352980boicsz3",
+    "173133919759160h66un2d",
+    "1764086067041sxhuo9jp5"
+  ],
+  "vaults": ["Brain"]
+}
