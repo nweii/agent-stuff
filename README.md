@@ -14,7 +14,7 @@ Personal prompts, skills, and commands I use with Claude and Cursor. Some are hi
 
 ## The format
 
-This repo uses the [Claude Agent Skills format](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills). Skills are folders containing a `SKILL.md` with YAML frontmatter and instructions. The `description` field tells Claude when to apply the skill.
+This repo uses the [Claude Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) [format](https://agentskills.io). Skills are folders containing a `SKILL.md` with YAML frontmatter and instructions. The `description` field tells AI agents when to load and apply the skill.
 
 ```
 skill-name/
@@ -27,9 +27,9 @@ Commands are standalone markdown files with prompts that get invoked via `/comma
 
 ## Using these
 
-Copy whatever looks useful into your own `.claude/skills/` or `.cursor/rules/` directory. Adapt as needed—these are personal workflows, not polished libraries.
+Copy whatever looks useful into your own `.claude/skills/` or `.cursor/rules/` directory. Adapt as needed.
 
-Note: Some skills reference personal vault notes not included in this repo. These show how the skills integrate with a real system—the structure is the point, not the specific files.
+Note: Some skills reference personal vault notes not included in this repo.
 
 ## License
 
