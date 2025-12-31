@@ -9,7 +9,7 @@ Personal prompts, skills, and commands I use with Claude and Cursor. Some are hi
 - **Reference** — Documentation on Agent Skills, Cursor rules, and how components work together
 - **Templates** — Starting points for creating new skills, commands, and rules
 
-## The format
+## Agent skills format
 
 This repo uses the [Claude Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) [format](https://agentskills.io). Skills are folders containing a `SKILL.md` with YAML frontmatter and instructions. The `description` field tells AI agents when to load and apply the skill.
 
