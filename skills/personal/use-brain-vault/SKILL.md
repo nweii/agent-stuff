@@ -14,6 +14,7 @@ This skill bundle covers the complete vault system: metadata organization, Base 
 
 - See **[periodic-notes.md](periodic-notes.md)** for Daily/weekly/quarterly journal structure
 - See **[obsidian-reference.md](obsidian-reference.md)** for links to official Obsidian documentation (Bases, formatting, syntax, etc.). Consult these when helping with Obsidian configuration or note refactoring.
+- See **[cli-tools.md](cli-tools.md)** for extended obsidian-cli reference (additional flags and commands)
 
 ## Navigating the Vault
 
@@ -33,6 +34,8 @@ Folders provide tidy organization, but the core organizational logic resides wit
 ### Reading Notes Efficiently
 
 Many notes use the `description` frontmatter property to provide an abstract or summary. Read or grep for the description first as a token-efficient way to understand a file without reading its entire contents. This helps determine whether to read a file in full.
+
+Alternatively, use `obsidian-cli frontmatter "Note" --print` to extract just the YAML frontmatter without reading the full note body.
 
 ## Vault Principles
 
@@ -54,6 +57,53 @@ Here are some of the most common ones:
 ### Renaming Published Notes
 
 When renaming notes that have `publish: true`, add the old title as an alias in the format `{Folder path(s)}/{old title}`. This preserves SEO redirects in Obsidian Publish and maintains search indexing for existing URLs.
+
+## obsidian-cli
+
+[obsidian-cli](https://github.com/Yakitrak/obsidian-cli) provides terminal automation for Obsidian vaults. The key advantage over raw file operations is **link-safe refactoring**—moves and renames automatically update all wikilinks and markdown links across the vault.
+
+### Availability
+
+Check if the CLI is available and configured:
+
+```bash
+command -v obsidian-cli && obsidian-cli print-default --path-only
+```
+
+If not installed, see [cli-tools.md](cli-tools.md) for installation instructions, or fall back to direct file operations (with the caveat that moves/renames won't auto-update links).
+
+Obsidian tracks vaults in `~/Library/Application Support/obsidian/obsidian.json`—avoid hardcoding vault paths.
+
+### Essential commands
+
+```bash
+# Move/rename with automatic link updates
+obsidian-cli move "old/path/Note" "new/path/Note"
+
+# Search by filename (fuzzy) or content
+obsidian-cli search
+obsidian-cli search-content "query"
+
+# Create notes
+obsidian-cli create "Folder/Note" --content "..." --open
+
+# Token-efficient note preview via frontmatter
+# Read the description property to grok a note without reading the full file
+obsidian-cli frontmatter "Note" --print
+
+# Edit frontmatter properties
+obsidian-cli frontmatter "Note" --edit --key "status" --value "done"
+
+# Delete
+obsidian-cli delete "path/Note"
+```
+
+### When to use vs direct file edits
+
+- **Use obsidian-cli**: Moving, renaming, or deleting notes (preserves link integrity)
+- **Use direct edits**: Modifying note content (Obsidian picks up changes automatically)
+
+If you need additional commands and flags, see [cli-tools.md](cli-tools.md).
 
 ## Context-Aware Dashboards via Bases
 
