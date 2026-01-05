@@ -26,7 +26,7 @@ Folders provide tidy organization, but the core organizational logic resides wit
 
 - **`01-Days`**: Personal daily, weekly, and quarterly journals (aka periodic notes). See [periodic-notes.md](periodic-notes.md) for details.
 - **`02-Evergreen`**: Concept notes.
-- **`03-Records`**: Information, saves, topic indexes, and working notes. Archival and utilitarian notes.
+- **`03-Records`**: Information, web clippings, snippets, topic indexes, working notes, and non-periodic journaling (thinking notes, reflections). Archival and utilitarian notes.
 - **`04-Entities`**: Profiles for specific external things: people, places, companies, media (similar to a `References` folder).
 - **`98-Spaces`**: Hub notes serving as dynamic dashboards and indexes for categories and types (similar to a `Categories` folder).
 - **`99-Admin`**: Obsidian templates and config files.
