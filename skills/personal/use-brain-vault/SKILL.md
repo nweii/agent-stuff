@@ -13,6 +13,7 @@ This skill bundle covers the complete vault system: metadata organization, Base 
 ## Quick Navigation
 
 - See **[periodic-notes.md](periodic-notes.md)** for Daily/weekly/quarterly journal structure
+- See **[things-integration.md](things-integration.md)** for Things 3 todo management and integration
 - See **[obsidian-reference.md](obsidian-reference.md)** for links to official Obsidian documentation (Bases, formatting, syntax, etc.). Consult these when helping with Obsidian configuration or note refactoring.
 - See **[cli-tools.md](cli-tools.md)** for extended obsidian-cli reference (additional flags and commands)
 
