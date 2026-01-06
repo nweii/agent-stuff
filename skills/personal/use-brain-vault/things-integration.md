@@ -4,33 +4,38 @@ Manage todos and project tasks directly from the vault using the `things` CLI. T
 
 ## Core Concepts
 
-- **Thinking vs. Doing**: Use Obsidian for drafting ideas, meeting notes, and project planning. Use Things 3 for actionable todos with specific dates and deadlines.
+- **Thinking vs. Doing**: Use Obsidian notes for drafting ideas, meeting notes, and project planning. Use Things 3 for actionable todos with specific dates and deadlines.
 - **CLI-First**: Use the `things` command to add tasks without leaving the chat or your notes.
 - **Contextual Tasks**: When summarizing a meeting or a project note, proactively identify "inklings" or action items and offer to send them to Things.
 
 ## Auth Token
 
-The CLI requires an auth token for update operations.
-- **Environment**: You should set `THINGS_AUTH_TOKEN` in your shell profile (e.g., `~/.zshrc`) to persist it.
+The CLI requires an auth token for update operations. This should already be set. If you run into trouble, set `THINGS_AUTH_TOKEN` in your shell profile (e.g., `~/.zshrc`) to persist it. The user may need to retrieve this token from their Things app settings.
 
 ## Common Workflows
 
 ### 1. Adding Tasks from Daily Notes
+
 When a task is mentioned in a daily note or during a session, add it to Things:
+
 ```bash
 # Add to Today with notes
 things add "Follow up with [Name]" --notes "Context: [2026-01-06-Tue](obsidian://open?vault=Brain&file=01-Days%2F2026-01-06-Tue)" --when today
 ```
 
 ### 2. Project Task Extraction
+
 When working on a project note (`categories: [[Projects]]`), extract action items:
+
 ```bash
 # Add to a specific project list in Things
 things add "Draft initial spec" --list "Product Launch" --notes "Reference: [Project Alpha](obsidian://open?vault=Brain&file=02-Evergreen%2FProject%20Alpha)"
 ```
 
 ### 3. Reviewing Tasks
+
 Use read-only commands to provide context during planning:
+
 ```bash
 # See what's on the plate for today
 things today

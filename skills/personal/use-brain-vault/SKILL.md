@@ -2,6 +2,7 @@
 name: use-brain-vault
 description: "Navigate and develop this Obsidian vault—metadata system (categories, types, tags, related), Bases for dynamic dashboards, and periodic notes structure. Use when organizing vault content, configuring Bases, or working with journal notes."
 alwaysApply: true
+modified: 2026-01-06
 ---
 
 # Brain Vault Skills

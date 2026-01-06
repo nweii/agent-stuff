@@ -19,8 +19,6 @@ Use `things` to read your local Things database (inbox/today/search/projects/are
 
 Update operations require an auth token. You should set `THINGS_AUTH_TOKEN` in your shell profile (e.g., `~/.zshrc`) to persist it.
 
-Run `things auth` to check token status and see setup steps.
-
 ## Read-only (DB)
 
 - `things inbox --limit 50`
