@@ -1,6 +1,6 @@
 ---
 name: using-heavy-mcps
-description: "Use mcporter + jq to reduce token bloat when working with token-heavy MCPs like Sanity and Brain vault. Call MCPs outside chat, filter outputs, and feed compact results back to the model."
+description: "Use mcporter and jq to reduce token bloat from heavy MCPs like Sanity or Brain vault. Filter and compact tool outputs outside chat to feed only essential data back to the model."
 ---
 
 # Token-Efficient MCP Usage via MCPorter

@@ -1,6 +1,6 @@
 ---
 name: things-mac
-description: Manage Things 3 via the `things` CLI on macOS (add/update/delete projects, areas, and todos via URL scheme + AppleScript; read/search/list from the local Things database). Use when a user asks to add/manage tasks, projects, or areas in Things, list inbox/today/logbook, search tasks, or inspect tags and repeating templates.
+description: "Manage Things 3 on macOS via CLI. Read, search, add, or update tasks, projects, and areas. Use for task management, listing inbox/today, and inspecting tags or repeating templates."
 homepage: [https://github.com/ossianhempel/things3-cli](https://github.com/ossianhempel/things3-cli)
 # source-credit: https://github.com/steipete/clawdis-skills/things-mac
 ---

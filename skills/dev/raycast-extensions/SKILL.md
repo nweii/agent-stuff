@@ -1,6 +1,6 @@
 ---
 name: raycast-extensions
-description: Guide for building Raycast extensions with React, TypeScript, and Node.js. Use when creating new Raycast commands/extensions, working with Raycast UI components (List, Detail, Form, Grid, MenuBarExtra), implementing ActionPanel patterns, using data fetching hooks (useFetch, usePromise), integrating with Raycast AI (AI.ask, useAI), or configuring extension manifests and preferences.
+description: "Build Raycast extensions using React and Node.js. Use for creating commands, UI components (List, Form, Grid), hooks (useFetch), AI integration, and manifest configuration."
 ---
 
 # Raycast Extension Development

@@ -1,6 +1,6 @@
 ---
 name: aid-finances
-description: Expert financial advice and guidance. Use when providing financial advice, analyzing investments, planning budgets, discussing market strategies, retirement planning, or any personal finance questions.
+description: "Expert financial guidance for budgeting, investments, and retirement planning. Use for analyzing market strategies, debt management, or general personal finance questions."
 ---
 
 # Financial Advisory

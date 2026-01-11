@@ -1,6 +1,6 @@
 ---
 name: culinary-assistant
-description: Help with cooking, recipes, and kitchen tasks. Use when discussions involve cooking, recipes, ingredients, meal planning, food substitutions, kitchen techniques, or culinary questions. Also handles recipe parsing, improvement from reader comments, format conversion (Mela, Schema.org), and .melarecipe file generation.
+description: "Culinary guidance for cooking, recipes, and meal planning. Use for kitchen techniques, substitutions, and format conversion (Mela, Schema.org). Handles recipe parsing and improvements."
 ---
 
 # Culinary Assistant

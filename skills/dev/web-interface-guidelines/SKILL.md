@@ -1,6 +1,6 @@
 ---
 name: web-interface-guidelines
-description: Best practices for building accessible, fast, and delightful web interfaces. Use when doing frontend/UI development, building web apps, reviewing UI code, or implementing interactive components. Covers interactions, animation, layout, accessibility, performance, and visual design.
+description: "Best practices for building accessible, fast, delightful web interfaces. Use for frontend development, UI reviews, and implementing interactive components, animations, and layouts."
 ---
 
 # Web Interface Guidelines
