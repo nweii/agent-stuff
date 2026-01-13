@@ -1,6 +1,7 @@
 ---
 name: web-interface-guidelines
 description: "Best practices for building accessible, fast, delightful web interfaces. Use for frontend development, UI reviews, and implementing interactive components, animations, and layouts."
+# source-url: https://vercel.com/design/guidelines
 ---
 
 # Web Interface Guidelines
