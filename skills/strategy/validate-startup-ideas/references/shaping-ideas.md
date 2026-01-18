@@ -50,6 +50,21 @@ The people who write software see the world through this lens. Understanding thi
 
 **For idea validation**: Consider what abstraction your product offers. What complexity does it hide? What new vocabulary does it give users?
 
+## Inflections and earned secrets
+
+From Mike Maples Jr (Floodgate): Pattern-breaking ideas sit at the intersection of *inflections* and *insights*.
+
+**Inflections** are external events that create the potential for radical change—technological (iPhone 4s GPS chip), regulatory (telemedicine across state lines), or belief-based (people trusting reviews over hotel brands). They happen outside any single company and create windows of opportunity.
+
+**Earned secrets** are non-obvious truths about how inflections can be harnessed to change behavior. They're *earned* by living in the future—getting your hands dirty with cutting-edge technology, not just reading about it. If you're not living in the future, your opinion about it isn't valid.
+
+Stress test your inflection:
+1. What specifically is the new thing?
+2. What specific empowerment does it offer, to whom?
+3. What conditions must be met for that empowerment to be realized?
+
+The insight comes from noticing what's *missing* in the future you're living in. The Airbnb guys didn't know air bed and breakfast was a startup idea at first—they were just trying to pay rent. The insight emerged from playing in a new space and being surprised.
+
 ## The idea maze
 
 From Chris Dixon: Good founders can anticipate how their industry and competitors may change to find success over many potential paths.
@@ -76,6 +91,16 @@ From Paul Graham:
 **Operate cheaply and give ideas time to evolve.** The worst thing is a rigid, pre-ordained plan with heavy spending to implement it.
 
 **The key skill isn't technical—it's understanding users.** Get into the habit of thinking of software as having users. What do they want? What would make them say wow?
+
+### The value-business balance
+
+Ivan Zhao (Notion): "Too much of yourself, then there's no users—you're just doing an art project. Too much for business, you're building a commodity." Great products exist on a spectrum between building for your values and building for the market. Neither extreme works.
+
+PMF doesn't feel binary. It's gradual—"Oh, good. We have people who care about this thing we make now." No milestone moment, just slowly strengthening signal.
+
+### Don't be afraid to reset
+
+"You can create progress through better abstractions. That compounds faster, can catch up to all the things you built much quicker than you ever thought." Humans think linearly; abstractions compound exponentially. If you find a better way, you can recover sunk costs surprisingly fast.
 
 ## Hallmarks of a great idea
 

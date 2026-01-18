@@ -37,6 +37,22 @@ Quick validation checklist:
 - Already paying for inferior alternative
 - Existing solution has obvious flaw
 
+### Adjacent users
+
+Bangaly Kaba (Instagram, Instacart): Consider who's *just outside* your current user base. The "adjacent user" is someone who could use your product but doesn't—often because of a single friction point. When you solve for them, you unlock the next growth wave.
+
+### Tarpit detection
+
+Dalton Caldwell (YC): Tarpits are ideas that *seem* promising, validate easily, and attract lots of founders—but systematically fail. Classic examples: "apps to coordinate hangouts with friends," music discovery, Foursquare clones. Warning signs:
+
+- Everyone you tell says "I would use that"
+- You can name 5+ attempts at the same idea
+- The problem has existed forever without a dominant solution
+
+### Sugar-coated broccoli
+
+Ivan Zhao (Notion): If your vision is "broccoli" (something users don't naturally seek out), wrap it in "sugar" (a form factor they already use daily). Notion wanted to build "Lego for software"—but nobody wakes up wanting that. So they hid it inside productivity software, a category people already cared about. The vision is still there; it's just discovered gradually.
+
 ## Shaping the solution
 
 Don't build what users ask for. Solve the underlying problem better.
@@ -52,6 +68,10 @@ Great products give users a **premise**—a foundational belief that normalizes 
 - **Kickstarter**: It's ok to ask for money before building
 
 The best premises become core features. Bumble required women to message first—the premise became the product mechanic.
+
+### Force a choice, not a comparison
+
+Mike Maples Jr (Floodgate): Don't be a "10x better Apple." Be the world's first banana. Great ideas make people choose you or not—they can't compare you to the status quo. If customers can substitute something else for your solution, they won't take the risk on a startup.
 
 **For deeper guidance on crafting premises and shaping ideas strategically**, see [references/shaping-ideas.md](references/shaping-ideas.md).
 
