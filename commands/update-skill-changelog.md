@@ -23,7 +23,7 @@ Update a skill's changelog.md file with a new entry. Also updates the version co
 1. Locate the skill's `changelog.md` (create if missing using "Keep a Changelog" format)
 2. Find or create section for the specified version with today's date
 3. Add the new entry under the appropriate change type heading
-4. Update the `# version:` comment in `SKILL.md` frontmatter to match (commented out to avoid breaking agent systems with strict frontmatter requirements)
+4. Update the `metadata.version` field in `SKILL.md` frontmatter to match (use YAML block format under a `metadata:` key for compatibility with strict frontmatter parsers)
 5. If the skill has a paired/synced version elsewhere, remind user to update that one too
 
 ## Format
