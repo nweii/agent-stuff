@@ -1,9 +1,9 @@
 ---
 title: spec-interview
-description: Interview me about the plan
+description: Interview the user about a product plan idea until a detailed spec is produced.
 argument-hint: [plan]
 model: opus
-# source-url: https://x.com/trq212/status/2005315275026260309
+# based on https://x.com/trq212/status/2005315275026260309
 ---
 
 Read this plan file $1 and interview me in detail about literally anything: technical implementation, UI & UX, concerns, tradeoffs, etc. Make sure questions are not obvious.
