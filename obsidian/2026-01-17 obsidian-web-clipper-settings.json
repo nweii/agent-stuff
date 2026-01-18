@@ -16,9 +16,80 @@
     "defaultPromptContext": "",
     "interpreterAutoRun": false,
     "interpreterEnabled": true,
-    "interpreterModel": "1766095547037",
-    "models": [],
-    "providers": []
+    "interpreterModel": "1758350259615",
+    "models": [
+      {
+        "enabled": true,
+        "id": "gpt-4o-mini",
+        "name": "GPT 5 Nano",
+        "providerId": "1733954263926",
+        "providerModelId": "gpt-5-nano"
+      },
+      {
+        "enabled": true,
+        "id": "1758350259615",
+        "name": "Gemini 2.5 Flash Lite",
+        "providerId": "1733954282994",
+        "providerModelId": "gemini-2.5-flash-lite"
+      },
+      {
+        "enabled": true,
+        "id": "claude-3-haiku-20240307",
+        "name": "Claude 4.5 Haiku",
+        "providerId": "1733954242408",
+        "providerModelId": "claude-haiku-4-5"
+      },
+      {
+        "enabled": true,
+        "id": "gpt-4o",
+        "name": "GPT 5 Mini",
+        "providerId": "1733954263926",
+        "providerModelId": "gpt-5-mini"
+      },
+      {
+        "enabled": true,
+        "id": "1760635788819",
+        "name": "Claude 4.5 Sonnet",
+        "providerId": "1733954242408",
+        "providerModelId": "claude-sonnet-4-5"
+      },
+      {
+        "enabled": true,
+        "id": "1766095519632",
+        "name": "Gemini 3 Pro Preview",
+        "providerId": "1733954282994",
+        "providerModelId": "gemini-3-pro-preview"
+      },
+      {
+        "enabled": true,
+        "id": "1766095547037",
+        "name": "Gemini 3 Flash",
+        "providerId": "1733954282994",
+        "providerModelId": "gemini-3-flash-preview"
+      }
+    ],
+    "providers": [
+      {
+        "apiKey": "",
+        "apiKeyRequired": true,
+        "baseUrl": "https://api.anthropic.com/v1/messages",
+        "id": "1733954242408",
+        "name": "Anthropic"
+      },
+      {
+        "apiKey": "",
+        "apiKeyRequired": true,
+        "baseUrl": "https://api.openai.com/v1/chat/completions",
+        "id": "1733954263926",
+        "name": "OpenAI"
+      },
+      {
+        "apiKey": "",
+        "baseUrl": "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+        "id": "1733954282994",
+        "name": "Google Gemini"
+      }
+    ]
   },
   "migrationVersion": 1,
   "property_types": [
@@ -124,9 +195,9 @@
     "themeMode": "auto"
   },
   "stats": {
-    "addToObsidian": 299,
-    "copyToClipboard": 5,
-    "saveFile": 16,
+    "addToObsidian": 382,
+    "copyToClipboard": 6,
+    "saveFile": 20,
     "share": 0
   },
   "template_173133919759160h66un2d": {
@@ -231,7 +302,7 @@
     "schemaVersion": "0.1.0",
     "name": "Excerpts",
     "behavior": "create",
-    "noteContentFormat": "Summary: {{\"Read and analyze the provided text, noting key points, facts, arguments, counterarguments, complications, novel insights, nuances, and supporting details. Write one concise 3-4 sentence paragraph capturing key ideas in plain, simple language. Be economical - express ideas in the shortest clear way possible. Skip redundant phrases like 'the text shows' or 'the article argues' - jump straight to ideas (ex. 'the article argues' 'Argues…' instead of 'the article argues'). Use natural sentence structures and contractions where they help concision. Skip 'the' and 'a/an' when meaning stays clear. Skip publication details and author names. Keep language approachable while preserving nuance. Write in an objective style. Present in plain text without formatting. Don't add any external facts.\"}}\n\n- Source: [{{title}}]({{url}})\n- Saved [[{{date|date:\"YYYY-MM-DD-ddd\"}}]].\n\n## Excerpts\n\n{{highlights|map:item => item.text|join:\"\\n\\n\\[…]\\n\\n\"|blockquote}}\n",
+    "noteContentFormat": "Summary: {{\"Read and analyze the provided text, noting key points, facts, arguments, counterarguments, complications, novel insights, nuances, and supporting details. Write one concise 3-4 sentence paragraph capturing key ideas in plain, simple language. Be economical - express ideas in the shortest clear way possible. Skip redundant phrases like 'the text shows' or 'the article argues' - jump straight to ideas (ex. 'the article argues' 'Argues…' instead of 'the article argues'). Use natural sentence structures and contractions where they help concision. Skip 'the' and 'a/an' when meaning stays clear. Skip publication details and author names. Keep language approachable while preserving nuance. Write in an objective style. Present in plain text without formatting. Don't add any external facts. Never use backslash escaping in your output.\"}}\n\n- Source: [{{title}}]({{url}})\n- Saved [[{{date|date:\"YYYY-MM-DD-ddd\"}}]].\n\n## Excerpts\n\n{{highlights|map:item => item.text|join:\"\\n\\n\\[…]\\n\\n\"|blockquote}}\n",
     "properties": [
       {
         "id": "175834842559473el1wrdu",
@@ -306,7 +377,9 @@
         "type": "date"
       }
     ],
-    "triggers": ["schema:@NewsArticle"],
+    "triggers": [
+      "schema:@NewsArticle"
+    ],
     "noteNameFormat": "{{title}} - {{site}}",
     "path": "03-Records/Clippings",
     "id": "1758348799376ionbag3d1",
@@ -392,8 +465,11 @@
         "type": "date"
       }
     ],
-    "triggers": ["schema:@SocialMediaPosting", "schema:@Conversation"],
-    "noteNameFormat": "‎{{\"Summarize the main topic or discussion as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "triggers": [
+      "schema:@SocialMediaPosting",
+      "schema:@Conversation"
+    ],
+    "noteNameFormat": "‎{{\"Summarize the main topic or discussion as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"|safe_name}}",
     "path": "03-Records/Clippings",
     "id": "17583490244618p1w73dkm",
     "context": "",
@@ -403,7 +479,7 @@
     "schemaVersion": "0.1.0",
     "name": "X thread",
     "behavior": "create",
-    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines\"}}",
+    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines. {{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines. Never use backslash escaping in your output.\"}}",
     "properties": [
       {
         "id": "175834842559473el1wrdu",
@@ -472,8 +548,8 @@
         "type": "date"
       }
     ],
-    "triggers": ["https://x.com", "https://twitter.com"],
-    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "triggers": [],
+    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"|safe_name}}",
     "path": "03-Records/Clippings",
     "id": "1758349589086qz7l6usiu",
     "context": "",
@@ -483,7 +559,7 @@
     "schemaVersion": "0.1.0",
     "name": "Post",
     "behavior": "create",
-    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines\"}}",
+    "noteContentFormat": "{{\"You are extracting a social media post or Twitter/X thread from the current page. Produce exactly one header line and one continuous block of quoted lines for only the author’s original thread. Detect the author’s display name from the first thread tweet; if unavailable, use the handle. Detect the canonical URL of the first tweet. EXACTLY follow this template structure for your output, and nothing else: A markdown hyperlink `[Author](FirstTweetURL): ` on its own line, then only quoted lines for the thread content (no blank lines). Rules: (1) Include only tweets by the same author that continue the original thread; exclude any tweet that is a reply to another user or a standalone reply in the conversation view. (2) Preserve the author’s original line breaks: each original line becomes one line beginning with \"> \" (do not invent line breaks or reflow text). (3) Do not repeat headers per tweet; do not include per-tweet URLs—only the first tweet URL belongs in the header. (4) Strip all query/utm/tracking parameters from every URL you output. (5) Links appearing in text stay inline as [Label](https://example) and you append the cleaned destination at the end of that same line in parentheses; example: > Some text [Label](https://example) ([https://example](https://example)). (6) If any tweet is truncated with “Show more”, append \"... [Show more](ShowMoreURL)\" to the end of that tweet’s last visible quoted line. (7) For tweet content images only (exclude avatars, profile banners, emojis, and UI icons), emit each image as its own quoted line: > . Never include images from profile_images, profile_banners, or emoji sets. (8) QUOTED TWEETS RULE (avoid false positives): Use the “Quoting …” block ONLY when the author’s tweet embeds another tweet as a quote-tweet (a visible embedded tweet card inside that specific tweet). In that case insert exactly one line: > Quoting [QuotedAuthor](QuotedTweetURL): and then render the embedded tweet’s content with one additional quote level using \"> > \" (with a space) at the start of every quoted line and quoted image line. Do NOT use “Quoting …” for: (a) the author’s other tweets in the same thread, (b) sibling replies shown on the page, or (c) any tweet that is not embedded inside the current tweet’s content. (9) Preserve chronological order across the entire thread, even if paginated. (10) Exclude all UI/metadata: no avatars, author names/handles/dates/timestamps inside the quotes, no view/like/repost counts, no “Replying to…”, no buttons, no chrome. Output only the single header line and the quoted content lines. Never use backslash escaping in your output.\"}}",
     "properties": [
       {
         "id": "175834842559473el1wrdu",
@@ -558,8 +634,10 @@
         "type": "date"
       }
     ],
-    "triggers": [],
-    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"}}",
+    "triggers": [
+      "https://x.com"
+    ],
+    "noteNameFormat": "‎{{\"Summarize the main topic, question, or point of the poster's content as a filename-safe string (with white spaces), using: 'Post about <topic>', etc. Avoid special characters, punctuation, and keep it under 90 characters. Write in sentence case.\"|safe_name}}",
     "path": "03-Records/Clippings",
     "id": "1758351986230q27qbusfd",
     "context": "",
@@ -662,7 +740,9 @@
         "type": "date"
       }
     ],
-    "triggers": ["https://letterboxd.com/film/"],
+    "triggers": [
+      "https://letterboxd.com/film/"
+    ],
     "noteNameFormat": "{{schema:@Movie:name}}",
     "path": "04-Entities",
     "id": "1761595129089g41bcmj",
@@ -720,7 +800,7 @@
     "schemaVersion": "0.1.0",
     "name": "Form",
     "behavior": "create",
-    "noteContentFormat": "{{\"Convert this form into a markdown body, intended for use in a note where the user can draft responses. With that in mind, ignore questions that have very basic or routine answers where drafting is not necessary, such as requests for name, email, current location, etc., or procedural yes/no questions (Unless the question involves some level of interpretation or custom answer that would necessitate a more thoughtful answer). Consider form labels, subtitles, etc. Convert top-level questions into headings starting at H2 level. If the question is very long (>2 sentences), come up with a shorthand version of the question or rephrase it as a title summarizing the question's topic, and include the full question in its section body. If applicable, use an empty code block to provide a space for the user to draft their response to the question. Convert multi-select, single-select, and dropdowns into checkbox lists so the user can make selections in markdown (only if you have access to the options. Otherwise, just show a code block). Strip out any body text that is irrelevant to the questions being asked unless it provides context about the form, submission content instructions/context, or the intention of the form (e.g., informational text about disabilities or military status such as those in a job application form).\"}}",
+    "noteContentFormat": "{{\"Convert this form into a markdown body, intended for use in a note where the user can draft responses. If found, include all context-setting writing (ex. job description text, recipient information, problem definitions, current events, 'what we're looking for'/'who you are' sections) in full in its own section before the form. With that in mind, ignore questions that have very basic or routine answers where drafting is not necessary, such as requests for name, email, current location, etc., or procedural yes/no questions (Unless the question involves some level of interpretation or custom answer that would necessitate a more thoughtful answer). Consider form labels, subtitles, etc. Convert top-level questions into headings starting at H2 level. If the question is very long (>2 sentences), rephrase it in shorthand or as a title summarizing the question topic, copying the full question to its section body. For open-ended responses, use an empty code block to provide a space for the user to draft their response to the question. If you see answer options for a question, multi-select, single-select, and dropdowns into checkbox lists so the user can make selections in markdown (if you don't see options, just provide a code block for answers). Ignore any body text that is irrelevant to the questions being asked unless it provides context about the form, submission content instructions/context, or the intention of the form. Do not hallucinate or invent anything\"}}",
     "properties": [
       {
         "id": "175834842559473el1wrdu",
@@ -743,7 +823,7 @@
       {
         "id": "1763156341425qfzzw9hir",
         "name": "status",
-        "value": "draft",
+        "value": "Draft",
         "type": "text"
       },
       {
@@ -785,7 +865,7 @@
       {
         "id": "17390422099263u43fx5",
         "name": "tags",
-        "value": "clippings, full-text, applications, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `relationships, advice, personal-growth, companies/Apple`\\\"}}",
+        "value": "clippings, full-text, applications, {{\\\"2-3 comma separated tags (written in plural when applicable) that describe the topics or nature of the provided content. Strict rules for a given tag: Pluralize if possible. Use lowercase. NO WHITE SPACES ALLOWED; Use hyphens instead. No special characters other than hyphens. Max 2 words, preferring a single word. Example output: `startups, job-descriptions, self-descriptions, companies/Apple`\\\"}}",
         "type": "multitext"
       },
       {
@@ -806,8 +886,8 @@
       "/^https?://[a-z0-9-]+\\.wd[1-5]\\.myworkdayjobs\\.com/[a-z0-9-]+/job/",
       "/^https?://www\\.linkedin\\.com/jobs/view/[0-9]+/"
     ],
-    "noteNameFormat": "Submission - {{\"Concisely state who this is being submitted to and what it's for (e.g.,. Product designer at Netflix, Mentor volunteer for Ember, Arc feedback survey, NYU financial aid application)\"}} {{date:\"YYYY-MM\"}}",
-    "path": "03-Records/Working notes/Drafts",
+    "noteNameFormat": "Submission - {{\"Concisely state who this is being submitted to and what it's for (e.g.,. Product designer at Netflix, Mentor volunteer for Ember, Arc feedback survey, NYU financial aid application)\"}} {{date:\"YYYY-MM\"|safe_name}}",
+    "path": "03-Records/Working",
     "id": "1763156278384lc8yrgse8",
     "context": "",
     "vault": "Brain"
@@ -827,7 +907,7 @@
     "id": "1764131159278083mvtumh",
     "name": "Person",
     "behavior": "create",
-    "noteNameFormat": "{{\"The full name of the person or entity, if available. Fallback to just first name or alias if not found\"}}",
+    "noteNameFormat": "{{\"The full name of the person or entity, if available. Prefer full names over first names or aliases, otherwise, fallback to latter\"|safe_name}}",
     "path": "04-Entities",
     "noteContentFormat": "\n{{\"Prepare content for this note to save information about a person or group. Look for anything that could serve as a bio or overview of who/what this entity is, ideally directly from the page. Include this under an appropriately named simple markdown H2 heading like \"Bio\", as a blockquote. If and only if you can't find a bio from the source, try to put together your own bio (max 1 paragraph if generated) based on the information you have, written report style in shorthand, and not in a blockquote since you're generating it in this case.\"}}\n\n![[Related.base#Person]]",
     "properties": [
@@ -864,7 +944,7 @@
       {
         "id": "17641314845135tri8wzpy",
         "name": "related",
-        "value": "{{\\\"comma-separated list of 1-3 companies or entities this person is related to, only if available. If you don't identify any, return nothing.\\\"|wikilink}}",
+        "value": "{{\\\"comma-separated list of 1-3 companies or entities this person is related to, only if available. If you don't identify any, return nothing. Each entity should be in a [[wikilink]]\\\"}}",
         "type": "multitext"
       },
       {
@@ -880,7 +960,9 @@
         "type": "date"
       }
     ],
-    "triggers": ["https://www.linkedin.com/in/"],
+    "triggers": [
+      "https://www.linkedin.com/in/"
+    ],
     "context": "{{contentHtml}}",
     "vault": "Brain"
   },
@@ -984,5 +1066,7 @@
     "173133919759160h66un2d",
     "1764086067041sxhuo9jp5"
   ],
-  "vaults": ["Brain"]
+  "vaults": [
+    "Brain"
+  ]
 }
