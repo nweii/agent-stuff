@@ -1,7 +1,9 @@
 ---
 name: validating-startup-ideas
 description: "Find and validate startup ideas by mining user complaints, crafting premises, and navigating the idea maze. Use when discovering product opportunities, validating ideas, shaping solutions, researching user pain points, or exploring what to build."
-# version: 1.5.0
+metadata:
+  author: nathan
+  version: "1.5.0"
 ---
 
 # Validating Startup Ideas

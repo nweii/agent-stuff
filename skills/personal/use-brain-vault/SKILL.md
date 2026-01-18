@@ -2,7 +2,9 @@
 name: use-brain-vault
 description: "Navigate this Obsidian vault: metadata (categories, types, tags), Bases for dashboards, and periodic journaling. Use for organizing content, configuring Bases, or journal notes."
 alwaysApply: true
-# version: 1.0.0
+metadata:
+  author: nathan
+  version: "1.0.0"
 ---
 
 # Brain Vault Skills
