@@ -26,7 +26,7 @@ Commands are standalone markdown files with prompts that get invoked via `/comma
 
 Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` directory. Adapt as needed.
 
-You can also use the `skills` CLI to quickly add items from this repo:
+You can also use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
 
 ```bash
 bunx skills add nweii/agent-stuff
