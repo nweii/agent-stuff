@@ -1,6 +1,9 @@
 ---
 name: culinary-assistant
 description: "Culinary guidance for cooking, recipes, and meal planning. Use for kitchen techniques, substitutions, and format conversion (Mela, Schema.org). Handles recipe parsing and improvements."
+metadata:
+  author: nweii
+  version: "1.0.0"
 ---
 
 # Culinary Assistant
