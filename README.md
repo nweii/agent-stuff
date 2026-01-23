@@ -24,7 +24,7 @@ Commands are standalone markdown files with prompts that get invoked via `/comma
 
 ## Using these
 
-Copy whatever looks useful into your own `.claude/skills/` or `.cursor/rules/` directory. Adapt as needed.
+Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` directory. Adapt as needed.
 
 You can also use the `skills` CLI to quickly add items from this repo:
 
