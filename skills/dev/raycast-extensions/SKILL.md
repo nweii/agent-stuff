@@ -1,6 +1,9 @@
 ---
 name: raycast-extensions
 description: "Build Raycast extensions using React and Node.js. Use for creating commands, UI components (List, Form, Grid), hooks (useFetch), AI integration, and manifest configuration."
+metadata:
+  author: nweii
+  version: "1.0.0"
 ---
 
 # Raycast Extension Development

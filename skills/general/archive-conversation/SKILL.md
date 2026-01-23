@@ -1,6 +1,9 @@
 ---
 name: archive-conversation
 description: Create analytical archival summaries of AI conversations, capturing intellectual journeys, key insights, and technical logs. Use when archiving, saving, or documenting a chat session.
+metadata:
+  author: nweii
+  version: "1.0.0"
 ---
 
 # AI Conversation Archival Summary

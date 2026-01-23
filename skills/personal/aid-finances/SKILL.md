@@ -1,6 +1,9 @@
 ---
 name: aid-finances
 description: "Expert financial guidance for budgeting, investments, and retirement planning. Use for analyzing market strategies, debt management, or general personal finance questions."
+metadata:
+  author: nweii
+  version: "1.0.0"
 ---
 
 # Financial Advisory

@@ -1,7 +1,9 @@
 ---
 name: react-useeffect
 description: "React useEffect best practices. Use when writing Effects, derived values, or data fetching. Teaches when NOT to use Effects and better alternatives like useMemo or key props."
-# source-credit: https://github.com/jarrodwatts/claude-code-config
+metadata:
+  author: jarrodwatts
+  source: https://github.com/jarrodwatts/claude-code-config
 ---
 
 # You Might Not Need an Effect
