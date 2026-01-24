@@ -1,6 +1,7 @@
 ---
 name: archive-conversation
-description: Create analytical archival summaries of AI conversations, capturing intellectual journeys, key insights, and technical logs. Use when archiving, saving, or documenting a chat session.
+description: "Create analytical archival summaries of AI conversations, capturing intellectual journeys, key insights, and technical logs. Use when archiving, saving, or documenting a chat session."
+argument-hint: "[save-location]"
 metadata:
   author: nweii
   version: "1.0.0"
@@ -10,53 +11,97 @@ metadata:
 
 Create an archival summary of an AI conversation that captures its intellectual journey, key insights, or technical work session logs. Document either how thinking evolved throughout the discussion or the specific actions and technical decisions made during a work session.
 
-## Deep Analysis
+## Deep Analysis Requirements
 
-Perform a deep, analytical reading of the entire conversation:
+Conduct a thorough analysis of the entire conversation:
 
-- **Conceptual Threads**: Identify all conceptual threads, task sequences, and transitions.
-- **Patterns**: Note patterns in questioning, resistance points, breakthrough moments, or technical hurdles.
-- **Nature of Exchange**: Identify if the session was technical work, creative exploration, strategic planning, or philosophical inquiry.
-- **Value**: Understand what made this particular exchange worth preserving (insight-driven vs. action-documentation).
-- **Structure**: Determine what structure best captures its unique value (narrative vs. log-formatted).
+1. Read through completely first, identifying all conceptual threads, task sequences, and transitions
+2. Note patterns in questioning, resistance points, breakthrough moments, or technical hurdles
+3. Identify the conversation's nature (technical work session, creative exploration, strategic planning, philosophical inquiry, etc.)
+4. Understand what made this particular exchange worth preserving (insight-driven vs. action-documentation)
+5. Determine what structure would best capture its unique value (narrative vs. log-formatted)
 
-## Documentation Guidelines
+**Look deeply for:**
 
-### Descriptive Headings
+- The real question beneath the initial question
+- How the problem space was redefined or the technical path was forged
+- Moments where assumptions were challenged or implementation details were decided
+- Conceptual frameworks or technical patterns that emerged organically
+- The emotional/intellectual journey or the step-by-step progress of a work session
+- Valuable tangents or "failed" approaches that taught something or informed the final code
+- Connections made between seemingly unrelated ideas or system components
+- What remained intentionally unresolved or deferred to later tasks
 
-Create headings that describe the actual content of each section. The heading should give readers immediate context about what happened in that part of the conversation.
+## Creating Descriptive Structure
 
-- Use sentence-case.
-- Be straightforward and specific (e.g., "Starting from hourly vs. project pricing questions", "Why the recursive function kept hitting memory limits").
-- Avoid generic labels like "Introduction" or "Key Findings".
+Instead of using generic headings like "Initial Question" or "Key Findings," create headings that describe the actual content of each section. The heading should give readers immediate context about what happened in that part of the conversation.
 
-### Flexible Approaches
+**Examples of descriptive headings:**
 
-- **Problem-Solving Sessions**: Open with the problem → Document failed approaches → Describe the working solution → Note implementation details.
-- **Creative Explorations**: Start with the initial vision → Show evolution/branching → Capture key decisions → Preserve unexplored directions.
-- **Learning Journeys**: Begin with gaps in understanding → Track building blocks → Highlight breakthroughs → List remaining questions.
-- **Work Sessions & Technical Execution**: Define objective → Document specific actions (files modified) → Capture technical hurdles → Summarize current state and remaining tasks.
+- "Starting from hourly vs. project pricing questions"
+- "Why the recursive function kept hitting memory limits"
+- "Exploring whether this needs to be real-time"
+- "The confusion about state management"
+- "Deciding between complexity and maintainability"
 
-### Excerpts
+Use sentence-case for headings, not title case. Avoid marketing-speak, dramatic phrasing, or trying to be clever.
 
-Include conversation excerpts that show thinking in action - moments where thinking actually changed, not just where information was exchanged. Be generous in excerpt lengths.
+## Flexible Documentation Approaches
+
+Let the conversation's natural flow determine your structure:
+
+**For Problem-Solving Sessions:**
+Open with what broke/what problem triggered the conversation → Document failed approaches if instructive → Describe the working solution → Note implementation details or next steps
+
+**For Creative Explorations:**
+Start with the initial vision or desire → Show how ideas evolved or branched → Capture key decisions and why they were made → Preserve unexplored directions worth revisiting
+
+**For Learning Journeys:**
+Begin with what the user didn't understand → Track how understanding built piece by piece → Highlight breakthrough moments → List remaining questions
+
+**For Work Sessions & Implementation Logs:**
+Define the session's objective → Document specific actions taken and files modified → Capture technical hurdles and how they were resolved → Summarize the current state of the work and remaining tasks
+
+**For Strategic Thinking:**
+Frame the decision that needed making → Explore options considered and their trade-offs → Document the framework or criteria that emerged → Capture action items or next considerations
+
+## Excerpt Guidelines
+
+Include conversation excerpts that show thinking in action:
 
 > Nathan: "[moment of recognition or confusion]"
 > AI: "[response that shifted understanding or articulated key insight]"
 
-## Output and Archival
+Choose excerpts that reveal intellectual movement - the moments where thinking actually changed, not just where information was exchanged. Be generous in your excerpt lengths.
 
-### Metadata and Naming
+## File Output Requirements
 
-- **Frontmatter**: Include metadata (like `#thinking` tag) as appropriate for the user's system.
-- **Naming Convention**: `{{Type}} - {{topic}} YYYY-MM.md`
-  - Use `Thinking` for insight-heavy journeys.
-  - Use `Log` for action-leaning work sessions.
-  - Example: `Thinking - career portfolio strategy 2025-08.md`
+### Naming Convention
 
-### Output Logic (Portable/Mobile Support)
+- **Format**: `{{Type}} - {{topic}} YYYY-MM.md`
+- Use `Thinking` for insight-heavy journeys or `Log` for action-leaning work sessions
+- Example: `Thinking - career portfolio strategy 2025-08.md`
+- Example: `Log - refactoring auth middleware 2025-01.md`
 
-1. **Identify Target Vault**: Detect if the user has a known notes vault or storage system (e.g., Obsidian, Google Drive, iCloud, Notion).
-2. **Confirm Location**: Unless a default saving location is already established in the current session's context, always ask the user to confirm where to save the file (e.g., "Should I save this to your `03-Records/Working` folder, or elsewhere?").
-3. **Default (Save to File System)**: If the environment supports file operations and a target location is confirmed, save the summary directly to the user's vault.
-4. **Fallback (Markdown Block)**: If vault access is unavailable, restricted, or the user prefers manual saving (common in mobile chat contexts), output the complete archival summary within a single markdown code block for the user to copy/save manually.
+### Save Location Logic
+
+1. **If save-location argument provided**: Use that path directly
+2. **If vault context known** (e.g., Brain vault): Default to `03-Records/Working` for work sessions, `03-Records/Journaling` for personal conversations
+3. **If no context**: Ask the user to confirm where to save
+4. **Fallback**: If vault access unavailable (mobile/restricted), output as markdown code block for manual saving
+
+### Metadata
+
+- Add appropriate tags (e.g., `#thinking`) based on the user's system
+- Use third person or neutral documentation style, not first person (except when quoting)
+
+## Remember
+
+- You're documenting intellectual exploration OR technical execution/work sessions
+- Perform deep analysis to identify all important threads, transitions, and task sequences
+- Use headings that describe what actually happened or what was achieved in that section
+- Keep language natural and straightforward - no marketing-speak or forced drama
+- Capture why this journey or work session matters, and what was actually produced or decided
+- Include the messy, human elements - confusion, recognition, technical frustrations, breakthroughs
+- Preserve what would be valuable to revisit months or years later
+- When using specific examples repeatedly, vary phrasing or generalize after first mention
