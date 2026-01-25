@@ -38,7 +38,7 @@ Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/
 - **Subject line**: Max 50 characters, imperative mood ("add" not "added")
 - **Body**: Wrap at 72 characters, explain *what* and *why* (not *how*)
 - **Scope**: Optional, indicates section of codebase (e.g., `feat(auth):`)
-- **Breaking changes**: Add `!` after type/scope (e.g., `feat!:`) and explain in footer
+- **Breaking changes**: Add exclamation mark after type/scope (e.g., `feat!:`) and explain in footer
 
 ## Process
 
