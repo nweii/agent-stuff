@@ -1,6 +1,6 @@
 ---
 name: rename-files
-description: "Analyze file content and propose intelligent renames using context-aware naming conventions. Date-prefixed for transactional/periodic documents, content-first for creative works. Use for organizing files, cleaning up downloads, or standardizing filen"
+description: "Analyze file content and propose intelligent renames using context-aware naming conventions. Date-prefixed for transactional/periodic documents, content-first for creative works. Use for organizing files, cleaning up downloads, or standardizing filenames."
 metadata:
   author: nweii
   version: "1.0.0"
