@@ -3,7 +3,7 @@ name: commit
 description: "Create well-formatted commits with conventional commit messages. Use when user asks to commit, wants to commit changes, or needs help with commit messages."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Commit
