@@ -3,15 +3,15 @@ name: spec-shaping
 description: "Shape product ideas into actionable specs and sprint plans. Use when interviewing about a product plan, breaking specs into sprints, or turning vague ideas into well-scoped work."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Spec Shaping
 
-Transform product ideas into well-scoped specs and actionable sprint plans. This skill supports two complementary phases:
+Transform product ideas into well-scoped specs and actionable sprint plans. This skill supports two complementary modes:
 
-1. **Interview phase**: Probe the problem space until a clear, narrow spec emerges
-2. **Sprint breakdown phase**: Decompose a spec into atomic tasks and demoable sprints
+1. **Interview mode**: Probe the problem space until a clear, narrow spec emerges
+2. **Sprint breakdown mode**: Decompose a spec into atomic tasks and demoable sprints
 
 ## When to Use
 
@@ -20,46 +20,73 @@ Transform product ideas into well-scoped specs and actionable sprint plans. This
 - User has a spec ready to break into sprints and tasks
 - User wants to validate whether a problem is well-framed before building
 
+## Document Management
+
+Treat specs and sprint plans as **living documents**. Use the following standards to ensure consistency and "freshness".
+
+### 1. File Operations (Search, Location, Updates)
+*   **Search First**: Before creating a new file, search for existing specs for this project.
+*   **Update vs. New**:
+    *   **Update**: If the "Identity" of the project is the same (same core problem, just refining/pivoting implementation), **update** the existing spec.
+        *   **Action**: Rename file to today's date + update Metadata.
+    *   **New**: If the problem definition has fundamentally changed, or the solution direction is a complete "burn it down" restart, create a **new** spec.
+*   **Output Location (Adaptive)**:
+    1.  Scan for: `specs/`, `planning/`, `docs/specs/`, `product/`.
+    2.  If found: Use that directory.
+    3.  Default: Create and use `specs/`.
+    4.  **Vaults**: If external, check `agents.md`/`claude.md` for overrides.
+
+### 2. File Standards (Naming, Metadata, Content)
+*   **Naming**: `[Semantic name] - [YYYY-MM-DD].md`
+    *   **Specs**: `Checkout flow spec - 2024-03-25.md`
+    *   **Sprints**: `Checkout flow sprints - 2024-03-25.md`
+*   **Frontmatter**:
+    ```yaml
+    ---
+    status: [Planned | In Progress | Completed]
+    last: [YYYY-MM-DD]
+    ---
+    ```
+*   **Context Header** (Required):
+    ```markdown
+    > [!NOTE]
+    > **Context**: [Why was this updated? e.g. "Pivot to V2"]
+    > _This document reflects the product thinking at the time of the last update._
+    ```
+*   **Changelog**: Keep a `## Changelog` at the bottom. **Initialize** if missing. Only log **significant** changes (e.g. scope pivots). Ignore trivial edits.
+
 ---
 
-## Phase 1: Spec Interview
+## Interview Mode
 
 Read the plan file and interview the user in detail about technical implementation, UI & UX, concerns, tradeoffs, etc. Make sure questions are not obvious.
 
 ### Interview Principles
 
 1. **Narrow before expanding**: Push to narrow the problem until it can be described in one clear sentence. Vague scope ("build a calendar") leads to endless shaping. Precise scope ("show empty time slots between existing events") enables real solutions.
-
 2. **Surface complexity early**: Ask "what could make this harder than it sounds?" and "where are the hidden dependencies?" The goal is to reveal time bombs before they're in the middle of a build, not after.
-
 3. **Distinguish understanding from justification**: Watch for the anti-pattern where someone has already decided what to build and is looking for data to justify it. Ask why this problem matters *before* discussing solutions.
-
 4. **Probe the adjacent user**: If this is user-facing, ask who the *next* user is — the one just outside the current target. What would need to be different for them?
 
 ### Interview Process
 
 Be very in-depth. Continue interviewing until you're confident the problem is well-framed and the key risks are surfaced. Then write the spec to the file.
 
-A good spec should be **shapeable** — someone should be able to read it and describe the solution in ≤9 major components. If they can't, the problem isn't narrow enough yet.
+A good spec should be **shapeable**— someone should be able to read it and describe the solution in ≤9 major components. If they can't, the problem isn't narrow enough yet.
 
 ---
 
-## Phase 2: Spec to Sprints
+## Sprint Breakdown Mode
 
 Read the spec file and break the project down into sprints and tasks.
 
 ### Core Principles
 
 1. **Atomic tasks**: Every task should be an atomic, committable piece of work that can be completed, reviewed, and merged independently.
-
 2. **Demoable sprints**: Every sprint should result in a demoable piece of software that can be run, tested, and built on top of previous sprints.
-
 3. **Clear validation**: Each task must include explicit validation criteria — tests where applicable, or another concrete verification method (e.g., "Validation: API returns 200 with expected payload", "Validation: Component renders correctly in Storybook").
-
 4. **Dependencies first**: Order tasks so dependencies are completed before the work that relies on them.
-
 5. **Fixed time, variable scope**: Sprints are time-boxed *appetites*, not scope commitments. If something doesn't fit, shape it smaller — don't extend the timeline.
-
 6. **Budget for understanding**: Reserve ~10-20% of sprint capacity for de-risking future work — spikes, research, or validation that will speed up the *next* sprint.
 
 ### Output Structure
@@ -90,9 +117,9 @@ Adapt the specific format to what makes sense for this project — a simple list
 
 5. Revise based on your review.
 
-6. Write the final sprint plan to a markdown file alongside the spec (e.g., if spec is `docs/spec.md`, write to `docs/sprints.md`).
+6. Write the final sprint plan to a markdown file alongside the spec (e.g., `Checkout sprints - 2024-03-25.md`).
 
 ### Explicitly Out of Scope
 
 - **Time estimates**: Do not estimate duration. The human will layer in timeline context.
-- **Resource allocation**: Do not assign tasks to people or roles.
+- **Resource allocation**: Do not assign tasks to people or roles unless explicitly requested and given enough context to do so.
