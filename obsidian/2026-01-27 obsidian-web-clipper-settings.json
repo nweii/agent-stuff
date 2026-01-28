@@ -16,15 +16,8 @@
     "defaultPromptContext": "",
     "interpreterAutoRun": false,
     "interpreterEnabled": true,
-    "interpreterModel": "1758350259615",
+    "interpreterModel": "1766095547037",
     "models": [
-      {
-        "enabled": true,
-        "id": "gpt-4o-mini",
-        "name": "GPT 5 Nano",
-        "providerId": "1733954263926",
-        "providerModelId": "gpt-5-nano"
-      },
       {
         "enabled": true,
         "id": "1758350259615",
@@ -38,13 +31,6 @@
         "name": "Claude 4.5 Haiku",
         "providerId": "1733954242408",
         "providerModelId": "claude-haiku-4-5"
-      },
-      {
-        "enabled": true,
-        "id": "gpt-4o",
-        "name": "GPT 5 Mini",
-        "providerId": "1733954263926",
-        "providerModelId": "gpt-5-mini"
       },
       {
         "enabled": true,
@@ -70,21 +56,18 @@
     ],
     "providers": [
       {
-        "apiKey": "",
         "apiKeyRequired": true,
         "baseUrl": "https://api.anthropic.com/v1/messages",
         "id": "1733954242408",
         "name": "Anthropic"
       },
       {
-        "apiKey": "",
         "apiKeyRequired": true,
         "baseUrl": "https://api.openai.com/v1/chat/completions",
         "id": "1733954263926",
         "name": "OpenAI"
       },
       {
-        "apiKey": "",
         "baseUrl": "https://generativelanguage.googleapis.com/v1beta/chat/completions",
         "id": "1733954282994",
         "name": "Google Gemini"
@@ -195,9 +178,9 @@
     "themeMode": "auto"
   },
   "stats": {
-    "addToObsidian": 382,
+    "addToObsidian": 420,
     "copyToClipboard": 6,
-    "saveFile": 20,
+    "saveFile": 21,
     "share": 0
   },
   "template_173133919759160h66un2d": {
@@ -886,7 +869,7 @@
       "/^https?://[a-z0-9-]+\\.wd[1-5]\\.myworkdayjobs\\.com/[a-z0-9-]+/job/",
       "/^https?://www\\.linkedin\\.com/jobs/view/[0-9]+/"
     ],
-    "noteNameFormat": "Submission - {{\"Concisely state who this is being submitted to and what it's for (e.g.,. Product designer at Netflix, Mentor volunteer for Ember, Arc feedback survey, NYU financial aid application)\"}} {{date:\"YYYY-MM\"|safe_name}}",
+    "noteNameFormat": "Submission - {{\"Concisely state who this is being submitted to and what it's for (e.g.,. Product designer at Netflix, Mentor volunteer for Ember, Arc feedback survey, NYU financial aid application)\"}} {{date|date:\"YYYY-MM\"}}",
     "path": "03-Records/Working",
     "id": "1763156278384lc8yrgse8",
     "context": "",
