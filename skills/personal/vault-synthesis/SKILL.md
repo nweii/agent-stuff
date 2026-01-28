@@ -3,7 +3,8 @@ name: vault-synthesis
 description: "Synthesize information across vault notes: history rollups, frontmatter summaries, periodic rollups, and topic note creation. Use when aggregating, summarizing, or organizing content across multiple notes."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
+  internal: true
 ---
 
 # Vault Synthesis
@@ -13,6 +14,7 @@ Operations that synthesize, aggregate, or organize information across multiple n
 ## When to Use
 
 Use this skill when you need to:
+
 - Compile periodic note mentions into a History note
 - Generate or update `description` frontmatter for notes
 - Roll up child note summaries into parent periodic notes
