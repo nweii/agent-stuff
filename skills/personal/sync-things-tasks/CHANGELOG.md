@@ -10,4 +10,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Generalized Obsidian vault examples to use placeholders instead of specific personal paths
-- Updated auth token documentation to be user-agnostic
+- Updated auth mention to be user-agnostic
