@@ -3,7 +3,7 @@ name: sync-things-tasks
 description: "Syncs tasks between Obsidian vault and Things 3. Adds tasks from notes, extracts action items from projects, reviews existing tasks. Use when managing todos from vault content."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Sync Things Tasks
@@ -18,7 +18,7 @@ Bridge thinking (Obsidian) and doing (Things 3) using the `things` CLI.
 
 ## Auth Token
 
-The CLI requires an auth token for update operations. Nathan has `THINGS_AUTH_TOKEN` set in his shell profile.
+The CLI requires an auth token for update operations. The user should have `THINGS_AUTH_TOKEN` set in their shell profile.
 
 ## Common Workflows
 
@@ -26,15 +26,15 @@ The CLI requires an auth token for update operations. Nathan has `THINGS_AUTH_TO
 
 ```bash
 # Add to Today with Obsidian link
-things add "Follow up with [Name]" --notes "Context: [2026-01-06-Tue](obsidian://open?vault=Brain&file=01-Days%2F2026-01-06-Tue)" --when today
+things add "Follow up with [Name]" --notes "Context: [Note Title](obsidian://open?vault=MyVault&file=Path%2FTo%2FNote)" --when today
 ```
 
 ### Project Task Extraction
 
-When working on project notes (`categories: [[Projects]]`):
+When working on project notes, extract action items:
 
 ```bash
-things add "Draft initial spec" --list "Project Name" --notes "Reference: [Project](obsidian://open?vault=Brain&file=...)"
+things add "Draft initial spec" --list "Project Name" --notes "Reference: [Project](obsidian://open?vault=MyVault&file=...)"
 ```
 
 ### Reviewing Tasks
@@ -51,6 +51,6 @@ things search "query"    # Search for existing tasks
 ## Integration Principles
 
 - **Discovery First**: Use `things areas` and `things projects` before creating new containers
-- **Obsidian URIs**: Include clickable Obsidian links in Things notes: `[Note](obsidian://open?vault=Brain&file=URL_ENCODED_PATH)`
+- **Obsidian URIs**: Include clickable Obsidian links in Things notes: `[Note](obsidian://open?vault=MyVault&file=URL_ENCODED_PATH)`
 - **Dry Run First**: Use `things --dry-run add "..."` for complex tasks
 - **Things as Truth**: Things is the source of truth for "doing"; don't necessarily update Obsidian when tasks complete
