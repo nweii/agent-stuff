@@ -4,7 +4,7 @@ description: "Create analytical archival summaries of AI conversations, capturin
 argument-hint: "[save-location]"
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # AI Conversation Archival Summary
@@ -69,7 +69,7 @@ Frame the decision that needed making → Explore options considered and their t
 
 Include conversation excerpts that show thinking in action:
 
-> Nathan: "[moment of recognition or confusion]"
+> [User's first name, if known]: "[moment of recognition or confusion]"
 > AI: "[response that shifted understanding or articulated key insight]"
 
 Choose excerpts that reveal intellectual movement - the moments where thinking actually changed, not just where information was exchanged. Be generous in your excerpt lengths.
@@ -80,19 +80,19 @@ Choose excerpts that reveal intellectual movement - the moments where thinking a
 
 - **Format**: `{{Type}} - {{topic}} YYYY-MM.md`
 - Use `Thinking` for insight-heavy journeys or `Log` for action-leaning work sessions
-- Example: `Thinking - career portfolio strategy 2025-08.md`
-- Example: `Log - refactoring auth middleware 2025-01.md`
+- Example: `Thinking - Portfolio strategy 2025-08.md`
+- Example: `Log - Refactoring auth middleware 2025-01.md`
 
 ### Save Location Logic
 
 1. **If save-location argument provided**: Use that path directly
-2. **If vault context known** (e.g., Brain vault): Default to `03-Records/Working` for work sessions, `03-Records/Journaling` for personal conversations
+2. **Context-aware detection**: Analyze the existing folder structure to find the most relevant folder for the note being archived (e.g., matching "Working" or "Journaling" folders to the conversation type).
 3. **If no context**: Ask the user to confirm where to save
 4. **Fallback**: If vault access unavailable (mobile/restricted), output as markdown code block for manual saving
 
 ### Metadata
 
-- Add appropriate tags (e.g., `#thinking`) based on the user's system
+- Add appropriate tags (e.g., `#thinking`, `#log`, `#journal`, `#learning`, `#ai-chat`) based on the user's system
 - Use third person or neutral documentation style, not first person (except when quoting)
 
 ## Remember
