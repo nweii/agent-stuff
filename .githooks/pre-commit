@@ -1,0 +1,18 @@
+#!/bin/bash
+# Updates catalog in README.md when skills or commands change.
+# Enable via: git config core.hooksPath .githooks
+
+set -e
+
+STAGED=$(git diff --cached --name-only | grep -E '^(skills|commands)/' || true)
+[ -z "$STAGED" ] && exit 0
+
+echo "Updating catalog (skills/commands changed)..." >&2
+python3 scripts/update-catalog.py
+
+if ! git diff --quiet README.md 2>/dev/null; then
+    git add README.md
+    echo "Staged README.md with catalog update" >&2
+fi
+
+exit 0
