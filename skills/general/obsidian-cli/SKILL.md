@@ -3,7 +3,7 @@ name: obsidian-cli
 description: Control Obsidian from the terminal via the obsidian CLI. Use for vault automation, opening/creating notes, searching, daily notes, tasks, tags, and plugin development.
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Obsidian CLI
@@ -21,21 +21,24 @@ Run `obsidian <command>` to control Obsidian from the terminal. The app must be 
 - **Parameters**: `param=value`. Quote values with spaces: `content="Hello world"`.
 - **Flags**: Boolean, no value: `silent`, `overwrite`, `newtab`.
 - **Multiline content**: Use `\n` for newlines, `\t` for tabs in `content=`.
+- Note: Commands default to silent operation and don't expect an active file by default.
 
 ## Common commands
 
 ### Notes and content
 
+Escape values in quotes if it has whitespaces.
+
 ```bash
 obsidian create name="Note" content="Hello world"
 obsidian create name="Note" template=Travel  # from Templates folder
 obsidian create name="Note" content="# Title\n\nBody" overwrite silent
-obsidian read [file=Note] [path=folder/note.md]
-obsidian open [file=Note] [newtab]
-obsidian append [file=Note] content="- [ ] Task"
-obsidian prepend [file=Note] content="# Header\n"
-obsidian delete [file=Note] [permanent]
-obsidian move [file=Note] to=folder/newpath.md
+obsidian read file="Note" path="folder/note.md" # path is optional
+obsidian append file="Note" content="- [ ] Task"
+obsidian prepend file="Note" content="# Header\n"
+obsidian delete file="Note"
+obsidian move file="Note" to=folder/newpath.md # also can rename
+obsidian rename file="Note" name="New file name"
 ```
 
 ### Daily notes
@@ -43,20 +46,22 @@ obsidian move [file=Note] to=folder/newpath.md
 Requires Daily notes plugin. Use `daily:append` / `daily:prepend` for content.
 
 ```bash
-obsidian daily [paneType=tab|split|window] [silent]
-obsidian daily:append content="- [ ] Buy groceries" [inline] [silent]
-obsidian daily:prepend content="- [ ] Morning routine" [inline]
 obsidian daily:read
+obsidian daily [paneType=tab|split|window] [open]
+obsidian daily:append content="- [ ] Buy groceries" [inline] [open]
+obsidian daily:prepend content="- [ ] Morning routine" [inline] # goes after the frontmatter
+obsidian daily:path # Returns the expected daily note path even if the file hasn't been created yet.
 ```
 
 ### Search and navigation
 
 ```bash
-obsidian search query="meeting notes" [path=folder] [limit=10] [format=text|json]
-obsidian search:open query="tag:project"
+obsidian search query="text" [path=folder] [limit=n] [format=text|json] [total] [case]
+obsidian search:context query="text" [path=folder] [limit=n] [format=text|json] [case]
+obsidian search:open [query="text"]
 obsidian files [folder=path] [ext=md] [total]
 obsidian recents [total]
-obsidian random [folder=path] [newtab] [silent]
+obsidian random [folder=path] [newtab] [open]
 ```
 
 ### Tasks and tags
@@ -64,7 +69,7 @@ obsidian random [folder=path] [newtab] [silent]
 ```bash
 obsidian tasks [daily] [file=Note] [todo] [done] [status="x"] [total] [verbose]
 obsidian task ref=path:line [toggle] [done] [todo] [daily]
-obsidian tags [all] [file=Note] [total] [counts] [sort=count]
+obsidian tags [active] [file=Note] [total] [counts] [sort=count]
 obsidian tag name=project [total] [verbose]
 ```
 
@@ -74,15 +79,15 @@ obsidian tag name=project [total] [verbose]
 obsidian links [file=Note] [total]
 obsidian backlinks [file=Note] [counts] [total]
 obsidian outline [file=Note] [format=tree|md]
-obsidian orphans [total] [all]
-obsidian deadends [total] [all]
+obsidian orphans [total] [active]
+obsidian deadends [total] [active]
 obsidian unresolved [total] [counts] [verbose]
 ```
 
 ### Properties and frontmatter
 
 ```bash
-obsidian properties [all] [file=Note] [total] [counts] [format=yaml|tsv]
+obsidian properties [active] [file=Note] [total] [counts] [format=yaml|tsv]
 obsidian property:read name=status [file=Note]
 obsidian property:set name=status value=done [file=Note]
 obsidian property:remove name=status [file=Note]
@@ -94,7 +99,7 @@ obsidian property:remove name=status [file=Note]
 obsidian bases
 obsidian base:views [file=base.base]
 obsidian base:query [file=base.base] [view=name] [format=json|csv|tsv|md|paths]
-obsidian base:create name="Item" content="..." [silent] [newtab]
+obsidian base:create name="Item" content="..." [open] [newtab]
 ```
 
 ### Plugins and themes
@@ -175,8 +180,10 @@ obsidian eval code="app.vault.getFiles().length"
 
 ## Help
 
-Run `obsidian help` (not `--help`) for the full command list.
+- `obsidian help` — full command list
+- `obsidian help <command>` — help for a specific command (e.g. `obsidian help search`)
+- `obsidian --help` — alias for `help`
 
 ## References
 
-For the most up-to-date CLI documentation: [Obsidian CLI (Context7)](https://context7.com/websites/help_obsidian_md/llms.txt?topic=cli&tokens=10000)
+For recent CLI documentation: [Obsidian CLI (Context7)](https://context7.com/websites/help_obsidian_md/llms.txt?topic=cli&tokens=10000)
