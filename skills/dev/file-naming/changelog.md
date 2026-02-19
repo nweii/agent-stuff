@@ -4,6 +4,11 @@ All notable changes to the `file-naming` skill.
 
 Format: [Keep a Changelog](https://keepachangelog.com)
 
+## [1.0.2]
+
+### Changed
+- Moved TV Episode Mode to [references/tv-episodes.md](references/tv-episodes.md)
+
 ## [1.0.1]
 
 ### Changed

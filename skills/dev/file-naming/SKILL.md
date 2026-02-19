@@ -3,7 +3,7 @@ name: file-naming
 description: "Analyze file content and propose intelligent renames using context-aware naming conventions. Date-prefixed for transactional/periodic documents, content-first for creative works. Use for organizing files, cleaning up downloads, or standardizing filenames."
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Rename Files
@@ -67,23 +67,4 @@ Analyze files and propose intelligent renames based on content type and metadata
 
 If content unclear: make best guess from filename, clean up existing name, or leave unchanged with note.
 
----
-
-## TV Episode Mode
-
-For TV show files, use standardized Plex/media manager format.
-
-### Convention
-
-- **Format**: `Show Name - sXXeYY - Episode Title.extension`
-- **Season/Episode**: Always use two digits and lowercase (e.g., s01e05 instead of S1E5)
-- **Clean up**: Remove release group tags, quality markers (1080p, x264), and unnecessary technical metadata
-
-### Process
-
-1. List the files in the target directory or use the provided list
-2. Extract the Show Name, Season, and Episode from the existing filenames
-3. Propose a preview table: "Original" | "Proposed"
-4. Wait for confirmation before executing the rename
-
-If the episode title cannot be determined, use `Show Name - sXXeYY.extension`.
+**For TV show files**, see [references/tv-episodes.md](references/tv-episodes.md) for Plex/media manager naming conventions.
