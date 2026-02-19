@@ -94,11 +94,13 @@ def generate_catalog() -> str:
         "",
         "### Skills",
         "",
+        "[Internal] = personal workflows or vault-specific, likely needs adaptation.",
+        "",
     ]
     
     for name, path, desc, is_internal in get_skills():
         if is_internal:
-            lines.append(f"- [{name}]({path}) 🔒 — {desc}")
+            lines.append(f"- [{name}]({path}) [Internal] — {desc}")
         else:
             lines.append(f"- [{name}]({path}) — {desc}")
     lines.append("")
