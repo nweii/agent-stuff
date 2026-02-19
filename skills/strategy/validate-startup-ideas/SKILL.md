@@ -44,7 +44,7 @@ Quick validation checklist:
 
 ### Tarpit detection
 
-Dalton Caldwell (YC): Tarpits are ideas that *seem* promising, validate easily, and attract lots of founders—but systematically fail. Classic examples: "apps to coordinate hangouts with friends," music discovery, Foursquare clones. Warning signs:
+Dalton Caldwell (YC): Tarpits are ideas that _seem_ promising, validate easily, and attract lots of founders—but systematically fail. Classic examples: "apps to coordinate hangouts with friends," music discovery, Foursquare clones. Warning signs:
 
 - Everyone you tell says "I would use that"
 - You can name 5+ attempts at the same idea
@@ -52,7 +52,7 @@ Dalton Caldwell (YC): Tarpits are ideas that *seem* promising, validate easily, 
 
 ### Adjacent users
 
-Bangaly Kaba (Instagram, Instacart): Consider who's *just outside* your current user base. The "adjacent user" is someone who could use your product but doesn't—often because of a single friction point. When you solve for them, you unlock the next growth wave.
+Bangaly Kaba (Instagram, Instacart): Consider who's _just outside_ your current user base. The "adjacent user" is someone who could use your product but doesn't—often because of a single friction point. When you solve for them, you unlock the next growth wave.
 
 ## Shaping the solution
 
