@@ -1,11 +1,16 @@
 ---
-description: Create a Commentary topic note from related notes with automatic backlinking
-argument-hint: <topic title> [note1] [note2] ...
+name: create-topic-note
+description: "Create a Commentary topic note grouping related notes under a common theme, with automatic backlinking to source notes. Triggers: 'group these under a topic', 'create topic note for [[A]], [[B]], [[C]]'."
+argument-hint: "<topic title> [[[note1]]] [[[note2]]] ..."
+metadata:
+  author: nweii
+  version: "1.0.0"
+  internal: true
 ---
 
-# Create Topic Note
+# Create topic note
 
-Create a new topic note that groups related notes under a common theme. Synthesizes provided notes into a lightweight hub with `![[Related.base]]`.
+Create a new topic note that groups related notes under a common theme. Synthesizes provided notes into a lightweight hub.
 
 ## Arguments
 

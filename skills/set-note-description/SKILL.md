@@ -1,18 +1,30 @@
 ---
-alwaysApply: false
-title: file-summarization
-description: When asked to generate summaries of markdown content for its YAML frontmatter, follow these instructions.
+name: set-note-description
+description: "Generate or update the description frontmatter property for a note. Selects Summary mode or Meta mode based on content type. Use when asked to create a description frontmatter summary for a note."
+context: fork
+model: haiku
+argument-hint: [note-title]
+metadata:
+  author: nweii
+  version: "1.0.0"
+  internal: true
 ---
 
-# File summarization
+# Summarize frontmatter
 
-Act as a markdown file analysis assistant. Read markdown files with YAML frontmatter and generate a description for discoverability. Either follow the user's specified mode or intelligently select the appropriate mode based on content type.
+Generate a `description` property for **$ARGUMENTS** and write it to the note's YAML frontmatter.
 
-## Mode Selection
+If no note is specified, ask which note to summarize before proceeding.
+
+---
+
+Act as a markdown file analysis assistant. Read the note and generate a description for discoverability. Either follow any specified mode or intelligently select based on content type.
+
+## Mode selection
 
 If the user specifies a mode, use it. Otherwise, select based on content type:
 
-### Use Summary Mode for:
+### Use Summary mode for:
 
 - **Ephemeral content**: daily logs, weekly rollups, journal entries, periodic notes
 - **Time-bound artifacts**: meeting notes, event recaps, trip logs
@@ -21,7 +33,7 @@ If the user specifies a mode, use it. Otherwise, select based on content type:
 
 These are documents where the _insights or events_ are the value—you likely won't re-read the whole thing, you need the crystallized takeaway or memory anchor.
 
-### Use Meta Mode for:
+### Use Meta mode for:
 
 - **Reference material**: guides, how-tos, documentation, templates
 - **Evergreen resources**: processes, checklists, policies, standards
@@ -46,7 +58,7 @@ These are documents you _retrieve by need_—you're searching for something that
 
 ---
 
-## Edge Cases
+## Edge cases
 
 **Hybrid documents** (e.g., daily log containing a reusable process):
 Default to the document's _primary purpose_. A daily log with an incidental process note is still a daily log—use summary and mention the process as a notable item. If the process becomes valuable enough, it should be extracted to its own note.
@@ -70,7 +82,7 @@ Default to summary. Capturing what's actually there is more useful than a vague 
 
 ---
 
-## Summary Mode
+## Summary mode
 
 Create a concise 1-2 sentence summary crystallizing what the content says—insights, conclusions, main points. For logs, include memorable events, proper nouns, and landmarks that jog memory. For exploratory content, capture main themes.
 
@@ -82,7 +94,7 @@ For periodic notes:
 - Minimize weight on slip box, addendum, or secondary sections
 - Focus on actual content, activities, insights
 
-### Summary Examples
+### Summary examples
 
 - `"Timeline padding 20-30% prevents Acme Corp delays; upfront alignment with Sarah's team saves more time than detailed technical planning."`
 - `"Struggling to delegate Marcus's onboarding—equate doing it myself with caring; reframe delegation as trust-building."`
@@ -90,17 +102,17 @@ For periodic notes:
 
 ---
 
-## Meta Mode
+## Meta mode
 
 Describe what this document IS—type, purpose, scope—plus when to reference it. Follow the **What + When** pattern:
 
-`[Document type/topic] [scope or focus]. Use when [explicit trigger conditions].
+`[Document type/topic] [scope or focus]. Use when [explicit trigger conditions].`
 
 Be specific about trigger conditions. "Use when relevant" is useless; "Use when debugging authentication failures or onboarding new backend engineers" is searchable.
 
 For periodic notes in meta mode (rare, but possible if requested): focus on domains, projects, or themes as searchable anchors.
 
-### Meta Examples
+### Meta examples
 
 - `"Guide to vault metadata conventions and Base file integration. Use when designing folder structure, troubleshooting queries, or onboarding to the knowledge system."`
 - `"Template for project retrospectives with prompts for timeline, collaboration, and technical debt. Use when closing out projects or preparing team retros."`
@@ -111,11 +123,11 @@ For periodic notes in meta mode (rare, but possible if requested): focus on doma
 
 ## Output
 
-Stay under 1024 characters for the output value of a description; avoid paragraph length.
+Stay under 1024 characters for the description value; avoid paragraph length.
 
 ## Frontmatter placement
 
-Add or update the `description` property in the YAML frontmatter following the hierarchy described in @obsidian-assistant.mdc:
+Add or update the `description` property in the YAML frontmatter at this position:
 
 1. Identity & routing (aliases, icon, publish, permalink, url)
 2. Content/classification (tags, description) ← INSERT HERE
@@ -124,16 +136,16 @@ Add or update the `description` property in the YAML frontmatter following the h
 
 ## Critical rules
 
-- **ONLY modify the description property** - never change, escape, or reformat any other content
+- **ONLY modify the description property** — never change, escape, or reformat any other content
 - Put the summary value in double quotes
 - Preserve all existing formatting and Obsidian-specific syntax exactly
 - If unable to write to the file, output a markdown code block with just: `description: "your summary here"`
 
 ## Periodic notes handling
 
-For periodic notes (see @periodic-notes.mdc for structure):
+For periodic notes:
 
-- Don't add temporal prefixes - the filename already indicates the time period
+- Don't add temporal prefixes — the filename already indicates the time period
 - Minimize weight given to "slip box" sections (external links, articles to read later)
 - Focus on the day's actual content, activities, and insights
 
@@ -150,4 +162,4 @@ When summarizing a periodic note that contains `related` wikilinks to smaller-pe
 
 This creates hierarchical abstraction where each level captures the essence of its component periods.
 
-Note: Some daily notes may not exist--that simply means one may not have been created for that day.
+Note: Some daily notes may not exist — that simply means one may not have been created for that day.

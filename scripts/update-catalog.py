@@ -6,6 +6,8 @@ import os
 import re
 from pathlib import Path
 
+from typing import List, Tuple, Optional
+
 REPO_ROOT = Path(__file__).parent.parent
 README_PATH = REPO_ROOT / "README.md"
 SKILLS_DIR = REPO_ROOT / "skills"
@@ -13,7 +15,7 @@ COMMANDS_DIR = REPO_ROOT / "commands"
 
 START_MARKER = "<!-- CATALOG:START -->"
 END_MARKER = "<!-- CATALOG:END -->"
-def extract_frontmatter_field(content: str, field: str) -> str | None:
+def extract_frontmatter_field(content: str, field: str) -> Optional[str]:
     """Extract a field value from YAML frontmatter."""
     frontmatter_match = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
     if not frontmatter_match:
@@ -21,17 +23,17 @@ def extract_frontmatter_field(content: str, field: str) -> str | None:
     
     frontmatter = frontmatter_match.group(1)
     
-    # Handle both quoted and unquoted values
-    pattern = rf'^{field}:\s*["\']?(.*?)["\']?\s*$'
+    # Handle both quoted and unquoted values; allow indented keys (e.g. metadata.internal)
+    pattern = rf'^\s*{field}:\s*["\']?(.*?)["\']?\s*$'
     match = re.search(pattern, frontmatter, re.MULTILINE)
     if match:
         return match.group(1).strip()
     return None
 
 
-def get_skills() -> list[tuple[str, str, str]]:
+def get_skills() -> List[Tuple[str, str, str, bool]]:
     """Get all skills as a flat sorted list."""
-    skills: list[tuple[str, str, str]] = []
+    skills: List[Tuple[str, str, str, bool]] = []
 
     for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
         # Skip private directory (gitignored)
@@ -42,18 +44,21 @@ def get_skills() -> list[tuple[str, str, str]]:
         desc = extract_frontmatter_field(content, "description")
         if not desc:
             desc = "(no description)"
+            
+        internal = extract_frontmatter_field(content, "internal")
+        is_internal = str(internal).lower() == "true"
 
         name = skill_file.parent.name
         path = f"skills/{name}/"
-        skills.append((name, path, desc))
+        skills.append((name, path, desc, is_internal))
 
     skills.sort(key=lambda x: x[0])
     return skills
 
 
-def get_commands() -> list[tuple[str, str, str]]:
+def get_commands() -> List[Tuple[str, str, str]]:
     """Get all commands as a flat sorted list."""
-    commands: list[tuple[str, str, str]] = []
+    commands: List[Tuple[str, str, str]] = []
 
     for cmd_file in COMMANDS_DIR.glob("*.md"):
         if cmd_file.parent.name == "private":
@@ -91,8 +96,11 @@ def generate_catalog() -> str:
         "",
     ]
     
-    for name, path, desc in get_skills():
-        lines.append(f"- [{name}]({path}) — {desc}")
+    for name, path, desc, is_internal in get_skills():
+        if is_internal:
+            lines.append(f"- [{name}]({path}) 🔒 — {desc}")
+        else:
+            lines.append(f"- [{name}]({path}) — {desc}")
     lines.append("")
     
     lines.append("### Commands")
