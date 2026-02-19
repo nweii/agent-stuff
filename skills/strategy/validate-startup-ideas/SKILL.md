@@ -3,14 +3,16 @@ name: validating-startup-ideas
 description: "Find and validate startup ideas by mining user complaints, crafting premises, and navigating the idea maze. Use when discovering product opportunities, validating ideas, shaping solutions, researching user pain points, or exploring what to build."
 metadata:
   author: nweii
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # Validating Startup Ideas
 
+Apply these frameworks as lenses to what the user brings—use them to surface blindspots, ask sharper questions, or reframe what's being worked on. This skill works at any stage of idea maturity.
+
 Every complaint signals someone willing to pay for a better solution. But finding complaints is only the start—great products give users a **premise** that normalizes new behavior.
 
-## Finding opportunities
+## Finding problems
 
 Mine complaints from platforms where users express frustration:
 
@@ -25,7 +27,7 @@ Mine complaints from platforms where users express frustration:
 
 **Upwork**: If 100+ people paying $20/hr for a task, they'll pay $50/mo to automate it.
 
-## Validation signals
+## Evaluating ideas
 
 From Lenny Rachitsky's B2B framework—four signs your idea has legs:
 
@@ -40,10 +42,6 @@ Quick validation checklist:
 - Already paying for inferior alternative
 - Existing solution has obvious flaw
 
-### Adjacent users
-
-Bangaly Kaba (Instagram, Instacart): Consider who's *just outside* your current user base. The "adjacent user" is someone who could use your product but doesn't—often because of a single friction point. When you solve for them, you unlock the next growth wave.
-
 ### Tarpit detection
 
 Dalton Caldwell (YC): Tarpits are ideas that *seem* promising, validate easily, and attract lots of founders—but systematically fail. Classic examples: "apps to coordinate hangouts with friends," music discovery, Foursquare clones. Warning signs:
@@ -52,9 +50,9 @@ Dalton Caldwell (YC): Tarpits are ideas that *seem* promising, validate easily, 
 - You can name 5+ attempts at the same idea
 - The problem has existed forever without a dominant solution
 
-### Sugar-coated broccoli
+### Adjacent users
 
-Ivan Zhao (Notion): If your vision is "broccoli" (something users don't naturally seek out), wrap it in "sugar" (a form factor they already use daily). Notion wanted to build "Lego for software"—but nobody wakes up wanting that. So they hid it inside productivity software, a category people already cared about. The vision is still there; it's just discovered gradually.
+Bangaly Kaba (Instagram, Instacart): Consider who's *just outside* your current user base. The "adjacent user" is someone who could use your product but doesn't—often because of a single friction point. When you solve for them, you unlock the next growth wave.
 
 ## Shaping the solution
 
@@ -72,13 +70,17 @@ Great products give users a **premise**—a foundational belief that normalizes 
 
 The best premises become core features. Bumble required women to message first—the premise became the product mechanic.
 
+### Sugar-coated broccoli
+
+Ivan Zhao (Notion): If your vision is "broccoli" (something users don't naturally seek out), wrap it in "sugar" (a form factor they already use daily). Notion wanted to build "Lego for software"—but nobody wakes up wanting that. So they hid it inside productivity software, a category people already cared about. The vision is still there; it's just discovered gradually.
+
 ### Force a choice, not a comparison
 
 Mike Maples Jr (Floodgate): Don't be a "10x better Apple." Be the world's first banana. Great ideas make people choose you or not—they can't compare you to the status quo. If customers can substitute something else for your solution, they won't take the risk on a startup.
 
 **For deeper guidance on crafting premises and shaping ideas strategically**, see [references/shaping-ideas.md](references/shaping-ideas.md).
 
-## Rapid validation process
+## Testing early
 
 Fons Mans approach:
 

@@ -4,6 +4,14 @@ All notable changes to the `validate-startup-ideas` skill will be documented in 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.6.0] - 2026-02-19
+
+### Changed
+- Added intro note: apply frameworks as lenses to what the user brings, works at any stage of idea maturity
+- Reorganized sections under find / evaluate / shape / test groupings
+- Moved sugar-coated broccoli from under "Validation signals" to "Shaping the solution" where it belongs
+- Renamed "Validation signals" → "Evaluating ideas" and "Rapid validation process" → "Testing early"
+
 ## [1.5.0] - 2026-01-17
 
 ### Added
