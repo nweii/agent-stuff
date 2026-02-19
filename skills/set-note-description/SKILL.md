@@ -42,18 +42,18 @@ These are documents where the _insights or events_ are the value—you likely wo
 
 These are documents you _retrieve by need_—you're searching for something that solves a problem or answers a question, not recalling what you concluded.
 
-### Signals to look for:
+### Evaluating the primary intent
 
-| Signal                                                  | Suggests |
-| :------------------------------------------------------ | :------- |
-| Date in filename or periodic note pattern               | Summary  |
-| "Guide", "How to", "Reference", "Template" in title     | Meta     |
-| First-person reflective tone                            | Summary  |
-| Instructional or explanatory tone                       | Meta     |
-| Contains conclusions, decisions, realizations           | Summary  |
-| Defines evergreen processes, structures, or conventions | Meta     |
-| Primarily links/resources with light commentary         | Meta     |
-| Narrative of events or experiences                      | Summary  |
+Rather than looking at isolated sentences, evaluate what the document *fundamentally is*. If signals conflict, default to the document's primary purpose:
+
+| If the document reads primarily like... | Use | Because... |
+| :-------------------------------------- | :------ | :--------- |
+| A journal, log, or record of events | **Summary** | The value is recalling *what happened* or *what was discussed*. |
+| A manual, template, or reference guide | **Meta** | The value is knowing *when to employ* this tool. |
+| A person thinking out loud or reflecting | **Summary** | It captures point-in-time realizations and personal insights. |
+| An encyclopedia entry, spec, or project brief | **Meta** | It's a structural artifact defining the scope or requirements of a topic or project. |
+| A list of decisions or meeting outcomes | **Summary** | You want to surface the *actual conclusions* without reading the doc. |
+| A curated collection or index of links | **Meta** | Summarizing the links is less useful than defining the collection's scope. |
 
 ---
 

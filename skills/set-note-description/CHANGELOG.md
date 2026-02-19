@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Replaced signal-based mode selection table with an intent-based evaluation table to reduce conflicting signals
 - Broadened definition of "slip box" sections to clarify they collect items to be reorganized later
 - Generalized the periodic notes summary rollup pattern to apply to any hierarchical parent-child notes
 - Removed `internal: true` flag to indicate the skill is general-purpose enough for wider use
