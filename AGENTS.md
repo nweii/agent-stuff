@@ -10,7 +10,7 @@ A personal collection of AI agent skills, plugins, commands, and rules. It follo
 
 ```
 agent-stuff/
-├── skills/           # Agent Skills (Claude format), organized by category
+├── skills/           # Agent Skills (Claude format)
 ├── commands/         # Slash commands, organized by context
 ├── templates/        # Templates for new components
 ├── reference/        # Platform docs and guides
