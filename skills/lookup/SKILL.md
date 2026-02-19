@@ -1,18 +1,21 @@
 ---
 name: lookup
 description: "Explain the meaning of selected text using surrounding context. Identifies unclear words, phrases, idioms, or colloquialisms and provides concise definitions with cultural context and usage notes."
+disable-model-invocation: true
+argument-hint: [key-text]
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Lookup
 
-Explain the meaning of the selected text, using surrounding context to provide clear understanding.
+Explain the meaning of $ARGUMENTS, using surrounding context to provide clear understanding.
 
 ## What to Explain
 
 Identify what needs explanation:
+
 - Specific word, phrase, or idiom within a sentence
 - The entire selection if unclear as a whole
 - Multiple elements that work together
