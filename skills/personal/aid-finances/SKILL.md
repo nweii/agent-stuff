@@ -4,6 +4,7 @@ description: "Expert financial guidance for budgeting, investments, and retireme
 metadata:
   author: nweii
   version: "1.0.0"
+  internal: true
 ---
 
 # Financial Advisory
