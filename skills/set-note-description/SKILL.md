@@ -6,8 +6,7 @@ model: haiku
 argument-hint: [note-title]
 metadata:
   author: nweii
-  version: "1.0.0"
-  internal: true
+  version: "1.1.0"
 ---
 
 # Summarize frontmatter
@@ -45,16 +44,16 @@ These are documents you _retrieve by need_—you're searching for something that
 
 ### Signals to look for:
 
-| Signal                                              | Suggests |
-| :-------------------------------------------------- | :------- |
-| Date in filename or periodic note pattern           | Summary  |
-| "Guide", "How to", "Reference", "Template" in title | Meta     |
-| First-person reflective tone                        | Summary  |
-| Instructional or explanatory tone                   | Meta     |
-| Contains conclusions, decisions, realizations       | Summary  |
-| Defines processes, structures, or conventions       | Meta     |
-| Primarily links/resources with light commentary     | Meta     |
-| Narrative of events or experiences                  | Summary  |
+| Signal                                                  | Suggests |
+| :------------------------------------------------------ | :------- |
+| Date in filename or periodic note pattern               | Summary  |
+| "Guide", "How to", "Reference", "Template" in title     | Meta     |
+| First-person reflective tone                            | Summary  |
+| Instructional or explanatory tone                       | Meta     |
+| Contains conclusions, decisions, realizations           | Summary  |
+| Defines evergreen processes, structures, or conventions | Meta     |
+| Primarily links/resources with light commentary         | Meta     |
+| Narrative of events or experiences                      | Summary  |
 
 ---
 
@@ -145,21 +144,21 @@ Add or update the `description` property in the YAML frontmatter at this positio
 
 For periodic notes:
 
-- Don't add temporal prefixes — the filename already indicates the time period
-- Minimize weight given to "slip box" sections (external links, articles to read later)
+- Don't add temporal prefixes if the filename already indicates the time period
+- Minimize weight given to "slip box" or inbox sections—areas used to collect items you plan to reorganize or turn into different notes later (e.g., scratchpads, raw captures, external links) so they don't skew the summary
 - Focus on the day's actual content, activities, and insights
 
-### Summary rollup pattern
+### Hierarchical rollup pattern
 
-When summarizing a periodic note that contains `related` wikilinks to smaller-period notes:
+When summarizing a parent note (like a periodic weekly note) that links to component child notes (like daily notes) via properties like `related` or body links:
 
-1. Check if the related notes already have `description` properties in their frontmatter
-2. If they do, synthesize the current note's summary from those existing summaries rather than re-reading all original content
-3. Create increasingly high-level overviews as you move up the time hierarchy:
-   - **Weekly summary**: Synthesize from related daily summaries
-   - **Quarterly summary**: Synthesize from related weekly summaries
-   - **Yearly summary**: Synthesize from related quarterly summaries
+1. Check if the child notes already have `description` properties in their frontmatter
+2. If they do, synthesize the parent note's summary from those existing summaries rather than re-reading all original content
+3. Create increasingly high-level overviews as you move up the hierarchy:
+   - **Weekly summary**: Synthesize from linked daily summaries
+   - **Quarterly summary**: Synthesize from linked weekly summaries
+   - **Yearly summary**: Synthesize from linked quarterly summaries
 
-This creates hierarchical abstraction where each level captures the essence of its component periods.
+This creates hierarchical abstraction where each level captures the essence of its component parts.
 
-Note: Some daily notes may not exist — that simply means one may not have been created for that day.
+Note: Some expected child notes (like a specific daily note) may not exist — that simply means one may not have been created for that period.
