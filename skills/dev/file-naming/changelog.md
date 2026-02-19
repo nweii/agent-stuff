@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to the `rename-files` skill.
+All notable changes to the `file-naming` skill.
 
 Format: [Keep a Changelog](https://keepachangelog.com)
+
+## [1.0.1]
+
+### Changed
+- Renamed skill from `rename-files` to `file-naming` to better reflect its focus on naming conventions rather than the rename action
 
 ## [1.0.0]
 
