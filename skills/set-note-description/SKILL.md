@@ -44,16 +44,20 @@ These are documents you _retrieve by need_—you're searching for something that
 
 ### Evaluating the primary intent
 
-Rather than looking at isolated sentences, evaluate what the document *fundamentally is*. If signals conflict, default to the document's primary purpose:
+Evaluate what the document _fundamentally is_ (rather than looking at individual sentences to infer purpose). If signals conflict, default to the document's primary purpose:
 
-| If the document reads primarily like... | Use | Because... |
-| :-------------------------------------- | :------ | :--------- |
-| A journal, log, or record of events | **Summary** | The value is recalling *what happened* or *what was discussed*. |
-| A manual, template, or reference guide | **Meta** | The value is knowing *when to employ* this tool. |
-| A person thinking out loud or reflecting | **Summary** | It captures point-in-time realizations and personal insights. |
-| An encyclopedia entry, spec, or project brief | **Meta** | It's a structural artifact defining the scope or requirements of a topic or project. |
-| A list of decisions or meeting outcomes | **Summary** | You want to surface the *actual conclusions* without reading the doc. |
-| A curated collection or index of links | **Meta** | Summarizing the links is less useful than defining the collection's scope. |
+- **Journal, log, or record of events** → Summary  
+  Recalling _what happened_ or _what was discussed_.
+- **Manual, template, or reference guide** → Meta  
+  Knowing _when to employ_ this tool.
+- **Person thinking out loud or reflecting** → Summary  
+  Captures point-in-time realizations and personal insights.
+- **Encyclopedia entry, spec, or project brief** → Meta  
+  Structural artifact defining the scope or requirements of a topic or project.
+- **List of decisions or meeting outcomes** → Summary  
+  Surfaces the _actual conclusions_ without reading the doc.
+- **Curated collection or index of links** → Meta  
+  Defining the collection's scope is more useful here than summarizing each link.
 
 ---
 
