@@ -29,83 +29,55 @@ def extract_frontmatter_field(content: str, field: str) -> str | None:
     return None
 
 
-def get_skills() -> dict[str, list[tuple[str, str, str]]]:
-    """Get all skills organized by category."""
-    skills_by_category: dict[str, list[tuple[str, str, str]]] = {}
-    
-    for skill_file in SKILLS_DIR.rglob("SKILL.md"):
-        # Skip private directories (gitignored)
-        if "private" in skill_file.parts:
+def get_skills() -> list[tuple[str, str, str]]:
+    """Get all skills as a flat sorted list."""
+    skills: list[tuple[str, str, str]] = []
+
+    for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
+        # Skip private directory (gitignored)
+        if skill_file.parent.name == "private":
             continue
-            
+
         content = skill_file.read_text()
         desc = extract_frontmatter_field(content, "description")
         if not desc:
             desc = "(no description)"
-        
-        # Get category from path (e.g., "dev" or "personal")
-        rel_path = skill_file.relative_to(SKILLS_DIR)
-        parts = rel_path.parts
-        category = parts[0] if len(parts) > 1 else "general"
-        name = parts[-2]  # Folder name containing SKILL.md
-        path = f"skills/{'/'.join(parts[:-1])}/"
-        
-        if category not in skills_by_category:
-            skills_by_category[category] = []
-        skills_by_category[category].append((name, path, desc))
-    
-    # Sort within each category
-    for category in skills_by_category:
-        skills_by_category[category].sort(key=lambda x: x[0])
-    
-    return skills_by_category
+
+        name = skill_file.parent.name
+        path = f"skills/{name}/"
+        skills.append((name, path, desc))
+
+    skills.sort(key=lambda x: x[0])
+    return skills
 
 
-def get_commands() -> dict[str, list[tuple[str, str, str]]]:
-    """Get all commands organized by category."""
-    commands_by_category: dict[str, list[tuple[str, str, str]]] = {}
-    
-    for cmd_file in COMMANDS_DIR.rglob("*.md"):
-        # Skip private directories (gitignored)
-        if "private" in cmd_file.parts:
+def get_commands() -> list[tuple[str, str, str]]:
+    """Get all commands as a flat sorted list."""
+    commands: list[tuple[str, str, str]] = []
+
+    for cmd_file in COMMANDS_DIR.glob("*.md"):
+        if cmd_file.parent.name == "private":
             continue
-            
+
         content = cmd_file.read_text()
         desc = extract_frontmatter_field(content, "description")
-        
-        # Fall back to first paragraph if no frontmatter description
+
+        # Fall back to first non-heading paragraph if no frontmatter description
         if not desc:
-            lines = content.strip().split("\n")
-            for line in lines:
+            for line in content.strip().split("\n"):
                 line = line.strip()
                 if line and not line.startswith("#") and not line.startswith("---"):
                     desc = line
                     break
         if not desc:
             desc = "(no description)"
-        
-        rel_path = cmd_file.relative_to(COMMANDS_DIR)
-        parts = rel_path.parts
-        
-        # Determine category
-        if len(parts) > 1:
-            category = parts[0]
-            name = parts[-1].replace(".md", "")
-        else:
-            category = "general"
-            name = parts[0].replace(".md", "")
-        
-        path = f"commands/{rel_path}"
-        
-        if category not in commands_by_category:
-            commands_by_category[category] = []
-        commands_by_category[category].append((name, path, desc))
-    
-    # Sort within each category
-    for category in commands_by_category:
-        commands_by_category[category].sort(key=lambda x: x[0])
-    
-    return commands_by_category
+
+        name = cmd_file.stem
+        path = f"commands/{cmd_file.name}"
+        commands.append((name, path, desc))
+
+    commands.sort(key=lambda x: x[0])
+    return commands
 
 
 def generate_catalog() -> str:
@@ -119,24 +91,16 @@ def generate_catalog() -> str:
         "",
     ]
     
-    skills = get_skills()
-    for category in sorted(skills.keys()):
-        lines.append(f"**{category}**")
-        lines.append("")
-        for name, path, desc in skills[category]:
-            lines.append(f"- [{name}]({path}) — {desc}")
-        lines.append("")
+    for name, path, desc in get_skills():
+        lines.append(f"- [{name}]({path}) — {desc}")
+    lines.append("")
     
     lines.append("### Commands")
     lines.append("")
     
-    commands = get_commands()
-    for category in sorted(commands.keys()):
-        lines.append(f"**{category}**")
-        lines.append("")
-        for name, path, desc in commands[category]:
-            lines.append(f"- [{name}]({path}) — {desc}")
-        lines.append("")
+    for name, path, desc in get_commands():
+        lines.append(f"- [{name}]({path}) — {desc}")
+    lines.append("")
     
     lines.append("<!-- CATALOG:END -->")
     return "\n".join(lines)
