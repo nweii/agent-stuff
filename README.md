@@ -15,7 +15,7 @@ skill-name/
 
 ## Using these
 
-Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` directory. Or use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
+Copy whatever looks useful into your own skills directory. Or use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
 
 ```bash
 bunx skills add nweii/agent-stuff
