@@ -27,7 +27,7 @@ npx skills add nweii/agent-stuff
 Install a specific skill:
 
 ```bash
-bunx skills add nweii/agent-stuff/skills/{skill-name}
+bunx skills add nweii/agent-stuff --skill [skill-name]
 ```
 
 Updating skills:
