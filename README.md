@@ -19,11 +19,24 @@ Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` 
 
 ```bash
 bunx skills add nweii/agent-stuff
-```
 
-```bash
+# or
 npx skills add nweii/agent-stuff
 ```
+
+Install a specific skill:
+
+```bash
+bunx skills add nweii/agent-stuff/skills/{skill-name}
+```
+
+Updating skills:
+
+```bash
+bunx skills update
+```
+
+To update a specific skill, run `skills add` again with the same skill.
 
 ---
 
