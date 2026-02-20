@@ -2,13 +2,6 @@
 
 Personal prompts, skills, and commands I use with Claude and Cursor. Some are highly specific to my own setup (like my Obsidian vault). Sharing publicly in case any of it's useful or interesting to others.
 
-## What's here
-
-- **Skills** — Instructions that Claude/Cursor automatically apply based on context
-- **Commands** — User-invoked slash commands for specific workflows
-- **Reference** — Documentation on Agent Skills, Cursor rules, and how components work together
-- **Templates** — Starting points for creating new skills, commands, and rules
-
 ## Agent skills format
 
 This repo uses the [Claude Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) [format](https://agentskills.io). Skills are folders containing a `SKILL.md` with YAML frontmatter and instructions. The `description` field tells AI agents when to load and apply the skill.
@@ -20,25 +13,17 @@ skill-name/
 └── supporting-file.md    # Optional: additional context
 ```
 
-Commands are standalone markdown files with prompts that get invoked via `/command-name`.
-
 ## Using these
 
-Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` directory. Adapt as needed.
-
-You can also use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
+Copy whatever looks useful into your own `.claude/skills/` or `.cursor/skills/` directory. Or use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
 
 ```bash
 bunx skills add nweii/agent-stuff
 ```
 
-Or use `npx` if you prefer.
-
-Note: Some skills reference personal vault notes not included in this repo.
-
-## License
-
-MIT — do whatever you want with it.
+```bash
+npx skills add nweii/agent-stuff
+```
 
 ---
 
