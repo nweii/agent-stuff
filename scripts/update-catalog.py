@@ -100,7 +100,7 @@ def generate_catalog() -> str:
     
     for name, path, desc, is_internal in get_skills():
         if is_internal:
-            lines.append(f"- [{name}]({path}) [Internal] — {desc}")
+            lines.append(f"- [{name}]({path}) _[Internal]_ — {desc}")
         else:
             lines.append(f"- [{name}]({path}) — {desc}")
     lines.append("")
