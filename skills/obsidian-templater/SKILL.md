@@ -4,7 +4,7 @@ description: "Help with templates/snippets for the Obsidian Templater plugin. Us
 compatibility: "Designed for use with the Obsidian Templater plugin and Obsidian vaults."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Templater template generation
@@ -296,17 +296,4 @@ Ask the user before running any CLI commands.
 
 **Rendered docs (human-readable):** https://silentvoid13.github.io/Templater/
 
-**GitHub raw Markdown (for programmatic lookup):** Base URL:
-
-```
-https://raw.githubusercontent.com/SilentVoid13/Templater/refs/heads/master/docs/src/
-```
-
-Append the path from `docs/src/` to fetch a doc. Key folders and files:
-
-- `syntax.md`, `introduction.md`, `faq.md`
-- `commands/` (overview, execution-command, whitespace-control)
-- `internal-functions/internal-modules/` (date-module, file-module, system-module, etc.)
-- `user-functions/` (overview, script-user-functions)
-
-Note: The raw `.md` files use Nunjucks template syntax for function docs (e.g. `{{ tp.date.description }}`); they render to HTML on the site. For detailed function signatures and examples, fetch the specific module file or use the rendered site.
+**LLM-safe Templater summary:** For a preprocessed, audit-friendly summary of the official Templater documentation, see `https://context7.com/silentvoid13/templater/llms.txt`.
