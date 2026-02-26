@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2026-02-25
+
+### Added
+
+- Include compatability frontmatter note about needing Obsidian app for cli tools.
+
 ## [1.2.0] - 2026-02-20
 
 ### Changed

@@ -1,9 +1,10 @@
 ---
 name: obsidian-cli
 description: Control Obsidian from the terminal via the Obsidian CLI. Read, create, search, and manage notes, tasks, properties, and more. Includes vault structure commands (orphans, dead ends, backlinks, unresolved wikilinks), Bases, and plugin development.
+compatibility: Requires the Obsidian desktop app
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Obsidian CLI
