@@ -1,15 +1,14 @@
 ---
 name: obsidian-cli
 description: Control Obsidian from the terminal via the Obsidian CLI. Read, create, search, and manage notes, tasks, properties, and more. Includes vault structure commands (orphans, dead ends, backlinks, unresolved wikilinks), Bases, and plugin development.
-compatibility: Requires the Obsidian desktop app
 metadata:
   author: nweii
-  version: "1.2.1"
+  version: "1.3.0"
 ---
 
 # Obsidian CLI
 
-Run `obsidian <command>` to control Obsidian from the terminal. The app must be running for most commands; the first command will launch Obsidian if not open.
+Run `obsidian <command>` to control a running Obsidian instance from the terminal. The app must be running for most commands; the first command will launch Obsidian if not open.
 
 Run `obsidian help` or `obsidian help <command>` for the canonical, always-up-to-date command reference. This skill documents common patterns and non-obvious behaviors.
 
@@ -91,18 +90,48 @@ obsidian base:query [file=base.base] [view=name] [format=json|csv|tsv|md|paths]
 obsidian base:create name="Item" content="..." [open] [newtab]
 ```
 
-## Developer commands
+## Plugin development
 
-Reload a plugin after code changes — essential for the develop/test cycle:
+### Develop/test cycle
+
+After making code changes to a plugin or theme, follow this workflow:
+
+1. **Reload** the plugin to pick up changes:
+   ```bash
+   obsidian plugin:reload id=my-plugin
+   ```
+2. **Check for errors** — if errors appear, fix and repeat from step 1:
+   ```bash
+   obsidian dev:errors
+   ```
+3. **Verify visually** with a screenshot or DOM inspection:
+   ```bash
+   obsidian dev:screenshot path=screenshot.png
+   obsidian dev:dom selector=".workspace-leaf" text
+   ```
+4. **Check console output** for warnings or unexpected logs:
+   ```bash
+   obsidian dev:console level=error
+   ```
+
+### Additional developer commands
+
+Run JavaScript in the app context:
 
 ```bash
-obsidian plugin:reload id=my-plugin
 obsidian eval code="app.vault.getFiles().length"
-obsidian dev:screenshot path=screenshot.png
-obsidian dev:dom selector=".cm-editor" [text] [attr=class]
-obsidian dev:css selector=".cm-editor" [prop=color]
-obsidian dev:console [clear] [limit=10] [level=log|warn|error]
-obsidian dev:errors [clear]
+```
+
+Inspect CSS values:
+
+```bash
+obsidian dev:css selector=".workspace-leaf" prop=background-color
+```
+
+Toggle mobile emulation:
+
+```bash
+obsidian dev:mobile on
 ```
 
 ## Quick reference

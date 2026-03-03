@@ -1,10 +1,15 @@
 # Changelog
 
-## [1.2.1] - 2026-02-25
+## [1.3.0] - 2026-03-03
+
+### Changed
+
+- Removed compatibility frontmatter note
+- Sharper language about the CLI controlling a running instance of the app.
 
 ### Added
 
-- Include compatability frontmatter note about needing Obsidian app for cli tools.
+- Plugin development section from Steph Ango's 2026-02-10 update to his version of this skill.
 
 ## [1.2.0] - 2026-02-20
 
