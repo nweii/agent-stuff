@@ -86,42 +86,33 @@ Choose excerpts that reveal intellectual movement — the moments where thinking
 
 ## Vault save logic
 
-### 1. Fetch the live template
-
-If running locally with access to terminal tools where Obsidian is running, fetch the live template from the vault:
-
-```bash
-obsidian read file="Thinking note template"
-```
-
-If running in a cloud or sandboxed environment without shell access, skip this step and use the fallback frontmatter below directly.
-
-### 2. Compose the frontmatter
+### 1. Compose the frontmatter
 
 Use today's date for `created`, `modified`, and `last`.
-
-**Fallback template** (if `obsidian read` fails):
 
 ```yaml
 ---
 aliases:
+  - [1-2 intuitive alternative titles in sentence case, e.g. "Thinking through X" or "Notes from Y session"]
 categories: "[[Thinking]]"
 type:
-icon: LiBrainCircuit
+icon: [camelCase Lucide icon name prefixed with "Li" that fits the topic, e.g. LiBrainCircuit, LiMessageCircle, LiCode2]
 publish: false
-description:
+description: [1–2 sentence summary of what this conversation covered and why it was worth saving]
 last: YYYY-MM-DD
 tags:
   - thinking
-related: []
+  - [2-3 additional tags reflecting the specific topic, domain, or people involved]
+related:
+  - ["[[Note name]]"] # only include confirmed vault notes that came up in conversation; wikilinks require quotes in YAML arrays
 created: YYYY-MM-DD
 modified: YYYY-MM-DDTHH:mm
 ---
 ```
 
-For `Log` notes, change the `tags` entry to `log` and update `categories` to `"[[Log]]"` if appropriate.
+For `Log` notes, change the `tags` entry to `log` and update `categories` to `"[[Log]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced.
 
-### 3. Determine the save folder
+### 2. Determine the save folder
 
 - Personal life, emotions, identity, relationships, dreams, health → `03-Records/Journaling`
 - Work, projects, productivity (including personal productivity), technical sessions, client work → `03-Records/Working`
@@ -130,7 +121,7 @@ Within `03-Records/Working`, check for existing subfolders that match the conver
 
 If a specific save location was provided, use it directly.
 
-### 4. Save to vault
+### 3. Save to vault
 
 Use the Obsidian CLI to create the note:
 
