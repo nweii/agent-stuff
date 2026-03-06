@@ -3,7 +3,7 @@ name: quantify-impact
 description: "Extract quantifiable metrics and business outcomes from experience descriptions through structured conversation. Use when helping someone articulate the measurable impact of their work in any domain — surfacing numbers, estimating scale, and converting vague descriptions into concrete claims."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
   source: https://github.com/fractal-bootcamp/bootcamp-monorepo/blob/main/career/ELITE_CV_TRANSFORMATION.md
 ---
 
@@ -139,6 +139,8 @@ Before finalizing any claim, test it:
 - Would a skeptical peer find this plausible, not inflated?
 - Does the excitement come from the facts, or from the adjectives?
 - Is this precise enough that someone could verify the order of magnitude?
+
+Beware of tenuous lines of attribution. Avoid connecting localized work to global, trailing metrics (like company revenue or total signups) unless the candidate was directly responsible for that funnel. Quantify the direct, observable impact instead.
 
 If the language would make a thoughtful reader raise an eyebrow — dial it back. Understatement builds more trust than overstatement. Let the numbers carry the weight.
 
