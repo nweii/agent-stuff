@@ -4,7 +4,7 @@ description: "Extract quantifiable metrics and business outcomes from experience
 metadata:
   author: nweii
   version: "1.0.1"
-  source: https://github.com/fractal-bootcamp/bootcamp-monorepo/blob/main/career/ELITE_CV_TRANSFORMATION.md
+  credit: fractal-bootcamp/ELITE_CV_TRANSFORMATION.md
 ---
 
 # Quantify Impact
