@@ -4,7 +4,7 @@ description: "Create a Commentary topic note grouping related notes under a comm
 argument-hint: "<topic title> [[[note1]]] [[[note2]]] ..."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
   internal: true
 ---
 
@@ -35,8 +35,8 @@ Read each note's frontmatter (especially `description`) and skim content to unde
 
 Use available tools to discover additional relevant notes not explicitly provided:
 
+- **Semantic search** — When qmd is available (MCP `query` tool or `qmd query` CLI), use it for *semantic* search — `vec` or `expand` queries that find notes by meaning rather than keywords. The qmd skill documents query types. For keyword search, use obsidian search or the methods below; qmd's lex/BM25 adds nothing beyond what obsidian already provides.
 - Follow wikilinks in the provided notes to find related children or siblings
-- Use semantic search to find notes with similar themes
 - Check `related` properties for existing connections worth including
 - Search for shared tags or vocabulary
 
