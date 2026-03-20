@@ -3,7 +3,7 @@ name: obsidian-cli
 description: Control Obsidian from the terminal via the Obsidian CLI. Read, create, search, and manage notes, tasks, properties, and more. Includes vault structure commands (orphans, dead ends, backlinks, unresolved wikilinks), Bases, and plugin development.
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.3.1"
 ---
 
 # Obsidian CLI
@@ -11,6 +11,10 @@ metadata:
 Run `obsidian <command>` to control a running Obsidian instance from the terminal. The app must be running for most commands; the first command will launch Obsidian if not open.
 
 Run `obsidian help` or `obsidian help <command>` for the canonical, always-up-to-date command reference. This skill documents common patterns and non-obvious behaviors.
+
+## Status and commands
+
+!`which obsidian`
 
 ## Targeting vaults and files
 
@@ -97,19 +101,26 @@ obsidian base:create name="Item" content="..." [open] [newtab]
 After making code changes to a plugin or theme, follow this workflow:
 
 1. **Reload** the plugin to pick up changes:
+
    ```bash
    obsidian plugin:reload id=my-plugin
    ```
+
 2. **Check for errors** — if errors appear, fix and repeat from step 1:
+
    ```bash
    obsidian dev:errors
    ```
+
 3. **Verify visually** with a screenshot or DOM inspection:
+
    ```bash
    obsidian dev:screenshot path=screenshot.png
    obsidian dev:dom selector=".workspace-leaf" text
    ```
+
 4. **Check console output** for warnings or unexpected logs:
+
    ```bash
    obsidian dev:console level=error
    ```
@@ -136,18 +147,18 @@ obsidian dev:mobile on
 
 ## Quick reference
 
-| Task                       | Command                                      |
-| -------------------------- | -------------------------------------------- |
-| List commands              | `obsidian help`                              |
-| Open daily note            | `obsidian daily`                             |
-| Append to daily            | `obsidian daily:append content="- [ ] Task"` |
-| Search vault               | `obsidian search query="text"`               |
+| Task | Command |
+|------|---------|
+| List commands | `obsidian help` |
+| Open daily note | `obsidian daily` |
+| Append to daily | `obsidian daily:append content="- [ ] Task"` |
+| Search vault | `obsidian search query="text"` |
 | Read active/specified file | `obsidian read` or `obsidian read file=Note` |
-| Create from template       | `obsidian create name="Title" template=Name` |
-| List tags with counts      | `obsidian tags counts`                       |
-| List tasks from daily      | `obsidian tasks daily`                       |
-| Find broken wikilinks      | `obsidian unresolved counts`                 |
-| Find orphan notes          | `obsidian orphans`                           |
+| Create from template | `obsidian create name="Title" template=Name` |
+| List tags with counts | `obsidian tags counts` |
+| List tasks from daily | `obsidian tasks daily` |
+| Find broken wikilinks | `obsidian unresolved counts` |
+| Find orphan notes | `obsidian orphans` |
 
 ## References
 

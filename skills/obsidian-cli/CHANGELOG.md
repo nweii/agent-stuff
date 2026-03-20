@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2026-03-20
+
+### Added
+
+- Include autocommand to verify CLI install with `which obsidian`
+
 ## [1.3.0] - 2026-03-03
 
 ### Changed
