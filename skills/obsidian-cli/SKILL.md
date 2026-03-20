@@ -4,6 +4,7 @@ description: Control Obsidian from the terminal via the Obsidian CLI. Read, crea
 metadata:
   author: nweii
   version: "1.3.1"
+  credit: kepano/obsidian-cli
 ---
 
 # Obsidian CLI
