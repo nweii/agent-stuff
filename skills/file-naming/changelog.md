@@ -2,7 +2,12 @@
 
 All notable changes to the `file-naming` skill.
 
-Format: [Keep a Changelog](https://keepachangelog.com)
+## [1.1.0]
+
+### Added
+
+- Safety rules around renaming under process section
+- Guidance around finding episode titles
 
 ## [1.0.2]
 
