@@ -1,5 +1,5 @@
 ---
-name: granola-to-obsidian
+name: obsidian-granola
 description: Syncs meetings from Granola to Obsidian notes. Fetches notes and transcripts from Granola, and imports them into formatted meeting and transcript notes in Obsidian. Use when the user says "sync my last granola meeting", "get my granola meeting with X", "make a note for my last meeting", or asks to pull in a Granola transcript.
 compatibility: Designed for a system that has Granola MCP and an Obsidian vault configured.
 context: fork
@@ -9,8 +9,6 @@ metadata:
   version: "1.1.0"
   internal: true
 ---
-
-# Granola to Obsidian
 
 This skill helps the user extract meeting data from Granola (via the Granola MCP) and turn it into properly formatted Obsidian notes in their vault.
 
@@ -104,14 +102,14 @@ If creating a new note:
 
 ## 6. (Desktop environment only) Open in Obsidian
 
+Note: This only works if the agent has Obsidian CLI access in the current environment. If the command fails or is unavailable, skip it silently and report the file paths to the user instead.
+
 After saving both notes, try to open them in Obsidian using the CLI:
 
 ```bash
 # If you have Obsidian running in your environment
 obsidian open file="[Meeting Title]"
 ```
-
-This only works if the agent has Obsidian CLI access in the current environment. If the command fails or is unavailable, skip it silently and report the file paths to the user instead.
 
 ## 7. Review
 
