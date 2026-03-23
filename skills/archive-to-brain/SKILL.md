@@ -4,7 +4,7 @@ description: "Save an archival summary of an AI conversation to Nathan's Obsidia
 compatibility: "The skill inherits the full analytical approach from the `archive-conversation` skill and adds vault-specific save logic."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.1.1"
   variants: nweii/archive-conversation
   internal: true
 ---
@@ -133,9 +133,10 @@ Pipe multiline content via stdin or use `\n` escaping as needed.
 
 If the Obsidian CLI is unavailable, fall back in this order:
 
-1. **Write the file directly** to the vault path on disk if file system access is available
-2. **Output as a downloadable file** if the environment supports it
-3. **Output as a markdown code block** for manual saving, with the intended vault path noted above the block
+1. **Use notesmd-cli instead**, if available.
+2. **Write the file directly** to the vault path on disk if file system access is available
+3. **Output as a downloadable file** if the environment supports it
+4. **Output as a markdown code block** for manual saving, with the intended vault path noted above the block
 
 ## Remember
 
