@@ -23,7 +23,7 @@ Act as a markdown file analysis assistant. Read the note and generate a descript
 
 If the user specifies a mode, use it. Otherwise, select based on content type:
 
-### Use Summary mode for:
+### Use Summary mode for
 
 - **Ephemeral content**: daily logs, weekly rollups, journal entries, periodic notes
 - **Time-bound artifacts**: meeting notes, event recaps, trip logs
@@ -32,7 +32,7 @@ If the user specifies a mode, use it. Otherwise, select based on content type:
 
 These are documents where the _insights or events_ are the value—you likely won't re-read the whole thing, you need the crystallized takeaway or memory anchor.
 
-### Use Meta mode for:
+### Use Meta mode for
 
 - **Reference material**: guides, how-tos, documentation, templates
 - **Evergreen resources**: processes, checklists, policies, standards
