@@ -4,8 +4,8 @@ description: "Save an archival summary of an AI conversation to Nathan's Obsidia
 compatibility: "The skill inherits the full analytical approach from the `archive-conversation` skill and adds vault-specific save logic."
 metadata:
   author: nweii
-  version: "1.1.1"
-  variants: nweii/archive-conversation
+  version: "1.1.2"
+  source: nweii/archive-conversation
   internal: true
 ---
 
@@ -105,12 +105,15 @@ tags:
   - [2-3 additional tags reflecting the specific topic, domain, or people involved]
 related:
   - ["[[Note name]]"] # only include confirmed vault notes that came up in conversation; wikilinks require quotes in YAML arrays
+# Optional: prev / next wikilinks for continuity with adjacent Thinking or Log notes — see paragraph after this block
 created: YYYY-MM-DD
 modified: YYYY-MM-DDTHH:mm
 ---
 ```
 
-For `Log` notes, change the `tags` entry to `log` and update `categories` to `"[[Log]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced.
+For `Log` notes, change the `tags` entry to `log` and update `categories` to `"[[Log]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced. **Do not** put a note in `related` if it is already tied via `prev` or `next` — same link twice is redundant; use `related` for broader or non-adjacent ties.
+
+**Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note via `obsidian property:set` or an equivalent edit). If the new note sits between two existing notes, fix all three. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
 
 ### 2. Determine the save folder
 
