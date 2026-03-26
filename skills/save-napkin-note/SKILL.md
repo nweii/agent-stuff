@@ -4,145 +4,118 @@ description: "Turn raw capture material into a properly structured Brain vault n
 argument-hint: "[optional note-title-or-path when source is a file]"
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
 # Save napkin note
 
-Turn capture material into a vault-ready note: right template, frontmatter, destination folder, and related links. The source may be:
+Turn capture material into a vault-ready note: template, frontmatter, folder, and related links. Sources:
 
 1. **An existing note** — inbox dump, partial draft, or rough file that needs finishing.
-2. **Inline content** — text the user pastes, dictates, or dumps in the conversation (no file yet).
+2. **Inline content** — pasted or dictated text in the conversation (no file yet).
 
-In both cases, fill in what is missing without overwriting work the user has already done. Do not summarize away or discard ideas unless they ask you to.
+Fill in what is missing without overwriting work the user already did. Do not summarize away or discard ideas unless they ask.
 
-## Tooling (any agent)
+## Defer to AGENTS.md / CLAUDE.md
 
-Vault conventions live in **AGENTS.md** (and CLAUDE.md). **Obsidian CLI commands in this skill are examples** for environments where `obsidian` is installed and wired to this vault.
+**Canonical rules live there:** vault layout, folder purposes, metadata semantics (including categories vs tags, `date` vs `last`, `prev`/`next`), hub vs content notes, and how to choose tools (Obsidian CLI, MCP, IDE, etc.).
 
-Use whatever you actually have:
+This skill only adds **procedure** for one task: filing a capture. When in doubt on *what a field means* or *where a note type belongs*, read AGENTS.md rather than guessing.
 
-- Obsidian CLI (`obsidian read`, `obsidian move`, `obsidian properties`, …) when available — prefer link-safe moves/renames when the toolchain supports them.
-- Vault MCP tools, notesmd-cli, IDE file operations, or direct filesystem reads/writes when CLI is not available.
-- In MCP-only setups, stay within the server's exposed capabilities; do not assume shell or Obsidian CLI.
-
-Map each illustrative `obsidian …` step to your environment's equivalent (read note, list properties, write file, move/rename with wikilink updates if possible).
+Illustrative `obsidian …` commands below are **examples** for vaults where the CLI is wired; map them to your environment (read, properties, link-safe move/rename).
 
 ## Arguments
 
-- **`$ARGUMENTS`**: When the source is a **file**, pass the note title or path so you can load it. If the user only dumped text in chat and named no file, **omit arguments** and treat the message (or the clearly marked paste block) as the source.
-- If it is ambiguous whether they mean a vault file vs. chat text, ask once before proceeding.
+- **`$ARGUMENTS`**: If the source is a **file**, pass title or path. If the user only dumped text in chat, **omit** and use the message (or marked paste) as the body.
+- If vault file vs chat is ambiguous, ask once.
 
 ---
 
 ## Analyzing the source
 
-**From a file:** Read the full note (via your vault tools).
+**From a file:** Read the full note with your vault tools.
 
-**From chat:** Use the user's message (or the section they identify as the capture) as the full body to structure.
+**From chat:** Use the user’s message or the section they label as the capture.
 
-Then parse for:
+Parse lightly: subject, entities (people, places, projects, dates, URLs), intent (event record vs concept vs reference vs active work), tone (fragment, decision log, meeting-shaped, etc.).
 
-- Subject matter and content type
-- Any people, places, projects, dates, or URLs mentioned
-- Implicit intent (record of something that happened? Concept? Reference? Project note?)
-- Tone signals: rough thought, decision log, meeting record, creative fragment?
-
-**Candidate home note:** For short fragments or clearly continuation-style captures, search the vault (wikilinks, titles, `related`, topic indexes, semantic search) for an **existing note** that this material would naturally extend or belong in. If you find a plausible match, **do not merge or append without explicit user confirmation** — see **Integrate vs. new note** below.
+**Candidate home note:** For fragments or clear continuations, search the vault for a note this could extend. **Never merge or append without explicit confirmation** — see **Integrate vs. new note**.
 
 ---
 
 ## Processing heuristics
 
-Apply these based on what the note actually needs.
-
 ### 1. Respect what exists
 
 Only generate what is missing.
 
-- **Folders (existing file):** If the note is already outside a generic inbox/dump location (e.g. not `00-Inbox/` or vault root), assume placement is intentional; do not move unless clearly wrong.
-- **Folders (inline-only):** There is no prior path — choose destination from the mapping below.
-- **Titles:** If the material already has a descriptive title (not "Untitled", "Quick note", or a bare timestamp), keep it; otherwise propose one in the filing plan.
-- **Frontmatter:** If fields (e.g. `tags`, `categories`) are already populated, append or leave them alone — do not blindly overwrite.
+- **Path (existing file):** If the note is already outside a generic inbox/dump location, assume placement is intentional; do not move unless clearly wrong.
+- **Path (inline-only):** No prior path — route using **Routing captures** below and AGENTS.md.
+- **Title:** Keep a descriptive title; replace placeholders (`Untitled`, bare timestamps) in the filing plan.
+- **Frontmatter:** If `tags`, `categories`, etc. are already set, merge or leave alone — do not blindly replace.
 
 ### 2. Integrate vs. new note
 
-When the capture is a **fragment** (or reads like an addendum to a topic you already have a note for), you may propose **integrating** into `[[Existing note]]` instead of creating a separate file.
+For fragments or addendum-shaped captures, you may offer **integration** into `[[Existing note]]` instead of a new file.
 
-**Rule:** If integration is a reasonable option, **always** pause and get **explicit confirmation** before editing that existing note. Never silently fold chat text or inbox content into another note because it "fits."
+**Rule:** If integration is plausible, **pause** for **explicit confirmation** before editing the target. Never silently fold content into another note because it “fits.”
 
-Present clearly:
+Present:
 
-- **Option A — New note:** default filing plan (title, folder, template, frontmatter).
-- **Option B — Integrate into existing:** which note (`[[Title]]` or path), *where* the new material would go (section/heading), and what frontmatter you would adjust (e.g. `description`, `last`, `related`, tags).
+- **Option A — New note:** filing plan (title, folder, template, frontmatter).
+- **Option B — Integrate:** target `[[Title]]` or path, where material goes (section/heading), frontmatter updates (`description`, `last`, `related`, tags).
 
-Ask which option they want (or a different target). Only after they confirm **Option B** (or explicitly ask you to merge into a named note) may you append or restructure the existing file.
-
-If they decline integration, proceed with Option A only.
+Proceed with B only after they confirm (or explicitly name a merge target). If they decline, Option A only.
 
 ### 3. Templates
 
-If the content already matches a specific template (frontmatter, headings, structure), use that as the base.
+If content already matches a template’s shape, use it. Otherwise inspect `99-Admin/Templates/` and pick the best fit; use **`Note template.md`** when unsure. Read template frontmatter for default `categories` / `tags`.
 
-Otherwise pick the best template by inspecting files under `99-Admin/Templates/`.
-
-Example (Obsidian CLI):
+Example (when Obsidian CLI is available):
 
 ```bash
 obsidian properties file="{Template name}"
 ```
 
-If you cannot run that, read the template `.md` file directly (or via MCP). Use template `categories` for note kind, `tags` for defaults, and **`Note template.md`** when unsure.
+Otherwise open the template `.md` via MCP or filesystem.
 
-### 4. Folders
+### 4. Routing captures (apply AGENTS.md here)
 
-Templates do not always imply a folder. When moving or when creating from inline content, use this mapping:
+AGENTS.md lists each area’s **purpose**. Use this workflow lens when choosing a folder:
 
-- Concept / evergreen idea → `02-Evergreen/`
-- Personal reflection, journal, thinking → `03-Records/Journaling/`
-- Meeting or conversation → `03-Records/Talks/`
-- Web clipping or saved content → `03-Records/Clippings/`
-- Short reference fragment → `03-Records/Snippets/`
-- Active project working notes → `03-Records/Working/`
-- Person, place, company, media → `04-Entities/` (matching subfolder)
-- General note with no strong signal → `03-Records/` (best-fit subfolder)
+- **Durable concept / evergreen** → match to `02-Evergreen/` intent in AGENTS.
+- **Personal reflection, letters, life writing** → `03-Records/Journaling/` (per AGENTS).
+- **Meeting or conversation record** → `03-Records/Talks/`.
+- **Saved web or external material** → `03-Records/Clippings/` (or provenance categories AGENTS allows).
+- **Short reference fragment** → `03-Records/Snippets/`.
+- **Active project work** → `03-Records/Working/` (project subfolders, `STATUS.md` cross-cuts — see AGENTS).
+- **Entity profile** (person, place, company, media) → `04-Entities/` and the subfolder pattern your vault uses.
+- **Weak signal** → best-fit under `03-Records/` per AGENTS descriptions, not vault root.
+
+Templates do not always imply folder; if the template and content disagree with AGENTS routing, **content + AGENTS win**.
 
 ### 5. Frontmatter
 
-Synthesize missing frontmatter per **AGENTS.md**.
+Follow **AGENTS.md** for property meanings, category semantics, and what not to duplicate across category types.
 
-**Fields to always ensure exist:**
+For this task: ensure a solid **`description`**, **`tags`**, and **`related`** when missing (prefer existing vault tags and 2–5 related links from mentions or `03-Records/Topics/`). Add `aliases`, `categories` (hub wikilinks only, per AGENTS), `icon`, `date`, `people`, `url`, `last` when the note type calls for them.
 
-- `description`: Summary mode (events, meetings, reflections) or Meta mode (concepts, references, specs). Under ~200 characters, telegraphic. Leave good existing descriptions alone unless they are placeholders.
-- `tags`: Template defaults plus 2–5 topical tags from the content. Prefer existing vault tags.
-- `related`: Wikilinks to connected notes — from explicit mentions, search, or `03-Records/Topics/`. Aim for 2–5.
+Do not hand-add `created` / `modified` unless the user or template requires it. For `publish`, only mirror what the chosen template does.
 
-**Add if meaningful and missing:**
-
-- `aliases`, `categories` (existing hub notes only — e.g. `[[Clippings]]`, `[[Projects]]`), `icon` (`Li{TitleCaseIconName}`), `date` / `people` / `url`, `last` where conventions apply.
-
-**Omit:**
-
-- `created` / `modified`: Templater (or equivalent) usually fills these; do not add them by hand unless the user or template explicitly requires it.
-- `publish`: only add `publish: false` when the base template includes it.
+Use **set-note-description** when you want a structured pass at `description` specifically.
 
 ### 6. Filenames
 
-If the filename is generic or you are creating a new file, propose a clean name:
-
-- Sentence case: `Designing for trust over efficiency.md`
-- Omit dates unless the note is inherently date-anchored.
-- Keep under ~60 characters.
-- Evergreens: declarative or noun-phrase titles.
+For generic names or new files: sentence case, declarative or noun-phrase for evergreens, omit dates unless the note is date-anchored, keep roughly under 60 characters.
 
 ---
 
 ## Output and approval
 
-Before writing files, show a **filing plan**. If a plausible **integration target** exists, show **both** a new-note plan and an integration option, and **do not apply** either until the user chooses (and, for integration, explicitly confirms the target note).
+Before writing, show a **filing plan**. If integration is plausible, show **both** options and **do not edit** until the user chooses (and confirms the merge target for B).
 
-**New note (default shape):**
+**New note:**
 
 ```
 **Filing plan — new note**
@@ -151,58 +124,35 @@ Before writing files, show a **filing plan**. If a plausible **integration targe
 - Template: [template name]
 - Source: [existing file path | inline chat capture]
 - Key frontmatter additions:
-  - description: "[generated description]"
-  - tags: [tag1, tag2] (merging with existing if any)
-  - related: [[Note A]] (merging with existing if any)
-  - [any other generated fields]
+  - description: "[…]"
+  - tags: […] (merge with existing if any)
+  - related: [[…]] (merge with existing if any)
+  - [other fields per AGENTS.md]
 ```
 
-**If integration is plausible, also show (still require confirmation):**
+**If integration is plausible (omit if none):**
 
 ```
 **Alternative — integrate into existing**
 - Target: [[Note title]] (path if helpful)
-- Placement: [e.g. new section under "## …", or after paragraph about …]
-- Edits to target frontmatter: [e.g. refresh description, bump `last`, add `related`]
-- [Omit this block if no credible existing note — do not invent a weak merge just to avoid a new file]
+- Placement: [section / heading / after …]
+- Edits to target frontmatter: [e.g. description, last, related]
 ```
 
-Ask: For a single path, "Does this look right, or should we adjust…?" When two paths exist: "**Should this become a new note, or should we fold it into [[X]]?**" Wait for an explicit choice before editing.
+Ask once for approval; for two paths, ask whether to create new or fold into `[[X]]`.
 
-Once approved:
+**After approval:**
 
-1. **Write or update** using your vault tools: create the file at the destination, or update in place, or perform a link-safe move/rename if your stack supports it (e.g. `obsidian move file="Note" to=folder/newpath.md` when Obsidian CLI is available). For **integration**, only modify the **confirmed** target note plus any agreed `related` updates elsewhere.
-2. Preserve substantive content — restructure or lightly clean; do not replace with a summary unless asked.
-3. Add backlinks from `related` targets when clearly appropriate; ask if uncertain.
-4. If you **duplicated** from a temp path (e.g. `00-Inbox/`) into a new canonical file, confirm before deleting the original.
+1. Create, update in place, or link-safe move/rename (e.g. `obsidian move file="Note" to=folder/newpath.md` when available). For integration, only touch the **confirmed** target and agreed `related` updates elsewhere.
+2. Preserve substance — light structure/cleanup only unless they ask to summarize.
+3. Update `related` backlinks when clearly right; ask if unsure.
+4. If you copied out of an inbox/temp path into a canonical file, confirm before deleting the original.
 
-### Frontmatter ordering
-
-Canonical order when you control the block; omit unused fields:
-
-```yaml
----
-aliases:
-categories:
-type:
-icon:
-publish:
-description:
-date:
-url:
-author:
-people:
-location:
-related:
-tags:
-created:
-modified:
----
-```
+When rewriting frontmatter wholesale, keep a consistent property order matching nearby notes or the template you used.
 
 ---
 
 ## Output
 
-1. The vault note at its final path (**new**, **updated in place**, or **existing note** after confirmed integration).
-2. One-line confirmation: what changed (path or `[[title]]`) and any `related` notes you touched.
+1. The note at its final path (**new**, **in place**, or **integrated** after confirmation).
+2. One line: what changed (path or `[[title]]`) and any `related` notes you touched.
