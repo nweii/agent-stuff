@@ -4,7 +4,7 @@ description: "Save an archival summary of an AI conversation to Nathan's Obsidia
 compatibility: "The skill inherits the full analytical approach from the `archive-conversation` skill and adds vault-specific save logic."
 metadata:
   author: nweii
-  version: "1.1.2"
+  version: "1.2.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -113,33 +113,45 @@ modified: YYYY-MM-DDTHH:mm
 
 For `Log` notes, change the `tags` entry to `logs` and update `categories` to `"[[Logs]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced. **Do not** put a note in `related` if it is already tied via `prev` or `next` — same link twice is redundant; use `related` for broader or non-adjacent ties.
 
-**Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note via `obsidian property:set` or an equivalent edit). If the new note sits between two existing notes, fix all three. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
+**Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note). Use whatever the environment supports: Obsidian CLI `property:set`, editing YAML frontmatter in place (after create), notesmd-cli if it exposes properties, vault MCP, etc. If the new note sits between two existing notes, fix all three. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
 
 ### 2. Determine the save folder
 
 - Personal life, emotions, identity, relationships, dreams, health → `03-Records/Journaling`
 - Work, projects, productivity (including personal productivity), technical sessions, client work → `03-Records/Working`
 
-Within `03-Records/Working`, check for existing subfolders that match the conversation topic (e.g., by running `obsidian search` or listing the directory if local tools are available). Use a matching subfolder if one clearly fits; otherwise save to the root of `03-Records/Working`. Don't assume which subfolders exist — they change over time.
+Within `03-Records/Working`, check for existing subfolders that match the conversation topic (search the vault, list the directory on disk, or use whatever tooling the host provides). Use a matching subfolder when it clearly fits; otherwise save to the root of `03-Records/Working`. Don't assume which subfolders exist — they change over time.
 
 If a specific save location was provided, use it directly.
 
 ### 3. Save to vault
 
-Use the Obsidian CLI to create the note:
+Pick a **write path that matches the machine**: desktop with Obsidian open, headless server with a synced vault folder, or chat-only with no filesystem. No single tool is always present.
 
-```bash
-obsidian create name="{{filename}}" path="{{folder}}/{{filename}}.md" content="{{full content with frontmatter}}"
-```
+**Preferred order when multiple options exist** (skip steps that are unavailable):
 
-Pipe multiline content via stdin or use `\n` escaping as needed.
+1. **Obsidian CLI** — Best when the Obsidian app can run (indexing, `property:set`, wikilink-style `file=`). Use `vault=<name>` if there are multiple vaults. Example create:
 
-If the Obsidian CLI is unavailable, fall back in this order:
+   ```bash
+   obsidian vault=Brain create name="{{filename}}" path="{{folder}}/{{filename}}.md" content="{{full content with frontmatter}}"
+   ```
 
-1. **Use notesmd-cli instead**, if available.
-2. **Write the file directly** to the vault path on disk if file system access is available
-3. **Output as a downloadable file** if the environment supports it
-4. **Output as a markdown code block** for manual saving, with the intended vault path noted above the block
+   Example continuity (bidirectional `prev` / `next`):
+
+   ```bash
+   obsidian vault=Brain property:set file="{{filename}}" name=prev value='[[Prior note title]]'
+   obsidian vault=Brain property:set file="Prior note title" name=next value='[[{{filename}}]]'
+   ```
+
+2. **notesmd-cli** — Typical on **headless** hosts where the vault is synced but Obsidian's CLI is not available. Use its create/update commands per that tool’s `--help`; set `prev` / `next` by editing frontmatter if the CLI does not expose properties.
+
+3. **Direct read/write** — If the absolute vault root is known and writable, write `{{folder}}/{{filename}}.md` with the full file contents (including frontmatter), then patch the prior note’s frontmatter for `next` if needed.
+
+4. **Vault MCP** — Use when the agent only has MCP filesystem access to the vault and no local CLI. Prefer create/move/update there over leaving the archive only in chat.
+
+5. **Manual handoff** — Output the full note in a markdown code block with the intended path above it so the user can paste or save it.
+
+Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values when required.
 
 ## Remember
 
