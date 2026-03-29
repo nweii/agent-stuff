@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.2] - 2026-03-29
+
+### Changed
+
+- Removed autocommand hooks that ran `which` when the skill loaded; agents now use `command -v` / `which` only when they need to verify install, for a cleaner security review posture.
+
 ## [1.5.1] - 2026-03-29
 
 ### Changed
