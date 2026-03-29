@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.1] - 2026-03-29
+
+### Changed
+
+- Renamed `NOTESMD.md` to `notesmd-fallback.md` so the filename reads as the notesmd-cli fallback guide, not generic Markdown notes.
+
+## [1.5.0] - 2026-03-29
+
+### Changed
+
+- Renamed skill to `obsidian-clis` (folder + frontmatter `name`). Reason: the upstream Obsidian skill already uses the slug `obsidian-cli`, so a distinct `name` avoids clashes when both are installed. The plural `clis` reflects multiple terminal paths (Obsidian app CLI and notesmd-cli when `obsidian` is missing), keeps the `obsidian-*` convention, and stays close to the official name for recognition.
+
+### Added
+
+- Headless path via **notesmd-cli** when `obsidian` is not on PATH; details in `NOTESMD.md`.
+- Third-person `description` and explicit “Obsidian first, then notesmd-cli” routing (no separate invocation mode).
+
 ## [1.3.1] - 2026-03-20
 
 ### Added

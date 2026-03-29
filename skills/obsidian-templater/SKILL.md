@@ -4,7 +4,7 @@ description: "Help with templates/snippets for the Obsidian Templater plugin. Us
 compatibility: "Designed for use with the Obsidian Templater plugin and Obsidian vaults."
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Templater template generation
@@ -278,9 +278,9 @@ See [momentjs.md](references/momentjs.md) for a comprehensive formatting cheatsh
 
 ---
 
-## Optional vault integration via obsidian-cli
+## Optional vault integration via obsidian-clis
 
-If the obsidian-cli skill is available and Obsidian is running, vault context can improve output:
+If the obsidian-clis skill is available and Obsidian is running, vault context can improve output:
 
 ```bash
 obsidian properties counts          # what frontmatter properties exist across the vault

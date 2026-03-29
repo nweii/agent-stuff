@@ -1,35 +1,49 @@
 ---
-name: obsidian-cli
-description: Control Obsidian from the terminal via the Obsidian CLI. Read, create, search, and manage notes, tasks, properties, and more. Includes vault structure commands (orphans, dead ends, backlinks, unresolved wikilinks), Bases, and plugin development.
+name: obsidian-clis
+description: Documents terminal control of Obsidian notes using the Obsidian app CLI (`obsidian`) when it is on PATH, and notesmd-cli when the app CLI is unavailable (headless or synced vault only). Covers note CRUD, search, vault structure (orphans, backlinks, unresolved links), tasks, properties, Bases, and plugin development when the app CLI is available. Use when the user mentions Obsidian CLI, obsidian-clis, notesmd-cli, terminal vault operations, or shell automation of Obsidian notes.
 metadata:
   author: nweii
-  version: "1.3.1"
-  credit: kepano/obsidian-cli
+  version: "1.5.1"
+  source: kepano/obsidian-cli
 ---
 
-# Obsidian CLI
+# Obsidian CLIs
+
+**CLIs** here means two terminal interfaces: the **Obsidian app CLI** (`obsidian`, primary) and **notesmd-cli** (filesystem fallback when `obsidian` is not available). There is no separate invocation mode—pick the binary that exists in the environment.
+
+## Which binary to use
+
+1. If `obsidian` is on PATH, use it for all workflows below (richer surface: links, Bases, tasks, plugin dev).
+2. If `obsidian` is missing but `notesmd-cli` is on PATH, follow [notesmd-fallback.md](notesmd-fallback.md) for headless vault operations.
+3. If neither is available, say so and fall back to direct file edits, MCP, or other vault tools the user provides.
+
+## CLI availability
+
+!`which obsidian`
+
+!`which notesmd-cli`
+
+---
+
+## Obsidian app CLI
 
 Run `obsidian <command>` to control a running Obsidian instance from the terminal. The app must be running for most commands; the first command will launch Obsidian if not open.
 
 Run `obsidian help` or `obsidian help <command>` for the canonical, always-up-to-date command reference. This skill documents common patterns and non-obvious behaviors.
 
-## Status and commands
-
-!`which obsidian`
-
-## Targeting vaults and files
+### Targeting vaults and files
 
 - **Vault**: `vault=<name>` as first parameter. Default: cwd if it's a vault folder, else the active vault.
 - **File**: `file=<name>` resolves like a wikilink (name only, no path or extension needed). `path=<path>` for exact path from vault root.
 - **TUI**: Run `obsidian` with no args for interactive mode; omit the `obsidian` prefix inside.
 
-## Parameters and flags
+### Parameters and flags
 
 - **Parameters**: `param=value`. Quote values with spaces: `content="Hello world"`.
 - **Flags**: Boolean, no value: `silent`, `overwrite`, `newtab`.
 - **Multiline content**: Use `\n` for newlines, `\t` for tabs in `content=`.
 
-## Search, links, and structure
+### Search, links, and structure
 
 ```bash
 obsidian search query="text" [path=folder] [limit=n] [format=text|json] [total] [case]
@@ -44,9 +58,9 @@ obsidian tags [active] [file=Note] [total] [counts] [sort=count]
 obsidian tag name=project [total] [verbose]
 ```
 
-## Common patterns
+### Common patterns
 
-### Notes and content
+#### Notes and content
 
 To peek at a note without reading its full content, use `property:read` or `properties file=Note`.
 
@@ -60,7 +74,7 @@ obsidian rename file="Note" name="New file name"
 obsidian delete file="Note"
 ```
 
-### Daily notes (Daily notes plugin)
+#### Daily notes (Daily notes plugin)
 
 ```bash
 obsidian daily:read
@@ -70,14 +84,14 @@ obsidian daily:prepend content="- [ ] Morning routine" [inline]  # goes after fr
 obsidian daily:path  # returns expected path even if file doesn't exist yet
 ```
 
-### Tasks
+#### Tasks
 
 ```bash
 obsidian tasks [daily] [file=Note] [todo] [done] [status="x"] [total] [verbose]
 obsidian task ref=path:line [toggle] [done] [todo] [daily]
 ```
 
-### Properties and frontmatter
+#### Properties and frontmatter
 
 ```bash
 obsidian properties [active] [file=Note] [total] [counts] [format=yaml|json|tsv]
@@ -86,7 +100,7 @@ obsidian property:set name=status value=done [file=Note]
 obsidian property:remove name=status [file=Note]
 ```
 
-### Bases (Bases plugin)
+#### Bases (Bases plugin)
 
 ```bash
 obsidian bases
@@ -95,9 +109,9 @@ obsidian base:query [file=base.base] [view=name] [format=json|csv|tsv|md|paths]
 obsidian base:create name="Item" content="..." [open] [newtab]
 ```
 
-## Plugin development
+### Plugin development
 
-### Develop/test cycle
+#### Develop/test cycle
 
 After making code changes to a plugin or theme, follow this workflow:
 
@@ -126,7 +140,7 @@ After making code changes to a plugin or theme, follow this workflow:
    obsidian dev:console level=error
    ```
 
-### Additional developer commands
+#### Additional developer commands
 
 Run JavaScript in the app context:
 
@@ -146,7 +160,7 @@ Toggle mobile emulation:
 obsidian dev:mobile on
 ```
 
-## Quick reference
+### Quick reference (Obsidian app CLI)
 
 | Task | Command |
 |------|---------|
@@ -161,7 +175,9 @@ obsidian dev:mobile on
 | Find broken wikilinks | `obsidian unresolved counts` |
 | Find orphan notes | `obsidian orphans` |
 
-## References
+For **notesmd-cli**, see [notesmd-fallback.md](notesmd-fallback.md).
+
+### References
 
 - `obsidian help` — full command list (always up to date)
 - `obsidian help <command>` — help for a specific command
