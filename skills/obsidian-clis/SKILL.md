@@ -179,4 +179,3 @@ For **notesmd-cli**, see [notesmd-fallback.md](notesmd-fallback.md).
 
 - `obsidian help` — full command list (always up to date)
 - `obsidian help <command>` — help for a specific command
-- [Obsidian CLI docs (Obsidian)](https://raw.githubusercontent.com/obsidianmd/obsidian-help/refs/heads/master/en/Extending%20Obsidian/Obsidian%20CLI.md)
