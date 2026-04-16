@@ -1,6 +1,6 @@
 ---
 name: project-chronicles
-description: Sets up and maintains a two-track documentation system for any project: a working log (implementation decisions, what changed) and usage notes (product/process thinking, what we're learning). Handles both fresh projects and existing ones — detects current structure and adapts rather than clobbing. Use this skill when starting a new project, when adding structured documentation to an ongoing project, when writing a session's working log entry or usage note, or when the user says "set up project docs", "add a working log", "track sessions", or anything about capturing ongoing project context for future sessions.
+description: "Sets up and maintains a two-track documentation system for any project: a working log (implementation decisions, what changed) and usage notes (product/process thinking, what we're learning). Handles both fresh projects and existing ones — detects current structure and adapts rather than overwriting. Use when starting a new project, adding structured documentation to an ongoing project, writing a session's working log entry or usage note, or when the user says 'set up project docs', 'add a working log', 'track sessions', or anything about capturing ongoing project context for future sessions."
 metadata:
   author: nweii
   version: 1.0.0
