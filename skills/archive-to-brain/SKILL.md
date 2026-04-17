@@ -4,7 +4,7 @@ description: "Save an archival summary of an AI conversation to Nathan's Obsidia
 compatibility: "The skill inherits the full analytical approach from the `archive-conversation` skill and adds vault-specific save logic."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.3.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -152,6 +152,30 @@ Pick a **write path that matches the machine**: desktop with Obsidian open, head
 5. **Manual handoff** — Output the full note in a markdown code block with the intended path above it so the user can paste or save it.
 
 Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values when required.
+
+### 4. Log to the corresponding daily note
+
+After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `date` or `last` frontmatter properties are useful supporting signals if the date is ambiguous.
+
+**Format:**
+```
+- Archived [[Note filename without extension]] — [one sentence: what the conversation covered and why it was saved]
+```
+
+The summary should be a tight, plain-language sentence — no marketing language. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
+
+**Resolving the target daily note** — derive the path from the chosen date:
+
+- Daily notes follow `01-Days/YYYY-MM-DD-ShortDayName.md` (e.g. `01-Days/2025-08-14-Thu.md`)
+- Derive the short day name from the date (`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`)
+
+**How to update it** (use whichever is available):
+
+- **Obsidian CLI**: Read the target note by path or title, locate `## Log`, and write the updated file with the bullet appended.
+- **Direct file edit**: Read `01-Days/YYYY-MM-DD-ShortDayName.md`, find `## Log`, and append the bullet on a new line after the last existing bullet in that section.
+- **Vault MCP**: Use update/edit tools to insert the bullet into `## Log`.
+
+If the target daily note does not exist, skip this step rather than creating it.
 
 ## Remember
 
