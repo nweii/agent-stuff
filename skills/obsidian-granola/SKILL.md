@@ -6,7 +6,7 @@ context: fork
 model: haiku
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
@@ -111,6 +111,21 @@ After saving both notes, try to open them in Obsidian using the CLI:
 obsidian open file="[Meeting Title]"
 ```
 
-## 7. Review
+## 7. Log to the daily note
+
+After saving the notes, append a bullet to the daily note for the meeting's date.
+
+**Format:**
+```
+- Synced [[Meeting Title]] from Granola — [one sentence: who the meeting was with and what it covered]
+```
+
+Resolve the daily note for the meeting's `date` using the vault's standard daily note conventions and whatever tools are available. Read the note, find a suitable log section, and append the bullet after the last existing bullet in that section. Use the Obsidian CLI, direct file edit, or vault MCP — whichever is available.
+
+Skip silently if: the daily note doesn't exist, or no suitable log section is found.
+
+If multiple meetings were synced on different dates, log to each respective daily note.
+
+## 8. Review
 
 Confirm with the user that the notes have been successfully created and linked together!
