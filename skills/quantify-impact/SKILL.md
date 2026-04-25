@@ -3,7 +3,7 @@ name: quantify-impact
 description: "Extract quantifiable metrics and business outcomes from experience descriptions through structured conversation. Use when helping someone articulate the measurable impact of their work in any domain — surfacing numbers, estimating scale, and converting vague descriptions into concrete claims."
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.1.0"
   credit: fractal-bootcamp/ELITE_CV_TRANSFORMATION.md
 ---
 
@@ -152,5 +152,16 @@ Strip these patterns on sight:
 - Corporate filler ("leveraged," "synergized," "ideated," "aligned stakeholders")
 - Hype framing ("game-changing," "revolutionary," "disrupted")
 - Cliché identity claims ("passionate problem-solver," "driven self-starter")
+- **Unsourced external comparative scaffolding** ("most teams," "typically," "unlike most companies") used to make the contribution feel special by contrast with an unsourced norm. Comparing the work to the *prior state it replaced* or to the *alternative approach it was chosen over* is fine, but comparing to a vague external norm without a source is rhetorical filler.
 
 Replace with the specific thing that happened and the specific number attached to it.
+
+### Evergreen-proof status language
+
+For in-progress work, avoid time-bound state phrasings — *"now running,"* *"currently in flight,"* *"awaiting sign-off"* — that decay quickly as the work advances or stalls. Prefer past-tense framings of what's been done (*"shipped a live deploy on real data,"* *"circulated with leadership"*) and let the reader infer the present. Bullets that survive a year of resume use are cheaper to maintain than bullets that need rewriting every quarter.
+
+### Audience legibility check
+
+When the conversation surfaces internal context (codenames, internal acronyms, organization-specific roles, processes named in shorthand), pause before letting them into a written claim. Ask: would a hiring manager or external reader understand the *so what* of this term, or does it depend on inside knowledge?
+
+If it depends on inside knowledge, translate the term to its functional referent — *"the company's primary daily lookup workflow"* instead of an internal codename. Names internal to the organization can stay in working notes or trailing comments where AI agents and future-you may benefit from them; the visible claim itself should land cleanly for an outsider reading cold.
