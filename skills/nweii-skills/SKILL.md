@@ -37,11 +37,20 @@ bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y
 # Install all skills, scoped to claude-code only
 bunx skills add nweii/agent-stuff -a claude-code -g -y
 
-# Update installed skills (respects original install scope)
+# Update non-internal skills (does NOT touch metadata.internal: true skills)
 bunx skills update -g
 ```
 
-Repo edits do NOT propagate live — `bunx skills add` copies the SKILL.md into `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`, but neither side is linked back to the repo source. To pick up edits: commit + push, then `bunx skills update -g`.
+Repo edits do NOT propagate live — `bunx skills add` copies the SKILL.md into `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`, but neither side is linked back to the repo source.
+
+**`bunx skills update -g` does not work on skills with `metadata.internal: true`.** The update will appear to run but silently fail with "Failed to update <name>" and no further detail. To refresh an internal skill after pushing repo changes, do a full reinstall:
+
+```bash
+bunx skills remove --skill <name> -a claude-code -g -y
+bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y
+```
+
+For non-internal skills, `bunx skills update -g` is the right refresh path.
 
 If a previous install spread to multiple agents, scope the cleanup with repeated `-a` flags (the comma-separated form does not parse):
 
@@ -87,4 +96,4 @@ When a skill has been developed directly in `~/.agents/skills/` and needs to mov
 4. Trash the local copy: `trash ~/.agents/skills/<skill-name>`
 5. Reinstall from the repo: `bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y`
 
-The reinstalled version is a copy at `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`. To pick up subsequent repo edits, run `bunx skills update -g`.
+The reinstalled version is a copy at `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`. To pick up subsequent repo edits: `bunx skills update -g` for non-internal skills, or `remove` + `add` for `metadata.internal: true` skills (which `update` skips).
