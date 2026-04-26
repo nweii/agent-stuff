@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference context for Nathan's agent skills setup: the nweii/agent-stuff repo, frontmatter conventions, changelog practices, privacy tiers, and how to migrate locally-developed skills into the repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
   internal: true
 ---
 
@@ -28,18 +28,26 @@ A git hook auto-updates `README.md` with a skills catalog on every commit.
 
 ## Installing and updating skills
 
+**Always scope installs to `-a claude-code`.** Without it, `bunx skills add` spreads the skill into 27+ agent directories (`~/.codebuddy/skills/`, `~/.cline/skills/`, etc.) for tools that aren't used. Claude Code is the only target that matters here.
+
 ```bash
-# Install a specific skill globally
-bunx skills add nweii/agent-stuff --skill <name> -g -y
+# Install a specific skill globally, scoped to claude-code only
+bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y
 
-# Install all skills
-bunx skills add nweii/agent-stuff -g -y
+# Install all skills, scoped to claude-code only
+bunx skills add nweii/agent-stuff -a claude-code -g -y
 
-# Update installed skills
+# Update installed skills (respects original install scope)
 bunx skills update -g
 ```
 
-Skills installed from the repo are symlinked, so local edits to the repo are reflected immediately without reinstalling.
+Repo edits do NOT propagate live — `bunx skills add` copies the SKILL.md into `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`, but neither side is linked back to the repo source. To pick up edits: commit + push, then `bunx skills update -g`.
+
+If a previous install spread to multiple agents, scope the cleanup with repeated `-a` flags (the comma-separated form does not parse):
+
+```bash
+bunx skills remove --skill <name> -a augment -a codebuddy -a cursor -g -y
+```
 
 ## Frontmatter conventions
 
@@ -77,6 +85,6 @@ When a skill has been developed directly in `~/.agents/skills/` and needs to mov
 2. **Fix the description** — wrap it in double quotes if it isn't already
 3. Commit and push
 4. Trash the local copy: `trash ~/.agents/skills/<skill-name>`
-5. Reinstall from the repo: `bunx skills add nweii/agent-stuff --skill <name> -g -y`
+5. Reinstall from the repo: `bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y`
 
-The reinstalled version will be a symlink into `~/.agents/skills/`, so subsequent edits to the repo file are live.
+The reinstalled version is a copy at `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`. To pick up subsequent repo edits, run `bunx skills update -g`.
