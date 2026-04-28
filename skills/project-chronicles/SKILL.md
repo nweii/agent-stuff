@@ -153,6 +153,8 @@ Before replying substantively to the first message in any session, orient from:
 2. The last one or two files in `{usage-notes-path}/` — what we're learning about the work.
    Scan filenames first; read the most recent in full.
 
+Make sure the logs are written comprehensibly for someone being onboarded to the project.
+
 If a usage note flags unresolved questions or thinking that's ahead of implementation,
 carry that forward rather than re-deriving it.
 ```
