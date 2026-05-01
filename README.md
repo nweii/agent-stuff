@@ -38,6 +38,18 @@ bunx skills update
 
 To update a specific skill, run `skills add` again with the same skill.
 
+### Internal skills
+
+Skills marked `[Internal]` in the catalog below have `metadata.internal: true` set — they're personal workflows tied to my own setup (vault paths, tools, naming conventions). You can still install them, but expect to tweak SKILL.md to fit your own folders, tool stack, and conventions before they're useful. The `skills` CLI treats them differently:
+
+- `bunx skills add nweii/agent-stuff` (no `--skill` flag) **skips** internal skills. To install one, name it explicitly with `--skill [skill-name]`.
+- `bunx skills update` **silently skips** internal skills (you'll see "Failed to update" with no detail). To refresh an installed internal skill after a repo change, remove and re-add it:
+
+  ```bash
+  bunx skills remove --skill [skill-name]
+  bunx skills add nweii/agent-stuff --skill [skill-name]
+  ```
+
 ---
 
 ## Catalog
