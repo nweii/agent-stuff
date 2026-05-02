@@ -3,7 +3,7 @@ name: audit-transcription
 description: "Help review and annotate auto-transcribed meeting notes or audio transcripts. Use when the user shares an imperfect machine-generated transcript and wants to flag mistranscriptions, propose corrections, or make the transcript easier to re-read. Interpretation is highly user-dependent — propose flags as hypotheses grouped by confidence tier and wait for user confirmation before applying edits. Read available domain context (project notes, glossaries, related files) before guessing at vocabulary."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Audit transcription
@@ -34,16 +34,16 @@ If a transcribed proper noun doesn't match anything in their documented vocabula
 
 | Tier | Example | What to do |
 |------|---------|------------|
-| **High — recurring vocabulary** | "Superbase" → Supabase, "TALEN" → Tailwind | Propose find/replace |
+| **High — recurring vocabulary** | A phonetic mishearing of a domain term that appears throughout the transcript (e.g. a tool, product, or library name consistently rendered as a similar-sounding non-word) | Propose find/replace |
 | **Medium — sentence-level gist** | A garbled clause whose meaning is recoverable from context | Propose your interpretation **as a question**: "I think you were saying X here — does that match?" |
-| **Low — unrecoverable** | "It's called the Logospeel nine store, the 31 extraction engine." | Flag as garbled. Do not reconstruct. |
+| **Low — unrecoverable** | A sentence where multiple consecutive words are nonsense and the surrounding context doesn't pin down what was being said | Flag as garbled. Do not reconstruct. |
 
 ### 4. Surface flags as a list, not as edits
 
 Show the user the triage grouped by tier. Wait for their pass:
 - They will confirm some, correct others, and reject a few entirely.
 - Treat each correction as a context update — apply it across the rest of the transcript before continuing.
-- Don't argue. If the user says "Volusion isn't a word we use," drop the guess.
+- Don't argue. If the user says "that's not a word we use" about one of your guesses, drop it and don't relitigate.
 
 ### 5. Apply edits in-place only after confirmation
 
