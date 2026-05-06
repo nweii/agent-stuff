@@ -3,7 +3,7 @@ name: obsidian-web-clipper
 description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, schema.org/CSS selector syntax, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching a template to a target site. Not for general scraping or other Obsidian features."
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
 # Obsidian Web Clipper Templates
@@ -16,15 +16,13 @@ Templates are configured as JSON. Users can import/export individual templates o
 
 Templates are deeply opinionated about folder layout, frontmatter property names, category/tag conventions, and note body structure. **Match the user's existing conventions rather than inventing.** Before drafting a template, look for:
 
-- `CLAUDE.md`, `AGENTS.md`, or a `README.md` at the vault root — vault-level conventions
-- An existing templates folder (commonly `99-Admin/Templates/`, `_templates/`, or similar) — frontmatter shape and naming for similar note types
-- An existing exported web clipper settings file — other templates the user has authored
-- Any YAML sort order configuration (Linter plugin, frontmatter sort plugin) — property order
-- A few sample notes of the type being clipped — tone, body structure, italicization conventions
+- Vault-level docs (`CLAUDE.md`, `AGENTS.md`, READMEs)
+- An existing templates folder, sample notes of the type being clipped, or a previously exported clipper settings file
+- Any YAML property-sort configuration (Linter or similar)
 
-When conventions aren't discoverable, default to vendor-neutral, minimal choices (a single `Clippings/` folder, generic property names like `url`, `author`, `tags`, `created`) and explicitly flag the assumptions you made so the user can adjust before import.
+When conventions aren't discoverable, default to minimal vendor-neutral choices and flag the assumptions you made so the user can adjust before import.
 
-If the user mentions plugins like Linter or has a property sort order note, mirror that order in the template's `properties` array — the extension preserves array order in the output frontmatter.
+If the vault has a property sort order, mirror that order in the template's `properties` array — the extension preserves array order in the output frontmatter, so freshly clipped notes won't reshuffle on lint.
 
 ## Template JSON Schema
 
@@ -70,94 +68,43 @@ When exporting a single template, the JSON is the template object directly (no w
 
 ## Variables
 
-All variables use `{{variableName}}` syntax. Filters chain with pipes: `{{variable|filter1|filter2:"arg"}}`.
+All variables use `{{variableName}}` syntax. Filters chain with pipes: `{{variable|filter1|filter2:"arg"}}`. There are four kinds:
 
-### Preset Variables
+- **Preset variables** — built-in page metadata: `{{title}}`, `{{url}}`, `{{author}}`, `{{site}}`, `{{published}}`, `{{description}}`, `{{content}}` (full article markdown), `{{date}}`, `{{highlights}}`, etc. Look up the full list in the live docs.
+- **Schema variables** — extract Schema.org JSON-LD from the page. Patterns:
 
-| Variable          | Description                                                                           |
-| ----------------- | ------------------------------------------------------------------------------------- |
-| `{{title}}`       | Page title                                                                            |
-| `{{author}}`      | Page author                                                                           |
-| `{{content}}`     | Article content in Markdown (returns highlights if any, else article, else selection) |
-| `{{contentHtml}}` | Article content in HTML                                                               |
-| `{{fullHtml}}`    | Full unprocessed page HTML                                                            |
-| `{{url}}`         | Current URL                                                                           |
-| `{{domain}}`      | Domain name                                                                           |
-| `{{site}}`        | Site name / publisher                                                                 |
-| `{{date}}`        | Current date                                                                          |
-| `{{time}}`        | Current date and time                                                                 |
-| `{{published}}`   | Published date                                                                        |
-| `{{description}}` | Page description / excerpt                                                            |
-| `{{image}}`       | Social share image URL                                                                |
-| `{{favicon}}`     | Favicon URL                                                                           |
-| `{{highlights}}`  | Array of highlights (each has `.text` and timestamp)                                  |
-| `{{words}}`       | Word count                                                                            |
+  ```
+  {{schema:name}}                    — first match anywhere
+  {{schema:@Recipe:name}}            — scoped to a specific @type
+  {{schema:author.name}}             — nested keys via dots
+  {{schema:image[0].contentUrl}}     — array index
+  {{schema:actors[*].name}}          — flatten arrays
+  ```
 
-### Schema Variables (Schema.org JSON-LD)
+  Schema-driven templates are usually the right choice for domain-specific clippers (recipes, films, books, jobs) since one `schema:@Type` trigger matches across many sites.
 
-Extract structured data from pages that include Schema.org markup.
+- **Selector variables** — pull content via CSS selectors when there's no schema:
 
-| Pattern                   | Example                       |
-| ------------------------- | ----------------------------- |
-| `{{schema:key}}`          | `{{schema:name}}`             |
-| `{{schema:@Type:key}}`    | `{{schema:@Movie:name}}`      |
-| `{{schema:parent.child}}` | `{{schema:author.name}}`      |
-| `{{schema:key[0].prop}}`  | `{{schema:director[0].name}}` |
-| `{{schema:key[*].prop}}`  | `{{schema:actors[*].name}}`   |
+  ```
+  {{selector:h1}}                    — text content
+  {{selector:img.hero?src}}          — attribute value
+  {{selectorHtml:article}}           — raw HTML
+  {{selectorHtml:body|markdown}}     — HTML → Markdown
+  ```
 
-Common schema types: `@Article`, `@NewsArticle`, `@BlogPosting`, `@Movie`, `@Product`, `@Recipe`, `@Person`, `@Organization`, `@SocialMediaPosting`, `@JobPosting`, `@Event`
+- **Interpreter variables** — natural-language prompts evaluated by an LLM (requires the user has an LLM provider configured in extension settings):
 
-### Selector Variables (CSS)
+  ```
+  {{"a summary of the page"}}
+  {{"3 tags describing this content"}}
+  {{"return JSON array with fields: author, text"|map:item => item.text|join:"\n"}}
+  ```
 
-| Pattern                          | Example                                             |
-| -------------------------------- | --------------------------------------------------- |
-| `{{selector:css}}`               | `{{selector:h1}}` — text content                    |
-| `{{selector:css?attr}}`          | `{{selector:img.hero?src}}` — attribute value       |
-| `{{selectorHtml:css}}`           | `{{selectorHtml:article}}` — raw HTML               |
-| `{{selectorHtml:css\|markdown}}` | `{{selectorHtml:body\|markdown}}` — HTML → Markdown |
-
-### Interpreter Variables (AI Prompts)
-
-When the interpreter is enabled (requires an LLM provider configured in settings), natural language prompts generate content:
-
-```
-{{"a summary of the page"}}
-{{"3 tags describing this content"}}
-{{"a summary"|blockquote}}
-{{"return JSON array with fields: author, text"|map:item => item.text|join:"\n"}}
-```
-
-The `context` field controls what page content the AI receives. Use `{{selectorHtml:#main}}` to limit input to a specific element, or provide structured context like:
-
-```
-<page>\nTitle: {{title}}\nAuthor: {{author}}\n{{content}}\n</page>
-```
+  The `context` field at the template top level controls what page content the AI sees. Use `{{selectorHtml:#main}}` or wrap structured context like `<page>\nTitle: {{title}}\n{{content}}\n</page>` to keep prompts focused.
 
 ## Filters
 
-Chain filters with `|`. Common filters with examples:
-
-| Filter       | Usage                         | Example                                                   |
-| ------------ | ----------------------------- | --------------------------------------------------------- |
-| `date`       | `date:"YYYY-MM-DD"`           | `{{date\|date:"YYYY-MM-DD"}}` → `2024-01-15`              |
-| `split`      | `split:"delimiter"`           | `{{url\|split:"?"\|slice:0,1}}` — strip query params      |
-| `slice`      | `slice:start,end`             | `slice:0,3` — first 3 items; `slice:-1` — last item       |
-| `join`       | `join:"sep"`                  | `join:", "` — combine array with separator                |
-| `map`        | `map:item => expr`            | `map:item => item.text` — extract property from each      |
-| `template`   | `template:"${var}"`           | `template:"- ${name}: ${value}\n"` — format objects       |
-| `wikilink`   | (no args)                     | Wraps in `[[...]]` — works on arrays too                  |
-| `blockquote` | (no args)                     | Prefixes each line with `> `                              |
-| `markdown`   | (no args)                     | Converts HTML to Markdown                                 |
-| `safe_name`  | `safe_name` or `safe_name:os` | Filename-safe text                                        |
-| `replace`    | `replace:"old":"new"`         | Also supports regex: `replace:"/pattern/g":"replacement"` |
-| `link`       | `link:"text"`                 | Converts URL to `[text](url)`                             |
-| `image`      | `image:"alt"`                 | Converts URL to `![alt](url)`                             |
-| `list`       | `list` or `list:numbered`     | Formats array as Markdown list                            |
-| `callout`    | (no args)                     | Formats as Obsidian callout                               |
-
-**All available filters:** blockquote, calc, callout, camel, capitalize, date, date_modify, duration, first, footnote, fragment_link, html_to_json, image, join, kebab, last, length, link, list, lower, map, markdown, merge, nth, number_format, object, pascal, remove_attr, remove_html, remove_tags, replace, replace_tags, reverse, round, safe_name, slice, snake, split, strip_attr, strip_md, strip_tags, table, template, title, trim, uncamel, unescape, unique, upper, wikilink
-
-For full filter documentation, query context7 with library ID `/obsidianmd/obsidian-clipper` (the clipper repo's `docs/Filters.md`) or `/obsidianmd/obsidian-help` (the official Obsidian help docs, which include a Web Clipper section). Either works; query both if one doesn't surface the answer.
+Chain filters with `|`. Look up specific filter signatures in the live docs (see Reference at the bottom). The patterns and gotchas below are the operationally non-obvious parts.
 
 ### Filter gotchas (verified via testing)
 
@@ -351,16 +298,11 @@ Template parse errors are silent until the user tries to import — and the impo
 - If the user has access to the extension, ask them to test-import the JSON before iterating further on the body or properties — a clean import is the fastest signal that filter syntax is valid.
 - If iterating with the user on a working template, ship one change at a time so a reintroduced parse error is easy to attribute.
 
-## Deeper Reference
+## Reference
 
-For complete filter documentation, advanced patterns, or edge cases, use context7. Two complementary libraries:
+For exhaustive filter signatures, the full preset variable list, schema variable edge cases, and anything not covered above, fetch the live docs. Two source-of-truth locations:
 
-- `/obsidianmd/obsidian-clipper` — the clipper repo's `docs/Filters.md`, with full per-filter API reference
-- `/obsidianmd/obsidian-help` — the official Obsidian help docs, which include a Web Clipper section with examples and gotchas
+- The clipper repo's `docs/` (e.g. `obsidianmd/obsidian-clipper`, look at `docs/Filters.md`, `docs/Variables.md`, `docs/Templates.md`, `docs/Interpreter.md`)
+- The official Obsidian help docs' Web Clipper section (e.g. `obsidianmd/obsidian-help`)
 
-Key doc pages worth retrieving when stuck:
-
-- Templates — template configuration and structure
-- Variables — all variable types and syntax
-- Filters — complete filter reference with parameters
-- Interpreter — AI prompt system details
+Use whatever retrieval tool fits — context7, WebFetch, direct GitHub raw URLs, or anything else. The skill doesn't prescribe a tool; pick the one that's faster or more accurate in the moment. Prefer the live docs over guessing from memory: filters and variables get added between releases.
