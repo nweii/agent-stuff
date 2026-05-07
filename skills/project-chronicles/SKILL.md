@@ -1,6 +1,6 @@
 ---
 name: project-chronicles
-description: "Sets up and maintains a two-track documentation system for any project: a working log (implementation decisions, what changed) and usage notes (product/process thinking, what we're learning). Handles both fresh projects and existing ones — detects current structure and adapts rather than overwriting. Use when starting a new project, adding structured documentation to an ongoing project, writing a session's working log entry or usage note, or when the user says 'set up project docs', 'add a working log', 'track sessions', or anything about capturing ongoing project context for future sessions."
+description: "Set up and maintain a two-track project documentation system: a working log (implementation decisions tied to code) and usage notes (durable product/process thinking). Detects existing structure and adapts rather than overwriting. Use when starting docs, writing a session log entry, or capturing project context for future sessions."
 metadata:
   author: nweii
   version: 1.0.0
@@ -150,13 +150,11 @@ section. Don't touch surrounding content. Something like:
 Before replying substantively to the first message in any session, orient from:
 
 1. The most recent working log entry in `{working-logs-path}/` — what changed recently.
-2. The last one or two files in `{usage-notes-path}/` — what we're learning about the work.
-   Scan filenames first; read the most recent in full.
+2. The last one or two files in `{usage-notes-path}/` — what we're learning about the work. Scan filenames first; read the most recent in full.
 
 Make sure the logs are written comprehensibly for someone being onboarded to the project.
 
-If a usage note flags unresolved questions or thinking that's ahead of implementation,
-carry that forward rather than re-deriving it.
+If a usage note flags unresolved questions or thinking that's ahead of implementation, carry that forward rather than re-deriving it.
 ```
 
 Adapt the language to match the existing file's tone and conventions.

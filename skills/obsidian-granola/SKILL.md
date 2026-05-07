@@ -1,6 +1,6 @@
 ---
 name: obsidian-granola
-description: Syncs meetings from Granola to Obsidian notes. Fetches notes and transcripts from Granola, and imports them into formatted meeting and transcript notes in Obsidian. Use when the user says "sync my last granola meeting", "get my granola meeting with X", "make a note for my last meeting", or asks to pull in a Granola transcript.
+description: Sync meetings from Granola to Obsidian — pulls notes and transcripts and imports them as formatted meeting/transcript notes. Use when the user says "sync my last granola meeting", "note for my last meeting", or asks to pull in a Granola transcript.
 compatibility: Designed for a system that has Granola MCP and an Obsidian vault configured.
 context: fork
 model: haiku

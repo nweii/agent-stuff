@@ -1,6 +1,6 @@
 ---
 name: obsidian-web-clipper
-description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, schema.org/CSS selector syntax, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching a template to a target site. Not for general scraping or other Obsidian features."
+description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, schema.org/CSS selectors, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching one to a target site. Not for general scraping."
 metadata:
   author: nweii
   version: "1.4.0"

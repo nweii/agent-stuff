@@ -1,6 +1,6 @@
 ---
 name: audit-transcription
-description: "Help review and annotate auto-transcribed meeting notes or audio transcripts. Use when the user shares an imperfect machine-generated transcript and wants to flag mistranscriptions, propose corrections, or make the transcript easier to re-read. Interpretation is highly user-dependent — propose flags as hypotheses grouped by confidence tier and wait for user confirmation before applying edits. Read available domain context (project notes, glossaries, related files) before guessing at vocabulary."
+description: "Review and annotate auto-transcribed meeting notes or audio transcripts. Use when the user shares an imperfect transcript and wants to flag mistranscriptions or propose corrections. Proposes flags as confidence-tiered hypotheses; reads available domain context before guessing vocabulary."
 metadata:
   author: nweii
   version: "1.0.1"

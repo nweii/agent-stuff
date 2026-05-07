@@ -1,6 +1,6 @@
 ---
 name: save-napkin-note
-description: "Turn raw capture material into a properly structured Brain vault note (template, frontmatter, folder, related links), or integrate a fragment into an existing note after user confirmation. Use when filing a quick capture into the vault. Triggers: 'save this as a note', 'file this', 'turn this into a note', 'napkin note', 'process this dump'."
+description: "Turn raw capture material into a properly structured Brain vault note (template, frontmatter, folder, links), or integrate a fragment into an existing note after confirmation. Use when filing a quick capture — triggers: 'save this as a note', 'file this', 'napkin note', 'process this dump'."
 argument-hint: "[optional note-title-or-path when source is a file]"
 metadata:
   author: nweii

@@ -1,6 +1,6 @@
 ---
 name: tirith-config
-description: "Operate a tirith setup — the terminal command analysis tool that defends against homograph URLs, ANSI injection, and pipe-to-shell exploits. Use when adding entries to ~/.config/tirith/policy.yaml, debugging a tirith-blocked command, choosing between allowlist / tirith run / TIRITH=0 bypass, verifying setup with tirith doctor, or after brew upgrade may have bumped tirith."
+description: "Operate a tirith setup — the terminal command analyzer guarding against homograph URLs, ANSI injection, and pipe-to-shell exploits. Use when editing ~/.config/tirith/policy.yaml, debugging a blocked command, choosing between allowlist / tirith run / TIRITH=0 bypass, or verifying with tirith doctor."
 metadata:
   author: nweii
   version: "1.0.0"

@@ -1,6 +1,6 @@
 ---
 name: nweii-skills
-description: "Reference context for Nathan's agent skills setup: the nweii/agent-stuff repo, frontmatter conventions, changelog practices, privacy tiers, and how to migrate locally-developed skills into the repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
+description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff repo, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into the repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
   version: "1.1.0"
