@@ -1,6 +1,7 @@
 ---
 name: sync-things-tasks
 description: "Syncs tasks between Obsidian vault and Things 3. Adds tasks from notes, extracts action items from projects, reviews existing tasks. Use when managing todos from vault content."
+disable-model-invocation: true
 metadata:
   author: nweii
   version: "1.1.0"

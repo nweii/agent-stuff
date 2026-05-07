@@ -3,6 +3,7 @@ name: obsidian-sync-people
 description: Creates or enriches entity notes for people in /04-Entities/ from available context — current conversation, Granola meetings, Gmail threads. Use when someone is mentioned and worth noting, or when explicitly asked to create or update a person note.
 argument-hint: "[Person name | 'all']"
 compatibility: Designed for use with the Brain Obsidian vault.
+disable-model-invocation: true
 metadata:
   author: nweii
   version: "1.0.0"

@@ -4,6 +4,7 @@ description: Sync meetings from Granola to Obsidian — pulls notes and transcri
 compatibility: Designed for a system that has Granola MCP and an Obsidian vault configured.
 context: fork
 model: haiku
+disable-model-invocation: true
 metadata:
   author: nweii
   version: "1.2.0"
