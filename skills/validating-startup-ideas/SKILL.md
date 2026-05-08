@@ -3,7 +3,7 @@ name: validating-startup-ideas
 description: "Find and validate startup ideas by mining user complaints, crafting premises, and navigating the idea maze. Use when discovering product opportunities, validating ideas, shaping solutions, researching user pain points, or exploring what to build."
 metadata:
   author: nweii
-  version: "1.6.0"
+  version: "1.6.1"
 ---
 
 # Validating Startup Ideas
@@ -58,9 +58,6 @@ Bangaly Kaba (Instagram, Instacart): Consider who's _just outside_ your current 
 
 Don't build what users ask for. Solve the underlying problem better.
 
-**Bad**: "Notion is too complex" → simpler Notion clone  
-**Good**: "Notion is too complex" → focused tool for one specific use case
-
 Great products give users a **premise**—a foundational belief that normalizes otherwise-atypical actions:
 
 - **Airbnb**: It's ok to stay in strangers' homes
@@ -90,5 +87,3 @@ Fons Mans approach:
 4. Quick check with new people (genuine reaction, no pitch)
 5. Publish to wider audience
 6. Only then build the leanest possible version
-
-From Paul Graham: Real startups discover the problem through evolution. Operate cheaply. Let ideas evolve. The market doesn't care how hard you worked—only whether you built what users want.
