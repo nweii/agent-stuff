@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.3.1"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -159,8 +159,9 @@ Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values w
 After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `date` or `last` frontmatter properties are useful supporting signals if the date is ambiguous.
 
 **Format:**
+
 ```
-- Archived [[Note filename without extension]] — [one sentence: what the conversation covered and why it was saved]
+- [[Note filename without extension]]: [one sentence: what the conversation covered and why it was saved]
 ```
 
 The summary should be a tight, plain-language sentence — no marketing language. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
