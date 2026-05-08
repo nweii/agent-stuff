@@ -1,9 +1,9 @@
 ---
 name: update-changelog
-description: "Update changelog files following Keep a Changelog conventions. Use for project changelogs or skill changelogs. Handles version sections, change type groupings, and skill-specific metadata updates."
+description: "Add or revise entries in a Keep-a-Changelog-format changelog.md, including version bumps and change-type groupings. Use when the user says 'update the changelog', 'log this change', 'bump the changelog', or after a notable edit in a skill or project that has a changelog.md."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Update Changelog

@@ -1,6 +1,6 @@
 ---
 name: use-tailwind-v4
-description: "Tailwind CSS v4 reference and migration guide. Use for v4 projects, syntax changes, upgrading from v3, and troubleshooting v4-specific utility patterns or configuration differences."
+description: "Tailwind CSS v4 syntax and v3→v4 migration reference. Use when the user mentions 'Tailwind v4', 'upgrade Tailwind', @theme, @utility, or @import 'tailwindcss', or is working in a project whose config indicates v4."
 ---
 
 # Tailwind CSS v4

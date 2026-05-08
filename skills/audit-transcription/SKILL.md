@@ -1,9 +1,9 @@
 ---
 name: audit-transcription
-description: "Review and annotate auto-transcribed meeting notes or audio transcripts. Use when the user shares an imperfect transcript and wants to flag mistranscriptions or propose corrections. Proposes flags as confidence-tiered hypotheses; reads available domain context before guessing vocabulary."
+description: "Flag and propose corrections for likely mistranscriptions in auto-transcribed meeting notes or audio transcripts. Use when the user says 'audit this transcript', 'fix the transcription', 'find mistranscriptions', or shares a noisy Granola/Whisper output and asks for cleanup."
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.1.0"
 ---
 
 # Audit transcription

@@ -1,9 +1,9 @@
 ---
 name: quantify-impact
-description: "Extract quantifiable metrics and business outcomes from experience descriptions through structured conversation. Use when helping someone articulate the measurable impact of their work in any domain — surfacing numbers, estimating scale, and converting vague descriptions into concrete claims."
+description: "Surface measurable metrics and outcomes from a description of work via structured conversation. Use when the user says 'help me quantify this', 'what numbers can I attach to X', or is drafting a resume bullet, case study, or impact statement that needs concrete scale."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   credit: fractal-bootcamp/ELITE_CV_TRANSFORMATION.md
 ---
 

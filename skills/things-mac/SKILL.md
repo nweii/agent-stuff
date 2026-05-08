@@ -1,6 +1,6 @@
 ---
 name: things-mac
-description: "Manage Things 3 on macOS via CLI. Read, search, add, or update tasks, projects, and areas. Use for task management, listing inbox/today, and inspecting tags or repeating templates."
+description: "Read, search, add, and update tasks/projects/areas in Things 3 via its CLI. Use when the user says 'what's in my Things inbox', 'add this to Things', 'show today in Things', 'find Things tasks tagged X', or asks about repeating templates."
 metadata:
   author: nweii
   source: https://github.com/steipete/clawdis-skills/things-mac

@@ -1,9 +1,9 @@
 ---
 name: visual-keywords
-description: "Generate keyword-rich strings for visual references to optimize for fuzzy search and recall. Focuses on searchability and keyword matching rather than prose or alt text."
+description: "Generate keyword strings for images, screenshots, or visual references — optimized for fuzzy search, not alt text or prose. Use when the user says 'keywords for this image', 'tag this for search', 'visual keywords', or wants searchable labels on an Eagle asset."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Visual Keywords
