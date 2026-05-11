@@ -3,7 +3,7 @@ name: project-chronicles
 description: "Set up and maintain a two-track project documentation system: a working log (implementation decisions tied to code) and usage notes (durable product/process thinking). Detects existing structure and adapts rather than overwriting. Use when starting docs, writing a session log entry, or capturing project context for future sessions."
 metadata:
   author: nweii
-  version: 1.0.0
+  version: "1.1.0"
 ---
 
 # Project Chronicles
@@ -38,12 +38,21 @@ Before proposing anything, look at what's already there. Scan the project root f
   that looks like it's collecting session or project context
 - Any files that resemble working logs or usage notes (common names: `CHANGELOG.md`,
   `working-log.md`, `notes.md`, `decisions.md`, `ADR/`)
+- **Implementation-record systems** — a separate framework already responsible for recording
+  per-change decisions. Candidates: `openspec/changes/` (OpenSpec), `docs/adr/` or `decisions/`
+  (Architecture Decision Records), a `specs/` + `changes/` pair, an actively-maintained
+  `CHANGELOG.md` with decision-style entries, or a strong issue/PR discipline where decisions
+  live in GitHub/Linear. The signal is that the project already has a place where "what
+  changed and why" gets written down on every change.
 
 Present what you found. Be specific: name the files and folders, describe what they appear to
 contain, and explain how you'd integrate rather than replace.
 
 If an existing docs structure is close to this pattern (even with different names), say so and
 ask whether to adapt it or set up alongside it.
+
+If an implementation-record system was detected, flag it explicitly — its presence changes the
+Phase 2 proposal (see "Delegated working-log mode" below).
 
 ---
 
@@ -54,7 +63,15 @@ Propose defaults based on what you found, then confirm with the user. The questi
 1. **Docs root** — where should the working log and usage notes live?
    Default: `docs/`. If something like `notes/` already exists and makes more sense, propose that.
 
-2. **Working log structure** — single file or subfolder?
+2. **Delegated working-log mode** — only ask this if an implementation-record system was
+   detected in Phase 1. Propose: "this project already records per-change decisions in
+   `<detected path>`. Want to skip the working-log track here and only scaffold usage notes?
+   The session-start config will point at `<detected path>` for the historical record."
+   This avoids double-bookkeeping — agents won't keep writing working-log entries alongside
+   the other system's per-change artifacts. If yes, skip questions 3 below; the working-log
+   structure question becomes irrelevant.
+
+3. **Working log structure** — single file or subfolder? *(skip in delegated mode)*
    The right choice depends on how much the project will accumulate over time.
    - **Single file** (`{docs-root}/working-log.md`) — good default for most projects. Simple,
      low friction, easy to scan. Fine until it gets long enough to be unwieldy.
@@ -65,15 +82,15 @@ Propose defaults based on what you found, then confirm with the user. The questi
    unless they know this will be a long-running project.
    If there's an existing changelog or decisions log, ask if it should be converted or kept separate.
 
-3. **Usage notes location** — subfolder name.
+4. **Usage notes location** — subfolder name.
    Default: `{docs-root}/usage/`.
    These are typically named by topic or session, not by date — propose freeform naming here.
 
-4. **Session-start config** — which file gets the "read these first" instructions?
+5. **Session-start config** — which file gets the "read these first" instructions?
    Look at what exists: if there's a `CLAUDE.md` or `AGENTS.md`, propose injecting a section.
    If nothing exists, offer to create one. Ask which they prefer.
 
-5. **Naming conventions** — are there project-specific naming patterns to follow?
+6. **Naming conventions** — are there project-specific naming patterns to follow?
    If the project already has a README with style conventions, or a CLAUDE.md with rules,
    inherit those rather than inventing new ones.
 
@@ -84,7 +101,8 @@ before writing anything.
 
 ## Phase 3: Scaffold
 
-Create only what doesn't exist. Never overwrite.
+Create only what doesn't exist. Never overwrite. In delegated mode, skip the working-log
+directory and file — only usage notes and the session-start injection get scaffolded.
 
 ### Directories
 
@@ -92,7 +110,7 @@ Create whatever directories are needed based on the agreed structure. If using a
 working logs, create it. If using a single file, no extra directory needed — just the docs root.
 Usage notes always get their own subfolder. Skip creation for anything that already exists.
 
-### Initial working log file
+### Initial working log file *(skip in delegated mode)*
 
 Create the working log file if none exists. The structure is the same regardless of whether
 you're using a single file or a subfolder — the difference is just the path:
@@ -142,7 +160,9 @@ Name files by topic, not date. Write when a session produces insight worth keepi
 ### Session-start injection
 
 If injecting into an existing config file (`CLAUDE.md`, `AGENTS.md`), add a clearly delimited
-section. Don't touch surrounding content. Something like:
+section. Don't touch surrounding content.
+
+**Default mode** — when this skill owns the working-log track:
 
 ```markdown
 ## Session start
@@ -153,6 +173,22 @@ Before replying substantively to the first message in any session, orient from:
 2. The last one or two files in `{usage-notes-path}/` — what we're learning about the work. Scan filenames first; read the most recent in full.
 
 Make sure the logs are written comprehensibly for someone being onboarded to the project.
+
+If a usage note flags unresolved questions or thinking that's ahead of implementation, carry that forward rather than re-deriving it.
+```
+
+**Delegated mode** — when another system (OpenSpec, ADRs, etc.) owns the implementation record.
+Parameterize the first item to point at whatever was detected in Phase 1:
+
+```markdown
+## Session start
+
+Before replying substantively to the first message in any session, orient from:
+
+1. The most recent entries in `{record-system-path}` — what changed recently. ({brief note on how that system works, e.g. "active changes are in `openspec/changes/<name>/`; archived changes are in `openspec/changes/archive/`"}).
+2. The last one or two files in `{usage-notes-path}/` — what we're learning about the work. Scan filenames first; read the most recent in full.
+
+Do not write working-log entries; per-change decisions are recorded through `{record-system-name}` (see `{record-system-path}`). Usage notes still apply for durable product/process observations.
 
 If a usage note flags unresolved questions or thinking that's ahead of implementation, carry that forward rather than re-deriving it.
 ```
@@ -169,6 +205,10 @@ minimal — don't over-architect a config file for a project that doesn't need o
 Once the scaffold exists, this skill also guides session behavior going forward.
 
 ### Writing a working log entry
+
+*Skip this section in delegated mode — per-change decisions belong in whatever
+implementation-record system was detected (OpenSpec changes, ADRs, etc.), not in a parallel
+working log here.*
 
 Append after completing a significant block of work — a feature, a bug fix, a design decision,
 a meaningful refactor. Not after every small edit.
