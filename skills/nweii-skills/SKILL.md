@@ -61,7 +61,7 @@ bunx skills add git@github.com:nweii/agent-stuff-private.git --skill <name> -a c
 
 **HTTPS URLs do not reliably work for private repos** ([vercel-labs/skills#12](https://github.com/vercel-labs/skills/issues/12)) — `bunx skills add` hangs on credentials. Always use SSH form for private remotes.
 
-`bunx skills update -g` also does not work for private repos ([vercel-labs/skills#381](https://github.com/vercel-labs/skills/issues/381)). To refresh a private skill: full reinstall (see below).
+`bunx skills update -g` also does not work for private repos ([vercel-labs/skills#381](https://github.com/vercel-labs/skills/issues/381)). To refresh a private skill: just re-run `bunx skills add` over the existing install (see below).
 
 ### Common: install pitfalls and refresh
 
@@ -72,10 +72,9 @@ Repo edits do NOT propagate live — `bunx skills add` copies the SKILL.md into 
 - Skills with `metadata.internal: true` — silently fails with "Failed to update <name>"
 - Skills installed from private repos
 
-For both: full reinstall to refresh:
+For both: re-run `add` over the existing install — it overwrites in place, no `remove` needed first.
 
 ```bash
-bunx skills remove --skill <name> -a claude-code -g -y
 bunx skills add <source> --skill <name> -a claude-code -g -y
 ```
 
