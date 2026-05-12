@@ -5,7 +5,7 @@ argument-hint: "[term or phrase]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
   internal: true
 ---
 
@@ -70,7 +70,7 @@ Path: `02-Evergreen/Terms/{term}.md`
 ```yaml
 ---
 icon: Li{LucideIconName}     # optional
-publish: true
+publish: false
 related:                      # optional, omit if empty
   - "[[Adjacent term]]"
 tags:
@@ -140,5 +140,5 @@ User: writing in the background while doing other things — the prose accretes 
 - Don't paraphrase source quotes in encountered mode. Verbatim only.
 - Don't invent metadata fields not in the existing convention (no `category`, no `type`, etc.) — keep frontmatter minimal.
 - Don't write ambient prose around the term. Term notes are tight scrapbook entries, not essays.
-- Don't flip `publish: true` to anything else — Term notes are typically published. (If the user says don't publish, set `publish: false` explicitly.)
+- Don't set `publish: true` on a new Term note. Default is `publish: false` so the note can ripen privately first; the user flips it on themselves when it's ready.
 - Don't auto-update STATUS or other vault state. This skill writes one file.
