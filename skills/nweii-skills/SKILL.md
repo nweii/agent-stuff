@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.3.0"
   internal: true
 ---
 
@@ -32,57 +32,66 @@ Both repos use the same layout:
 
 ## Installing and updating skills
 
-**Always scope installs to `-a claude-code`.** Without it, `bunx skills add` spreads the skill into 27+ agent directories (`~/.codebuddy/skills/`, `~/.cline/skills/`, etc.) for tools that aren't used. Claude Code is the only target that matters here.
+For Nathan's own skills (in `agent-stuff` or `agent-stuff-private`), **always symlink** the install location to the repo. Repo edits are then immediately live in the install — no commit/push/update cycle, no risk of drift between repo and install.
 
-### From `agent-stuff` (public)
+For third-party skills (vercel-labs, etc.) where there's no local source repo, use bunx as the install mechanism.
+
+### Architecture (read this first)
+
+`~/.claude/skills` is a **symlink** to `~/.agents/skills`. There is only one install root; Claude Code sees it through that parent-level symlink. So:
+
+- A skill at `~/.agents/skills/<name>/` is automatically visible to Claude Code at `~/.claude/skills/<name>/`.
+- There are no per-skill hardlinks or copies between the two paths — they're the same dir, two access paths.
+- Trashing `~/.claude/skills/<name>/` actually trashes `~/.agents/skills/<name>/` (you only need to do it once, via either path).
+
+### Symlink Nathan's own skills (preferred)
 
 ```bash
-# Specific skill
+# Public (agent-stuff)
+ln -s ~/Developer/LLMs/agent-stuff/skills/<name> ~/.agents/skills/<name>
+
+# Private (agent-stuff-private)
+ln -s ~/Developer/LLMs/agent-stuff-private/skills/<name> ~/.agents/skills/<name>
+```
+
+Converting an existing bunx install to a symlink:
+
+```bash
+trash ~/.agents/skills/<name>
+ln -s ~/Developer/LLMs/agent-stuff/skills/<name> ~/.agents/skills/<name>
+```
+
+When folder name differs from the frontmatter `name:`, the symlink takes the frontmatter name and points at the repo folder:
+
+```bash
+ln -s ~/Developer/LLMs/agent-stuff-private/skills/lennys-podcast-transcripts-slim ~/.agents/skills/lennys-podcast-transcripts
+```
+
+bunx still recognizes symlinked installs in `bunx skills list`, but its agent-tracking metadata may not register them as belonging to Claude Code specifically. That's only relevant for `bunx skills update`, which doesn't apply to symlinked skills anyway — edits are live.
+
+### bunx install (for third-party skills, or initial fetch)
+
+**Always scope installs to `-a claude-code`.** Without it, `bunx skills add` spreads the skill into 27+ agent directories (`~/.codebuddy/skills/`, `~/.cline/skills/`, etc.) for tools that aren't used.
+
+```bash
+# Public agent-stuff (initial fetch — convert to symlink afterward)
 bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y
 
-# All skills
-bunx skills add nweii/agent-stuff -a claude-code -g -y
-
-# Update non-internal skills (does NOT touch metadata.internal: true skills)
-bunx skills update -g
-```
-
-### From `agent-stuff-private` (private)
-
-Two install paths, depending on whether the GitHub remote is set up:
-
-```bash
-# Local path — works pre-remote, or for the same machine that has the clone
+# Private agent-stuff-private — local path
 bunx skills add ~/Developer/LLMs/agent-stuff-private --skill <name> -a claude-code -g -y
 
-# SSH URL — works on any machine with SSH access to the private remote
+# Private agent-stuff-private — SSH URL (HTTPS hangs on credentials, see vercel-labs/skills#12)
 bunx skills add git@github.com:nweii/agent-stuff-private.git --skill <name> -a claude-code -g -y
+
+# Third-party
+bunx skills add vercel-labs/agent-skills --skill <name> -a claude-code -g -y
 ```
 
-**HTTPS URLs do not reliably work for private repos** ([vercel-labs/skills#12](https://github.com/vercel-labs/skills/issues/12)) — `bunx skills add` hangs on credentials. Always use SSH form for private remotes.
+**HTTPS URLs do not work for private repos** ([vercel-labs/skills#12](https://github.com/vercel-labs/skills/issues/12)) — `bunx skills add` hangs on credentials. Always use SSH form.
 
-`bunx skills update -g` also does not work for private repos ([vercel-labs/skills#381](https://github.com/vercel-labs/skills/issues/381)). To refresh a private skill: just re-run `bunx skills add` over the existing install (see below).
+`bunx skills update -g` does not work for private repos ([vercel-labs/skills#381](https://github.com/vercel-labs/skills/issues/381)) or for skills with `metadata.internal: true` (silently fails with "Failed to update <name>"). For those, re-run `bunx skills add` over the existing install — it overwrites in place, no `remove` first.
 
-### Common: install pitfalls and refresh
-
-Repo edits do NOT propagate live — `bunx skills add` copies the SKILL.md into `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`, but neither side is linked back to the repo source.
-
-**Two cases where `bunx skills update -g` doesn't work**:
-
-- Skills with `metadata.internal: true` — silently fails with "Failed to update <name>"
-- Skills installed from private repos
-
-For both: re-run `add` over the existing install — it overwrites in place, no `remove` needed first.
-
-```bash
-bunx skills add <source> --skill <name> -a claude-code -g -y
-```
-
-For public, non-internal skills, `bunx skills update -g` is the right refresh path.
-
-### Skill name vs folder name
-
-`bunx skills add --skill <name>` matches against the **`name:` field in frontmatter**, not the folder name. If a skill folder is `lennys-podcast-transcripts-slim/` but its frontmatter says `name: lennys-podcast-transcripts`, install with the frontmatter name. Mismatches surface as "No matching skills found".
+### Cleaning up multi-agent spread
 
 If a previous install spread to multiple agents, scope the cleanup with repeated `-a` flags (the comma-separated form does not parse):
 
@@ -125,17 +134,21 @@ Only add a `changelog.md` when a skill has meaningful versioned history worth pr
 
 ## Migrating a locally-developed skill into a repo
 
-When a skill has been developed directly in `~/.agents/skills/` (or edited in `~/.claude/skills/` without populating up) and needs to move into a repo:
+When a skill has been developed directly in `~/.agents/skills/` and needs to move into a repo:
 
 1. Decide the tier (public, internal-but-public, or private) and pick the matching repo
-2. Copy the skill folder to `<repo>/skills/<name>/`
+2. Move the skill folder to `<repo>/skills/<name>/` (use `mv`, not `cp` — you'll symlink back in step 6)
 3. **Fix the description** — wrap it in double quotes if it isn't already
 4. Commit and push (private repo: ensure the remote is private)
-5. Trash the local copy: `trash ~/.agents/skills/<skill-name>` and `trash ~/.claude/skills/<skill-name>` if both exist
-6. Reinstall from the repo:
-   - Public: `bunx skills add nweii/agent-stuff --skill <name> -a claude-code -g -y`
-   - Private: `bunx skills add git@github.com:nweii/agent-stuff-private.git --skill <name> -a claude-code -g -y` (or local path if remote not set up)
+5. Trash any leftover local copy: `trash ~/.agents/skills/<name>` (this is the same dir as `~/.claude/skills/<name>/` via the parent symlink — only one trash needed)
+6. Symlink the install location to the repo:
+   ```bash
+   # Public
+   ln -s ~/Developer/LLMs/agent-stuff/skills/<name> ~/.agents/skills/<name>
+   # Private
+   ln -s ~/Developer/LLMs/agent-stuff-private/skills/<name> ~/.agents/skills/<name>
+   ```
 
-The reinstalled version is a copy at `~/.claude/skills/<name>/`, hardlinked from `~/.agents/skills/<name>/`. To pick up subsequent repo edits, see "Common: install pitfalls and refresh" above.
+   Future repo edits are immediately live in the install — no reinstall needed.
 
-**Watch for install-side edits.** If you've been editing the install copy (`~/.claude/skills/<name>/SKILL.md`) directly without populating back to the repo, those edits are the real source of truth — copy that version into the repo, not whatever stale version is sitting there. Diff before moving when in doubt.
+**Watch for install-side edits.** If you've been editing the install dir (`~/.agents/skills/<name>/SKILL.md`) directly while it was still a bunx-installed copy (not yet symlinked), that version is the real source of truth — diff against the repo before moving and use the install version if it's newer.
