@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.4.0"
+  version: "1.4.1"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -164,7 +164,7 @@ After saving the archive, append a bullet to the `## Log` section of the daily n
 - [[Note filename without extension]]: [one sentence: what the conversation covered and why it was saved]
 ```
 
-The summary should be a tight, plain-language sentence — no marketing language. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
+The summary should be a tight, plain-language summary in one sentence or less — no marketing language. Do not attempt to exhaustively cover every detail; the log section is meant for a skimmable recollection of what occured that day. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
 
 **Resolving the target daily note** — derive the path from the chosen date:
 
@@ -179,15 +179,19 @@ The summary should be a tight, plain-language sentence — no marketing language
 
 If the target daily note does not exist, skip this step rather than creating it.
 
-### 5. Surface an Obsidian URI
+### 5. Surface an Obsidian link
 
-After the file is saved, output its `obsidian://` URI in the chat reply so Nathan can open the note directly from wherever the skill ran (terminal, MCP, web chat). Skip this when the save fell through to manual handoff — there's no saved file to link to yet.
+After the file is saved, output a **clickable markdown hyperlink** in the chat reply so Nathan can open the note directly from wherever the skill ran (terminal, MCP, web chat). Skip this when the save fell through to manual handoff — there's no saved file to link to yet.
 
-**Format:** `obsidian://open?vault=Brain&file={{URI-encoded filename without extension}}`
+**Format:** `[{{Note title without .md}}](obsidian://open?vault=Brain&file={{URI-encoded filename without extension}})`
 
-URI-encode the filename (spaces → `%20`, slashes → `%2F`, etc.). The bare filename is sufficient — no folder path, no `.md` extension. Obsidian resolves by shortest unique match.
+Use the filename (without `.md`) as the link text unless a shorter display label is clearer. URI-encode only the `file=` value (spaces → `%20`, slashes → `%2F`, etc.). The bare filename is sufficient — no folder path, no `.md` extension. Obsidian resolves by shortest unique match.
 
-Example: filename `Thinking - Some topic 2025-08.md` → `obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08`
+Example: filename `Thinking - Some topic 2025-08.md` →
+
+`[Thinking - Some topic 2025-08](obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08)`
+
+Do not output a bare `obsidian://` URL on its own line — always wrap it in markdown link syntax so clients render it as a clickable hyperlink.
 
 ## Remember
 
