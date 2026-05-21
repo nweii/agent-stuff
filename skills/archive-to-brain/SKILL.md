@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.1"
+  version: "1.4.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -178,6 +178,16 @@ The summary should be a tight, plain-language sentence — no marketing language
 - **Vault MCP**: Use update/edit tools to insert the bullet into `## Log`.
 
 If the target daily note does not exist, skip this step rather than creating it.
+
+### 5. Surface an Obsidian URI
+
+After the file is saved, output its `obsidian://` URI in the chat reply so Nathan can open the note directly from wherever the skill ran (terminal, MCP, web chat). Skip this when the save fell through to manual handoff — there's no saved file to link to yet.
+
+**Format:** `obsidian://open?vault=Brain&file={{URI-encoded filename without extension}}`
+
+URI-encode the filename (spaces → `%20`, slashes → `%2F`, etc.). The bare filename is sufficient — no folder path, no `.md` extension. Obsidian resolves by shortest unique match.
+
+Example: filename `Thinking - Some topic 2025-08.md` → `obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08`
 
 ## Remember
 
