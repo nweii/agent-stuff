@@ -181,17 +181,25 @@ If the target daily note does not exist, skip this step rather than creating it.
 
 ### 5. Surface an Obsidian link
 
-After the file is saved, output a **clickable markdown hyperlink** in the chat reply so Nathan can open the note directly from wherever the skill ran (terminal, MCP, web chat). Skip this when the save fell through to manual handoff — there's no saved file to link to yet.
+After the file is saved, surface the Obsidian URI in the chat reply so Nathan can open the note from wherever the skill ran. Skip this step if the save didn't complete and the note was handed off for Nathan to save manually — there's no file to link to yet.
 
-**Format:** `[{{Note title without .md}}](obsidian://open?vault=Brain&file={{URI-encoded filename without extension}})`
+Output **both** a clickable markdown hyperlink **and** the bare URI on its own line beneath it. The markdown link renders as a tappable hyperlink in clients that support it (e.g. Claude mobile); the bare URI is a fallback selectable string for clients that don't reliably render `obsidian://` links as clickable (Claude desktop, terminal).
+
+**Format:**
+
+```
+[{{Note title without .md}}](obsidian://open?vault=Brain&file={{URI-encoded filename without extension}})
+obsidian://open?vault=Brain&file={{URI-encoded filename without extension}}
+```
 
 Use the filename (without `.md`) as the link text unless a shorter display label is clearer. URI-encode only the `file=` value (spaces → `%20`, slashes → `%2F`, etc.). The bare filename is sufficient — no folder path, no `.md` extension. Obsidian resolves by shortest unique match.
 
 Example: filename `Thinking - Some topic 2025-08.md` →
 
-`[Thinking - Some topic 2025-08](obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08)`
-
-Do not output a bare `obsidian://` URL on its own line — always wrap it in markdown link syntax so clients render it as a clickable hyperlink.
+```
+[Thinking - Some topic 2025-08](obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08)
+obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08
+```
 
 ## Remember
 
