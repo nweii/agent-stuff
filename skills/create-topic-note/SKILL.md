@@ -1,10 +1,10 @@
 ---
 name: create-topic-note
-description: "Create a Commentary topic note grouping related notes under a common theme, with automatic backlinking to source notes. Triggers: 'group these under a topic', 'create topic note for [[A]], [[B]], [[C]]'."
+description: "Create a topic note grouping related notes under a common theme, with automatic backlinking to source notes. Triggers: 'group these under a topic', 'create topic note for [[A]], [[B]], [[C]]'."
 argument-hint: "<topic title> [[[note1]]] [[[note2]]] ..."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
@@ -50,11 +50,10 @@ Create a new file in `03-Records/Topics/` with this structure:
 ---
 aliases:
   - {alternative names if useful}
-categories: ["[[Commentary]]"]
 icon:
 description: "{1-2 sentence summary synthesized from the grouped notes}"
 related: []
-tags: [{relevant topical tags, drawn from the grouped notes}]
+tags: [index, {relevant topical tags, drawn from the grouped notes}]
 ---
 
 {Optional 1-2 sentences of context if needed, otherwise leave blank}
