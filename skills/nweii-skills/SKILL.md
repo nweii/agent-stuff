@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.5.0"
+  version: "1.6.0"
   internal: true
 ---
 
@@ -32,11 +32,7 @@ Both repos use the same layout:
 
 ## Source of truth: the repos, not the install dir
 
-**All edits to a skill happen in the repo working copy** (`~/Developer/LLMs/agent-stuff/skills/<name>/` or `~/Developer/LLMs/agent-stuff-private/skills/<name>/`). The installed skill under `~/.agents/skills/<name>/` is a **downstream copy** placed there by `bunx skills add`, and gets overwritten on the next install.
-
-Never edit the install dir directly. If you find yourself reaching for `~/.agents/skills/<name>/SKILL.md`, stop — find the matching repo folder and edit there instead, then reinstall to sync the change down.
-
-Why this matters: the install dir is not version-controlled and not the artifact that gets pushed to GitHub. Edits there are silently ephemeral. The repo is the source; everything else is a render of it.
+**All edits to a skill happen in the repo working copy** (`~/Developer/LLMs/agent-stuff/skills/<name>/` or `~/Developer/LLMs/agent-stuff-private/skills/<name>/`). The installed skill under `~/.agents/skills/<name>/` is a **downstream copy** placed there by `bunx skills add` and overwritten on the next install — it isn't version-controlled and never reaches GitHub, so edits there are silently ephemeral. If you find yourself reaching for `~/.agents/skills/<name>/SKILL.md`, stop: edit the matching repo folder instead, then reinstall to sync the change down.
 
 ## Installing and updating skills
 
@@ -161,4 +157,4 @@ When a skill has been developed directly in `~/.agents/skills/` and needs to mov
 
    Future edits happen in the repo, then re-run `bunx skills add` (private or `internal`) or `bunx skills update` (public, non-`internal`) to sync the install.
 
-**The install dir is downstream, not source.** Edits to `~/.agents/skills/<name>/SKILL.md` get overwritten on the next `bunx skills add`. Always edit in the repo working copy. If you suspect drift before migrating, diff the install against the repo and reconcile to the repo before reinstalling.
+**The install dir is downstream, not source** — if you suspect the install drifted before migrating, diff it against the repo and reconcile to the repo before reinstalling.

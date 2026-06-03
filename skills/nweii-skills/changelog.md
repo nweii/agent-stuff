@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.0
+
+### Changed
+
+- Reversed 1.5.0's architecture correction: on Nathan's MacBook, `~/.claude/skills` IS a directory-level symlink to `~/.agents/skills` (verified via `readlink`). Per-skill symlinks never appear under this layout — every `~/.claude/skills/<name>` is the canonical copy seen through the parent link and lists as a real directory. Misdiagnosing this as copy-mode drift and "repairing" it deletes the real skill, so the repair section now gates on `readlink ~/.claude/skills` first.
+- Consolidated the source-of-truth rule (edit in the repo, install dir is downstream) from three statements into one strong statement in its own section plus one reminder in the migration steps.
+
 ## 1.5.0
 
 ### Changed
