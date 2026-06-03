@@ -1,5 +1,7 @@
 # Agent Stuff
 
+[![skills.sh](https://skills.sh/b/nweii/agent-stuff)](https://skills.sh/nweii/agent-stuff)
+
 Personal prompts, skills, and commands I use with Claude and Cursor. Some are highly specific to my own setup (like my Obsidian vault). Sharing publicly in case any of it's useful or interesting to others.
 
 ## Agent skills format
