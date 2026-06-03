@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.6.0"
+  version: "1.7.0"
   internal: true
 ---
 
@@ -115,12 +115,21 @@ metadata:
   author: nweii
   version: "1.0.0"         # semver, always quoted
   internal: true           # only include when true
+  source: owner/repo       # optional: single canonical upstream pointer
+  credit: "..."            # optional: prose attribution
 ---
 ```
 
 **Description quoting is required** — always wrap in double quotes. YAML chokes on unquoted descriptions that contain `: ` (colon-space), em dashes, or other special characters. This is a silent failure: the skill file appears valid but bunx can't parse the name and won't find the skill.
 
 `metadata.internal: true` marks personal workflows that are pushed to GitHub but not intended for general use. Use it on any skill that's specifically tuned to Nathan's setup, regardless of which repo it lives in.
+
+**Attribution** uses two fields, by provenance shape:
+
+- `metadata.source` — a single pointer (GitHub slug or URL) when the skill directly derives from or documents one specific upstream artifact.
+- `metadata.credit` — prose, for provenance that doesn't reduce to a pointer: adapted from multiple skills, inspired by someone's approach, or authored by a person rather than a repo ("Prompt by Suzanne at Anthropic, shared in a tweet thread by Thariq").
+
+They can coexist (source for the artifact, credit for the story). When someone else wrote the content wholesale and it's only being packaged here, put them in `author` and elaborate in `credit`.
 
 ## Privacy tiers
 

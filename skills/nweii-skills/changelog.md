@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0
+
+### Added
+
+- Attribution conventions: `metadata.source` for a single canonical upstream pointer (slug or URL) when a skill derives from one specific artifact; `metadata.credit` for prose attribution when provenance doesn't reduce to a pointer (multi-source adaptations, inspiration, or a person as author). Both can coexist; wholesale outside authorship goes in `author` with elaboration in `credit`.
+
 ## 1.6.0
 
 ### Changed
