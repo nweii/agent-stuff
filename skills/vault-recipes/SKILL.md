@@ -1,13 +1,13 @@
 ---
-name: recipe-vault
-description: "Search, read, filter, combine, adapt, and save recipes in the Brain vault collection at `03-Records/Clippings/Recipes`, via Obsidian CLI or nweii Brain MCP. Use whenever cooking and the collection are relevant — 'what should I make', 'recipes with miso', 'save this one' all imply it."
+name: vault-recipes
+description: "Search, read, filter, combine, adapt, and save recipes in the Brain vault collection. Use whenever cooking and the collection are relevant — 'what should I make', 'recipes with miso', 'save this one' all imply it."
 metadata:
   author: nweii
   version: "1.0.0"
   internal: true
 ---
 
-# Recipe Vault
+# Vault recipes
 
 Recipes live in this vault as one note per dish. This skill covers finding, reading, filtering, adapting, combining, and saving them, plus the cooking judgment that reworking them calls for.
 
