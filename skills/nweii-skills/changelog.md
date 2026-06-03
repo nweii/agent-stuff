@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0
+
+### Changed
+
+- Install commands now target two agents (`-a claude-code -a zed`) so bunx uses symlink mode. A single-agent install (`-a claude-code` alone) falls back to copy mode, writing a real folder into `~/.claude/skills/` and skipping the canonical `~/.agents/skills/`. The second agent maps to `~/.agents/skills`, so the real copy lands there and Claude Code gets a symlink, with no stray agent dir.
+- Private skills install from the `nweii/agent-stuff-private` slug, the same form as public skills, rather than the local clone path or an SSH URL. Cloning a private repo works through an authenticated `gh`. This keeps the recorded source portable across machines.
+- Corrected the architecture description: `~/.claude/skills` is not a parent-level symlink to `~/.agents/skills`. bunx keeps one real copy per skill in `~/.agents/skills/<name>/` and symlinks each agent's skills dir to it per-skill.
+- Clarified update behavior: `bunx skills update` cannot refresh private-repo skills (its tree check is unauthenticated and can't see a private repo) or `internal: true` skills (filtered out of the update handoff). Refresh both by re-running `bunx skills add`, which installs internal skills because naming one with `--skill` opts it in.
+- Reframed "repairing a symlinked install" as repairing a copied (non-symlink) install — a real directory under `~/.claude/skills/<name>` is the drift to fix, by reinstalling with the two-agent command.
+
 ## 1.1.0
 
 ### Changed
