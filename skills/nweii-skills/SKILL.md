@@ -56,6 +56,8 @@ Don't install private skills from the local clone path or an SSH URL — the slu
 - Trashing the symlink at `~/.claude/skills/<name>` leaves the canonical copy intact; trashing `~/.agents/skills/<name>` removes the real skill.
 - A `~/.claude/skills/<name>` that is a real directory instead of a symlink is **copy-mode drift** — see the install command below for why it happens and how to avoid it.
 
+**On Nathan's MacBook, `~/.claude/skills` is itself a directory-level symlink to `~/.agents/skills`** (`readlink ~/.claude/skills` to confirm on any machine). Under this layout per-skill symlinks never appear: every `~/.claude/skills/<name>` is the canonical copy seen through the parent link, so it lists as a real directory. That is NOT copy-mode drift — do not "repair" it. Trashing `~/.claude/skills/<name>` here deletes the real skill, and creating a per-skill symlink inside it produces a self-referencing loop. Check the parent with `readlink` before diagnosing anything about per-skill symlinks.
+
 ### Install commands
 
 The default install mode is symlink, but **bunx only uses it when two or more agent directories are targeted.** Installing to a single agent (`-a claude-code` alone) silently falls back to copy mode — it writes a real folder into `~/.claude/skills/` and skips the canonical `~/.agents/skills/` entirely. To get the symlink layout, add a second agent whose skills dir *is* the canonical `~/.agents/skills`, so the real copy lands there and Claude Code gets a symlink. `zed` works for this and creates no stray agent dir (its global skills dir is `~/.agents/skills`); `cline`, `dexto`, `loaf`, `warp`, and `kimi-code-cli` work the same way.
@@ -88,7 +90,7 @@ bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code -a zed -
 
 ### Repairing a copied (non-symlink) install
 
-If `~/.claude/skills/<name>` is a real directory rather than a symlink into `~/.agents/skills/`, it was installed in copy mode. Reinstall it with the two-agent command above — that rebuilds the canonical copy and the symlink, and refreshes the skill from upstream in the same step (so a drifted local copy is reconciled to source, not preserved).
+First check `readlink ~/.claude/skills` — if the skills dir is itself a symlink to `~/.agents/skills` (as on Nathan's MacBook), real directories inside it are the canonical copies and there is nothing to repair. Otherwise: if `~/.claude/skills/<name>` is a real directory rather than a symlink into `~/.agents/skills/`, it was installed in copy mode. Reinstall it with the two-agent command above — that rebuilds the canonical copy and the symlink, and refreshes the skill from upstream in the same step (so a drifted local copy is reconciled to source, not preserved).
 
 `--skill` takes the **frontmatter `name:`**, not the repo folder name. When the two differ (e.g. repo folder `lennys-podcast-transcripts-slim` with frontmatter `name: lennys-podcast-transcripts`), pass the frontmatter name. Bunx will silently install nothing if you pass the folder name in this case.
 
