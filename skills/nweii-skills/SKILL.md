@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.7.0"
+  version: "1.7.1"
   internal: true
 ---
 
@@ -44,6 +44,8 @@ Always install via `bunx skills add`, from the GitHub slug — same form for eve
 
 Don't install private skills from the local clone path or an SSH URL — the slug works for private repos through `gh` and keeps the recorded source portable across machines.
 
+To try a skill without installing it, `bunx skills use <owner/repo> --skill <name>` generates a usage prompt.
+
 ### Architecture: how the install is laid out
 
 `bunx skills add` keeps **one real copy** of each skill in the canonical dir `~/.agents/skills/<name>/`, then **symlinks each agent's skills dir to it**. So Claude Code sees `~/.claude/skills/<name>` as a symlink pointing to `../../.agents/skills/<name>`.
@@ -60,13 +62,13 @@ The default install mode is symlink, but **bunx only uses it when two or more ag
 
 ```bash
 # Public agent-stuff
-bunx skills add nweii/agent-stuff --skill <name> -a claude-code -a zed -g -y
+bunx skills add nweii/agent-stuff --skill <name> -a claude-code zed -g -y
 
 # Private agent-stuff-private (clones via authenticated gh)
-bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code -a zed -g -y
+bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code zed -g -y
 
 # Third-party
-bunx skills add vercel-labs/agent-skills --skill <name> -a claude-code -a zed -g -y
+bunx skills add vercel-labs/agent-skills --skill <name> -a claude-code zed -g -y
 ```
 
 Scoping with `-a` matters either way: without it, `bunx skills add` spreads the skill into every agent directory it knows about, for tools that aren't used.
@@ -81,7 +83,7 @@ Scoping with `-a` matters either way: without it, `bunx skills add` spreads the 
 For both, refresh by re-running `bunx skills add` (which installs internal skills fine, since naming a skill with `--skill` opts it in):
 
 ```bash
-bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code -a zed -g -y
+bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code zed -g -y
 ```
 
 ### Repairing a copied (non-symlink) install
@@ -92,10 +94,10 @@ First check `readlink ~/.claude/skills` — if the skills dir is itself a symlin
 
 ### Cleaning up multi-agent spread
 
-If a previous install spread to multiple agents, scope the cleanup with repeated `-a` flags (the comma-separated form does not parse):
+If a previous install spread to multiple agents, pass agents space-separated to a single `-a` flag (the comma-separated form does not parse):
 
 ```bash
-bunx skills remove --skill <name> -a augment -a codebuddy -a cursor -g -y
+bunx skills remove --skill <name> -a augment codebuddy cursor -g -y
 ```
 
 ## Pushing changes
@@ -159,9 +161,9 @@ When a skill has been developed directly in `~/.agents/skills/` and needs to mov
 6. Reinstall via bunx from the appropriate slug:
    ```bash
    # Public
-   bunx skills add nweii/agent-stuff --skill <name> -a claude-code -a zed -g -y
+   bunx skills add nweii/agent-stuff --skill <name> -a claude-code zed -g -y
    # Private
-   bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code -a zed -g -y
+   bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code zed -g -y
    ```
 
    Future edits happen in the repo, then re-run `bunx skills add` (private or `internal`) or `bunx skills update` (public, non-`internal`) to sync the install.

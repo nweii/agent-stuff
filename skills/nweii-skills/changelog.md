@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.1
+
+### Changed
+
+- Agent flags take space-separated values on a single `-a` (`-a claude-code zed`); install commands updated from the repeated-flag form. Comma-separated still does not parse.
+- Documented `bunx skills use <owner/repo> --skill <name>` for trying a skill without installing.
+
 ## 1.7.0
 
 ### Added
