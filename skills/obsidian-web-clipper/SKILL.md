@@ -1,10 +1,10 @@
 ---
 name: obsidian-web-clipper
-description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, schema.org/CSS selectors, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching one to a target site. Not for general scraping."
+description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, template logic, schema.org/CSS selectors, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching one to a target site. Not for general scraping."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # Obsidian Web Clipper Templates
@@ -12,6 +12,8 @@ metadata:
 Obsidian Web Clipper is a browser extension that saves web content to an Obsidian vault as Markdown notes. Templates define how pages are captured — what metadata to extract, how to format the note, and which sites to auto-match.
 
 Templates are configured as JSON. Users can import/export individual templates or full settings backups. When generating templates, output valid JSON the user can import directly.
+
+**Caution:** full settings exports contain interpreter API keys in plaintext (`interpreter_settings.providers[].apiKey`). Never quote them; flag exports stored in version control.
 
 ## Adapt to the user's vault conventions
 
@@ -152,6 +154,14 @@ These trip up template authors most often:
 {{"return JSON..."|map:item => item.title|join:"\n"}}     — AI → structured → formatted
 ```
 
+## Template logic
+
+Templates support Twig/Liquid-style logic in `noteContentFormat`, `noteNameFormat`, and property values: `{% if %}`/`{% elseif %}`/`{% else %}` conditionals, `{% for %}` loops (with a `loop` object: `loop.index`, `loop.first`, `loop.last`, etc.), `{% set %}` variable assignment, and `??` fallbacks (`{{title ?? "Untitled"}}`). Full syntax lives in `Logic.md` in the live docs (see Reference). The non-obvious parts:
+
+- **Evaluation order: template logic runs first, interpreter prompts after.** Logic can construct a prompt dynamically, but a prompt's *result* can never feed a conditional or loop.
+- **Filters bind tighter than `??`** — `{{title|upper ?? "X"}}` applies `upper` before the fallback check; parenthesize if the fallback needs the filter instead.
+- `{% set %}` accepts selector results (`{% set comments = selector:.comment %}`), which pairs with bracket indexing (`{{timestamps[loop.index0]}}`) to walk two parallel arrays in one loop.
+
 ## Properties
 
 Properties become Obsidian frontmatter fields. **Order matters:** the extension writes properties to frontmatter in the order they appear in the array. If the target vault uses a YAML sort plugin (Linter, etc.), match the template's property order to the user's sort order so freshly clipped notes don't reshuffle on lint.
@@ -186,7 +196,7 @@ Interpreter prompts inside JSON property `value` strings require escaped quotes.
 }
 ```
 
-This is the trickiest part of template authoring. The escaping layers:
+The escaping layers:
 
 1. Outer `"` → JSON string delimiter
 2. `\\\"` → produces literal `\"` in the parsed string
@@ -303,7 +313,9 @@ Template parse errors are silent until the user tries to import — and the impo
 
 For exhaustive filter signatures, the full preset variable list, schema variable edge cases, and anything not covered above, fetch the live docs. Two source-of-truth locations:
 
-- The clipper repo's `docs/` (e.g. `obsidianmd/obsidian-clipper`, look at `docs/Filters.md`, `docs/Variables.md`, `docs/Templates.md`, `docs/Interpreter.md`)
+- The clipper repo's `docs/` (e.g. `obsidianmd/obsidian-clipper`, look for `docs/Filters.md`, `docs/Variables.md`, `docs/Templates.md`, `docs/Logic.md`, `docs/Interpret web pages.md`)
 - The official Obsidian help docs' Web Clipper section (e.g. `obsidianmd/obsidian-help`)
 
-Use whatever retrieval tool fits — context7, WebFetch, direct GitHub raw URLs, or anything else. The skill doesn't prescribe a tool; pick the one that's faster or more accurate in the moment. Prefer the live docs over guessing from memory: filters and variables get added between releases.
+Canonical human-facing docs: `https://obsidian.md/help/web-clipper` (subpages `/filters`, `/logic`, etc.). These are JS-rendered; a plain fetch returns an empty shell. Link users there, but read from GitHub.
+
+Use whatever retrieval tool fits — context7, WebFetch, direct GitHub raw URLs, or anything else. Pick the one that's faster or more accurate in the moment. Prefer the live docs over guessing from memory.
