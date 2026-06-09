@@ -1,6 +1,6 @@
 ---
 name: teach-me
-description: "Command-invoked tutoring pass for understanding something deeply: a concept being learned, or work just done in the session. Locates where the learner is, teaches one step per turn, quizzes to verify, and continues until they can explain the material back and apply it. Can produce durable artifacts (a walkthrough of the work, a record of what was learned, a glossary) saved through whatever the environment supports. Best run after substantive work, or when the aim is to learn something rather than get an answer."
+description: "Command-invoked tutoring pass for understanding something deeply: a concept being learned, or work just done in the session. Locates where the learner is, teaches one step per turn, quizzes to verify, and continues until they can explain the material back and apply it. Can produce durable artifacts (a walkthrough of the work, a record of what was learned, a glossary) saved through whatever the environment supports. Best run after substantive work, or when the aim is to learn something."
 disable-model-invocation: true
 metadata:
   author: nweii
