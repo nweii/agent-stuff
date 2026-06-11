@@ -16,15 +16,18 @@ Templates are configured as JSON. Users can import/export individual templates o
 
 ## Adapt to the user's vault conventions
 
-Templates are deeply opinionated about folder layout, frontmatter property names, category/tag conventions, and note body structure. **Match the user's existing conventions rather than inventing.** Before drafting a template, look for:
+Templates are hold opinionated conventions for folder layout, frontmatter property names, category/tag conventions, and note body structure. **Match the user's existing conventions rather than inventing.** 
+
+Before drafting a template, understand:
 
 - Vault-level docs (`CLAUDE.md`, `AGENTS.md`, READMEs)
 - An existing templates folder, sample notes of the type being clipped, or a previously exported clipper settings file
 - Any YAML property-sort configuration (Linter or similar)
+- User preferences uncovered in discussion
 
-When conventions aren't discoverable, default to minimal vendor-neutral choices and flag the assumptions you made so the user can adjust before import.
+When conventions aren't discoverable or if the user isn't sure what they want, tailor what you can and fall back to minimal vendor-neutral choices. Flag any assumptions you've made so the user can adjust before import.
 
-If the vault has a property sort order, mirror that order in the template's `properties` array — the extension preserves array order in the output frontmatter, so freshly clipped notes won't reshuffle on lint.
+If the vault has a property sort order, mirror that order in the template's `properties` array.
 
 ## Template JSON Schema
 
@@ -110,7 +113,7 @@ Chain filters with `|`. Look up specific filter signatures in the live docs (see
 
 ### Filter gotchas (verified via testing)
 
-These trip up template authors most often:
+Minutiae that might trip up template authors:
 
 - **String concatenation with `+` doesn't work inside `map` callbacks.** The expression parser treats `+` as an unexpected character and fails the template import with `"Unexpected character '+' in template"`. Use template literals instead:
 
@@ -288,7 +291,7 @@ Key patterns in this example:
 - `tags` uses an AI-interpreter prompt for topical tags. Drop or replace with a static value if the user doesn't have the interpreter enabled.
 - Dates use preset variables directly.
 
-For domain-specific templates (recipes, films, books, jobs, etc.), prefer schema-driven extraction (`{{schema:@Type:key}}`) and `schema:@Type` triggers — schema-based templates auto-match across many sites of the same domain.
+For domain-specific templates (recipes, films, books, jobs, etc.), prefer schema-driven extraction (`{{schema:@Type:key}}`) and `schema:@Type` triggers — schema-based templates auto-match across many sites of the same conceptual domain.
 
 ## Adapting AI Prompts into Interpreter Variables
 
