@@ -3,7 +3,7 @@ name: obsidian-web-clipper
 description: "Author and debug Obsidian Web Clipper extension templates: template JSON, variables, filters, template logic, schema.org/CSS selectors, AI interpreter prompts, URL/schema triggers. Use when generating, importing, or fixing a clipper template, or matching one to a target site. Not for general scraping."
 metadata:
   author: nweii
-  version: "1.5.1"
+  version: "1.6.0"
 ---
 
 # Obsidian Web Clipper Templates
@@ -12,11 +12,13 @@ Obsidian Web Clipper is a browser extension that saves web content to an Obsidia
 
 Templates are configured as JSON. Users can import/export individual templates or full settings backups. When generating templates, output valid JSON the user can import directly.
 
+**Single-page scope.** A clip only sees the page it fired on — the DOM loaded in the active tab. The extension is not an agent; it can't crawl, follow links, or visit other URLs. Selector, schema, and interpreter variables all resolve against that one page. If a template needs data spread across multiple pages, it can't gather it in one clip — design around what's on the page being clipped.
+
 **Caution:** full settings exports contain interpreter API keys in plaintext (`interpreter_settings.providers[].apiKey`). Never quote them; flag exports stored in version control.
 
 ## Adapt to the user's vault conventions
 
-Templates are hold opinionated conventions for folder layout, frontmatter property names, category/tag conventions, and note body structure. **Match the user's existing conventions rather than inventing.** 
+Templates hold opinionated conventions for folder layout, frontmatter property names, category/tag conventions, and note body structure. **Match the user's existing conventions rather than inventing.** 
 
 Before drafting a template, understand:
 
