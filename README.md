@@ -17,7 +17,11 @@ skill-name/
 
 ## Using these
 
-Copy whatever looks useful into your own skills directory. Or use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly add items from this repo:
+Copy whatever looks useful into your own skills directory. 
+
+To download a specific folder, paste the Github URL for the skill at [https://download-directory.github.io](https://download-directory.github.io). 
+
+Or use the [`skills`](https://github.com/vercel-labs/add-skill) CLI to quickly install skills into your system:
 
 ```bash
 bunx skills add nweii/agent-stuff
