@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.0
+
+### Added
+
+- "Writing conventions" section: after the substance is settled, make a separate succinctness pass over the draft — succinctness over raw brevity, never compressing prose into something terse or cryptic at the expense of human readability.
+
 ## 1.7.1
 
 ### Changed

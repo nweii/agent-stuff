@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.7.1"
+  version: "1.8.0"
   internal: true
 ---
 
@@ -106,6 +106,10 @@ Commit freely in either repo working copy — that's local-only. Pushing is wher
 
 - **`agent-stuff` (public)** — **always get explicit user confirmation before `git push`.** Public commits are world-readable on GitHub and feed the auto-generated catalog. Don't push opportunistically.
 - **`agent-stuff-private`** — push as needed, no extra gate.
+
+## Writing conventions
+
+Skill content gets read by a human as often as by an agent, so write it to be read. Sort the substance first — the actual instructions, gotchas, and structure — then make a separate succinctness pass over the finished draft: cut filler, merge split sentences, tighten wording. Aim for succinctness, not raw brevity. The point is to drop words that don't earn their place, not to compress the prose into something terse or cryptic. If a trim makes a sentence harder to read or forces a re-parse, it went too far — keep the words that carry the meaning.
 
 ## Frontmatter conventions
 
