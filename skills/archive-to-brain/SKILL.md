@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.4.1"
+  version: "1.5.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -89,7 +89,7 @@ Choose excerpts that reveal intellectual movement — the moments where thinking
 
 ### 1. Compose the frontmatter
 
-Use today's date for `created`, `modified`, and `last`.
+Use today's date for `created` and `modified`. Set `last` to the day the conversation happened — usually today, and the only date a single-session archive needs.
 
 ```yaml
 ---
@@ -100,6 +100,7 @@ type:
 icon: [camelCase Lucide icon name prefixed with "Li" that fits the topic, e.g. LiBrainCircuit, LiMessageCircle, LiCode2]
 publish: false
 description: [1–2 sentence summary of what this conversation covered and why it was worth saving]
+# Optional: start — first day of the thread; add only for a multi-day note (see paragraph after this block)
 last: YYYY-MM-DD
 tags:
   - thinking
@@ -113,6 +114,8 @@ modified: YYYY-MM-DDTHH:mm
 ```
 
 For `Log` notes, change the `tags` entry to `logs` and update `categories` to `"[[Logs]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced. **Do not** put a note in `related` if it is already tied via `prev` or `next` — same link twice is redundant; use `related` for broader or non-adjacent ties.
+
+**Single date vs. multi-day thread (`last` / `start`):** A new archive usually captures one session: set `last` to the day it happened (usually today) and omit `start`, so `last` reads as a single date. Add `start` only when this note's thread spans more than one calendar day — a conversation resumed across days, or an existing archive you reopen and extend later. Then `start` is the first day and `last` the most recent, and the pair signals the span. When extending a note that had only `last`, promote its original `last` to `start` and set `last` to today. Never set `start` equal to `last`. This differs from `prev` / `next`, which chain separate notes in a series; `start` / `last` marks the span within one note.
 
 **Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note). Use whatever the environment supports: Obsidian CLI `property:set`, editing YAML frontmatter in place (after create), notesmd-cli if it exposes properties, vault MCP, etc. If the new note sits between two existing notes, fix all three. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
 
@@ -156,7 +159,7 @@ Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values w
 
 ### 4. Log to the corresponding daily note
 
-After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `date` or `last` frontmatter properties are useful supporting signals if the date is ambiguous.
+After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `start` / `last` frontmatter is a useful supporting signal if the date is ambiguous.
 
 **Format:**
 
