@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.5.0"
+  version: "1.5.1"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -161,13 +161,15 @@ Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values w
 
 After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `start` / `last` frontmatter is a useful supporting signal if the date is ambiguous.
 
-**Format:**
+**Format** — a daily-log bullet pointing to the saved archive, led by its area note when one applies (matches the vault convention in AGENTS.md → Write-Back Discipline):
 
 ```
-- [[Note filename without extension]]: [one sentence: what the conversation covered and why it was saved]
+- [[Area/domain]] / [[Note filename without extension]]: one-line summary
 ```
 
-The summary should be a tight, plain-language summary in one sentence or less — no marketing language. Do not attempt to exhaustively cover every detail; the log section is meant for a skimmable recollection of what occured that day. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
+Use Nathan's area note if he named one; otherwise search the vault for an existing `[[Domains]]` or `[[Projects]]` note that matches. Only use a link that resolves to a real note — never invent an area label — and omit the prefix if none exists.
+
+The summary should be tight and plain, one sentence or less — phrased the way Nathan would jot it himself, no marketing or robotic phrasing. Do not attempt to exhaustively cover every detail; the log section is meant for a skimmable recollection of what occured that day. Pull it from the note's `description` frontmatter or compose it from the archive's subject matter.
 
 **Resolving the target daily note** — derive the path from the chosen date:
 
