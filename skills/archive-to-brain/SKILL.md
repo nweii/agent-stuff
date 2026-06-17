@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.5.1"
+  version: "1.5.2"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -115,7 +115,9 @@ modified: YYYY-MM-DDTHH:mm
 
 For `Log` notes, change the `tags` entry to `logs` and update `categories` to `"[[Logs]]"` if appropriate. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced. **Do not** put a note in `related` if it is already tied via `prev` or `next` — same link twice is redundant; use `related` for broader or non-adjacent ties.
 
-**Single date vs. multi-day thread (`last` / `start`):** A new archive usually captures one session: set `last` to the day it happened (usually today) and omit `start`, so `last` reads as a single date. Add `start` only when this note's thread spans more than one calendar day — a conversation resumed across days, or an existing archive you reopen and extend later. Then `start` is the first day and `last` the most recent, and the pair signals the span. When extending a note that had only `last`, promote its original `last` to `start` and set `last` to today. Never set `start` equal to `last`. This differs from `prev` / `next`, which chain separate notes in a series; `start` / `last` marks the span within one note.
+**Extend or start a new note?** Default to a new note per session, linked to its neighbors with `prev` / `next` — most archives are discrete dated episodes. Extend an existing archive only when the new session is the same topic and scope as that note and it's still current, so the addition reads as one coherent piece. If the existing note is much older, or parts of it have likely been superseded, chain a new note instead — that keeps each note as a record of its moment rather than overwriting an earlier snapshot. When you do extend, mark the span with the `start` / `last` frontmatter properties.
+
+**Single date vs. multi-day thread (`last` / `start`):** A new archive usually captures one session: set `last` to the day it happened (usually today) and omit `start`, so `last` reads as a single date. Add `start` only when this note's thread spans more than one calendar day — a conversation resumed across days, or an existing archive you reopen and extend later. Then `start` is the first day and `last` the most recent, and the pair signals the span. When extending a note that had only `last`, promote its original `last` to `start` and set `last` to today. Never set `start` equal to `last`.
 
 **Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note). Use whatever the environment supports: Obsidian CLI `property:set`, editing YAML frontmatter in place (after create), notesmd-cli if it exposes properties, vault MCP, etc. If the new note sits between two existing notes, fix all three. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
 
