@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.9.0"
+  version: "1.10.0"
   internal: true
 ---
 
@@ -113,6 +113,36 @@ Skill content gets read by a human as often as by an agent, so write it to be re
 
 **Keep procedure skills operational.** When a skill exists to *do* something — write a note, scaffold a file, drive a tool — write the body as the steps to follow, in order, with the decision-points and gotchas inline. Lead with what to do, not with background or rationale the agent doesn't need in order to act. Defer anything it already knows or can read elsewhere (the vault's `AGENTS.md`, a sibling skill) rather than restating it. Reference skills that exist to *explain* — a system, a set of conventions — can carry more exposition; a procedure skill padded with it is just harder to execute against.
 
+## Skill content craft
+
+Cross-cutting habits for what goes in the body, condensed from the agentskills.io guides (linked below for the fuller treatment):
+
+- **Add what the agent lacks, omit what it knows.** Spend tokens on project conventions, domain procedures, non-obvious edge cases, and which exact tool/API to use — not on explaining what a PDF or an HTTP request is. The test per line: would the agent get this wrong without it? If no, cut it.
+- **Provide defaults, not menus.** When several tools or approaches work, pick one and mention alternatives briefly as an escape hatch, rather than listing equals the agent has to choose between.
+- **Match specificity to fragility.** Be prescriptive — exact commands, "don't add flags" — where a step is fragile or order-dependent; give freedom (and say *why*) where variation is fine and judgment helps.
+- **Progressive disclosure.** Keep `SKILL.md` to the core path (the spec targets <500 lines / ~5k tokens); move deep reference into `references/` and tell the agent *when* to load each file ("read `references/x.md` if the API returns non-200"), not a generic "see references/."
+- **Gotchas sections** earn their keep — environment-specific facts that defy reasonable assumptions (soft-deletes, an ID that's named three things across services). When a correction has to be made during real use, fold it back here.
+
+### Bundled scripts
+
+If a skill ships scripts (`scripts/`), design them for a non-interactive agent:
+
+- **No interactive prompts** — take input via flags, env, or stdin; a TTY prompt hangs the run. Fail with a usage hint instead.
+- **`--help` is the interface** the agent reads, so keep it short and current. Write errors that say what was expected and what to try.
+- **Structured output** — data to stdout (JSON/CSV), diagnostics to stderr, so output stays parseable and composable.
+- **Safe under retry** — idempotent where possible, `--dry-run` for destructive ops, meaningful exit codes, bounded output (paginate or require `--output` for large results).
+- **Self-contained deps** — declare inline (PEP 723 + `uv run`, or Bun's runtime auto-install) so there's no separate install step.
+
+Reach for a script only when a one-off command grows too complex to get right inline, or when traces show the agent reinventing the same logic each run.
+
+### References
+
+Fuller treatment, fetch on demand:
+
+- [Best practices](https://agentskills.io/skill-creation/best-practices.md) — scoping, control calibration, the gotchas/template/checklist/validation patterns.
+- [Optimizing descriptions](https://agentskills.io/skill-creation/optimizing-descriptions.md) — trigger evals, train/validation split, the optimization loop.
+- [Using scripts](https://agentskills.io/skill-creation/using-scripts.md) — one-off commands, self-contained scripts, agentic script design.
+
 ## Frontmatter conventions
 
 ```yaml
@@ -131,6 +161,8 @@ metadata:
 **Description quoting is required** — always wrap in double quotes. YAML chokes on unquoted descriptions that contain `: ` (colon-space), em dashes, or other special characters. This is a silent failure: the skill file appears valid but bunx can't parse the name and won't find the skill.
 
 **Write the description for routing, not summary.** Its job is to make the model pick this skill at the right moment and skip it otherwise, so spend the words on concrete triggers — what the user says or does, the file types or contexts involved — over a thorough account of what the skill contains. Detail belongs in the body; the description is the matcher. Treat ~200–300 characters as a ceiling rather than a target: shorter is always welcome and often sharper, but don't drop a trigger or a distinction that routing needs just to hit a lower count. (1024 is the hard limit.)
+
+Phrase it imperatively and from the user's side — "Use when…" over "This skill does…", describing what the user is trying to do rather than the skill's mechanics. Be a little pushy: name the contexts where it applies, including ones where the user won't say the domain outright ("even if they don't mention 'CSV'"). One nuance — agents skip skills for tasks they can already handle in a step or two, so a description earns its trigger on specialized or multi-step work, not trivial one-liners. For systematic tuning (eval queries, train/validation split, trigger-rate loop) see the optimizing-descriptions reference under [Skill content craft](#skill-content-craft), or let `skill-creator` automate it.
 
 `metadata.internal: true` marks personal workflows that are pushed to GitHub but not intended for general use. Use it on any skill that's specifically tuned to Nathan's setup, regardless of which repo it lives in.
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.10.0
+
+### Added
+
+- "Skill content craft" section condensing the agentskills.io guides: add-what-the-agent-lacks, defaults-not-menus, match-specificity-to-fragility, progressive disclosure (when-to-load triggers), and gotchas sections; a bundled-scripts subsection (non-interactive, `--help`, structured stdout/stderr, retry-safe, inline deps); and on-demand reference links to the three agentskills.io pages.
+- Description guidance expanded with imperative/user-intent phrasing, being pushy about implicit triggers, the "agents skip trivial tasks" nuance, and a pointer to the description-optimization eval loop.
+
 ## 1.9.0
 
 ### Added
