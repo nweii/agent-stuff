@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.8.0"
+  version: "1.9.0"
   internal: true
 ---
 
@@ -111,6 +111,8 @@ Commit freely in either repo working copy — that's local-only. Pushing is wher
 
 Skill content gets read by a human as often as by an agent, so write it to be read. Sort the substance first — the actual instructions, gotchas, and structure — then make a separate succinctness pass over the finished draft: cut filler, merge split sentences, tighten wording. Aim for succinctness, not raw brevity. The point is to drop words that don't earn their place, not to compress the prose into something terse or cryptic. If a trim makes a sentence harder to read or forces a re-parse, it went too far — keep the words that carry the meaning.
 
+**Keep procedure skills operational.** When a skill exists to *do* something — write a note, scaffold a file, drive a tool — write the body as the steps to follow, in order, with the decision-points and gotchas inline. Lead with what to do, not with background or rationale the agent doesn't need in order to act. Defer anything it already knows or can read elsewhere (the vault's `AGENTS.md`, a sibling skill) rather than restating it. Reference skills that exist to *explain* — a system, a set of conventions — can carry more exposition; a procedure skill padded with it is just harder to execute against.
+
 ## Frontmatter conventions
 
 ```yaml
@@ -127,6 +129,8 @@ metadata:
 ```
 
 **Description quoting is required** — always wrap in double quotes. YAML chokes on unquoted descriptions that contain `: ` (colon-space), em dashes, or other special characters. This is a silent failure: the skill file appears valid but bunx can't parse the name and won't find the skill.
+
+**Write the description for routing, not summary.** Its job is to make the model pick this skill at the right moment and skip it otherwise, so spend the words on concrete triggers — what the user says or does, the file types or contexts involved — over a thorough account of what the skill contains. Detail belongs in the body; the description is the matcher. Treat ~200–300 characters as a ceiling rather than a target: shorter is always welcome and often sharper, but don't drop a trigger or a distinction that routing needs just to hit a lower count. (1024 is the hard limit.)
 
 `metadata.internal: true` marks personal workflows that are pushed to GitHub but not intended for general use. Use it on any skill that's specifically tuned to Nathan's setup, regardless of which repo it lives in.
 

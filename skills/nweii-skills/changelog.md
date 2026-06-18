@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.0
+
+### Added
+
+- "Keep procedure skills operational" guidance in Writing conventions: skills that *do* something get written as ordered steps with gotchas inline, deferring what the agent can read elsewhere; reference skills that *explain* can carry more exposition.
+- "Write the description for routing, not summary" guidance in Frontmatter conventions: descriptions spend their words on concrete triggers over content summary; ~200–300 chars is a ceiling, not a target, and shouldn't be undercut at the expense of routing-relevant triggers or distinctions.
+
 ## 1.8.0
 
 ### Added
