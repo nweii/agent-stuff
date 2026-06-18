@@ -1,9 +1,9 @@
 ---
 name: nweii-skills
-description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, frontmatter conventions, changelog practices, privacy tiers, and migrating locally-developed skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
+description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.10.0"
+  version: "1.11.0"
   internal: true
 ---
 
@@ -151,7 +151,7 @@ name: skill-name           # lowercase-with-hyphens, max 64 chars
 description: "..."         # Always quoted. Max ~1024 chars. Describe what it does AND when to use it.
 metadata:
   author: nweii
-  version: "1.0.0"         # semver, always quoted
+  version: "1.0.0"         # semver, always quoted; bump on meaningful change
   internal: true           # only include when true
   source: owner/repo       # optional: single canonical upstream pointer
   credit: "..."            # optional: prose attribution
@@ -184,10 +184,6 @@ Three tiers, two repos:
 | Private | `agent-stuff-private` | Private GitHub remote, `metadata.internal: true` | Career materials, project-specific assistants, anything that shouldn't leave Nathan's environment |
 
 The previous `skills/private/` (gitignored subfolder of agent-stuff) tier is retired — that pattern was fragile (one stray `git add -A` and content leaks) and made cross-machine sync impossible. All formerly-private skills now live in `agent-stuff-private`.
-
-## Changelogs
-
-Only add a `changelog.md` when a skill has meaningful versioned history worth preserving — significant behavioral changes, deprecated patterns, or decisions future maintainers should understand. Omit it for simple or stable skills. When present, increment `metadata.version` alongside it.
 
 ## Migrating a locally-developed skill into a repo
 
