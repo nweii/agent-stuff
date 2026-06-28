@@ -166,6 +166,8 @@ Phrase it imperatively and from the user's side — "Use when…" over "This ski
 
 `metadata.internal: true` marks personal workflows that are pushed to GitHub but not intended for general use. Use it on any skill that's specifically tuned to Nathan's setup, regardless of which repo it lives in.
 
+**Versioning.** Keep a skill (or agent) at `0.y.z` while it's still in development or dogfooding — not yet in real use. That's what the pre-1.0 range is for in semver: anything can still change. Promote to `1.0.0` once it's actually adopted and stable; after that, bump the minor for new capability and the patch for fixes. This applies to agent files too, which borrow the same `metadata` block for tracking even though their runtime ignores it.
+
 **Attribution** uses two fields, by provenance shape:
 
 - `metadata.source` — a single pointer (GitHub slug or URL) when the skill directly derives from or documents one specific upstream artifact.
