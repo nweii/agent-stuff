@@ -4,17 +4,17 @@ Instructions for AI assistants working on this repository.
 
 ## What this repo is
 
-A personal collection of AI agent skills, plugins, commands, and rules. It follows the Claude/Anthropic Agent Skills format.
+A personal collection of AI agent skills and subagent definitions. It follows the Claude/Anthropic Agent Skills format.
 
 ## Directory structure
 
 ```
 agent-stuff/
 ├── skills/           # Agent Skills (Claude format)
-├── commands/         # Slash commands, organized by context
+├── agents/           # Subagent definitions (copy-only, not installed by bunx)
+├── zips/             # Auto-built per-skill zips for drag-into-Claude.ai (generated)
 ├── templates/        # Templates for new components
-├── reference/        # Platform docs and guides
-└── obsidian/         # Obsidian-related configs
+└── scripts/          # Catalog + zip build scripts (run by the pre-commit hook)
 ```
 
 ## Creating skills

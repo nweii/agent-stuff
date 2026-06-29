@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-# ABOUTME: Generates the skills/commands catalog section for README.md
-# ABOUTME: Reads frontmatter descriptions and outputs markdown lists
+# ABOUTME: Generates the skills catalog section for README.md
+# ABOUTME: Reads frontmatter descriptions and outputs markdown lists, general skills first then an Internal section
 
-import os
 import re
 from pathlib import Path
 
@@ -11,18 +10,20 @@ from typing import List, Tuple, Optional
 REPO_ROOT = Path(__file__).parent.parent
 README_PATH = REPO_ROOT / "README.md"
 SKILLS_DIR = REPO_ROOT / "skills"
-COMMANDS_DIR = REPO_ROOT / "commands"
+AGENTS_DIR = REPO_ROOT / "agents"
 
 START_MARKER = "<!-- CATALOG:START -->"
 END_MARKER = "<!-- CATALOG:END -->"
+
+
 def extract_frontmatter_field(content: str, field: str) -> Optional[str]:
     """Extract a field value from YAML frontmatter."""
     frontmatter_match = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
     if not frontmatter_match:
         return None
-    
+
     frontmatter = frontmatter_match.group(1)
-    
+
     # Handle both quoted and unquoted values; allow indented keys (e.g. metadata.internal)
     pattern = rf'^\s*{field}:\s*["\']?(.*?)["\']?\s*$'
     match = re.search(pattern, frontmatter, re.MULTILINE)
@@ -32,7 +33,7 @@ def extract_frontmatter_field(content: str, field: str) -> Optional[str]:
 
 
 def get_skills() -> List[Tuple[str, str, str, bool]]:
-    """Get all skills as a flat sorted list."""
+    """Get all skills as a flat sorted list of (name, path, description, is_internal)."""
     skills: List[Tuple[str, str, str, bool]] = []
 
     for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
@@ -44,7 +45,7 @@ def get_skills() -> List[Tuple[str, str, str, bool]]:
         desc = extract_frontmatter_field(content, "description")
         if not desc:
             desc = "(no description)"
-            
+
         internal = extract_frontmatter_field(content, "internal")
         is_internal = str(internal).lower() == "true"
 
@@ -56,37 +57,28 @@ def get_skills() -> List[Tuple[str, str, str, bool]]:
     return skills
 
 
-def get_commands() -> List[Tuple[str, str, str]]:
-    """Get all commands as a flat sorted list."""
-    commands: List[Tuple[str, str, str]] = []
-
-    for cmd_file in COMMANDS_DIR.glob("*.md"):
-        if cmd_file.parent.name == "private":
+def get_agents() -> List[Tuple[str, str, str]]:
+    """Subagent definitions as a sorted list of (name, path, description). README.md skipped."""
+    agents: List[Tuple[str, str, str]] = []
+    if not AGENTS_DIR.is_dir():
+        return agents
+    for f in AGENTS_DIR.glob("*.md"):
+        if f.name == "README.md":
             continue
-
-        content = cmd_file.read_text()
-        desc = extract_frontmatter_field(content, "description")
-
-        # Fall back to first non-heading paragraph if no frontmatter description
-        if not desc:
-            for line in content.strip().split("\n"):
-                line = line.strip()
-                if line and not line.startswith("#") and not line.startswith("---"):
-                    desc = line
-                    break
-        if not desc:
-            desc = "(no description)"
-
-        name = cmd_file.stem
-        path = f"commands/{cmd_file.name}"
-        commands.append((name, path, desc))
-
-    commands.sort(key=lambda x: x[0])
-    return commands
+        content = f.read_text()
+        name = extract_frontmatter_field(content, "name") or f.stem
+        desc = extract_frontmatter_field(content, "description") or "(no description)"
+        agents.append((name, f"agents/{f.name}", desc))
+    agents.sort(key=lambda x: x[0])
+    return agents
 
 
 def generate_catalog() -> str:
-    """Generate the full catalog markdown."""
+    """Generate the full catalog markdown: general skills, an Internal section, then Agents."""
+    skills = get_skills()
+    general = [s for s in skills if not s[3]]
+    internal = [s for s in skills if s[3]]
+
     lines = [
         "<!-- CATALOG:START -->",
         "",
@@ -94,24 +86,38 @@ def generate_catalog() -> str:
         "",
         "### Skills",
         "",
-        "[Internal] = personal workflows or vault-specific, likely needs adaptation.",
-        "",
     ]
-    
-    for name, path, desc, is_internal in get_skills():
-        if is_internal:
-            lines.append(f"- [{name}]({path}) _[Internal]_ — {desc}")
-        else:
-            lines.append(f"- [{name}]({path}) — {desc}")
-    lines.append("")
-    
-    lines.append("### Commands")
-    lines.append("")
-    
-    for name, path, desc in get_commands():
+
+    for name, path, desc, _ in general:
         lines.append(f"- [{name}]({path}) — {desc}")
     lines.append("")
-    
+
+    if internal:
+        lines.append("### Internal")
+        lines.append("")
+        lines.append(
+            "Personal workflows tied to my own setup (vault paths, tools, naming "
+            "conventions). Installable, but expect to adapt `SKILL.md` to your own "
+            "folders and conventions before they're useful."
+        )
+        lines.append("")
+        for name, path, desc, _ in internal:
+            lines.append(f"- [{name}]({path}) — {desc}")
+        lines.append("")
+
+    agents = get_agents()
+    if agents:
+        lines.append("### Agents")
+        lines.append("")
+        lines.append(
+            "Claude Code subagents — copy the `*.md` into your own agents directory "
+            "(not installed by `bunx skills`). See [`agents/`](agents/)."
+        )
+        lines.append("")
+        for name, path, desc in agents:
+            lines.append(f"- [{name}]({path}) — {desc}")
+        lines.append("")
+
     lines.append("<!-- CATALOG:END -->")
     return "\n".join(lines)
 
@@ -119,24 +125,24 @@ def generate_catalog() -> str:
 def update_readme():
     """Update the README with the generated catalog."""
     readme_content = README_PATH.read_text()
-    
+
     # Check for markers
     if START_MARKER not in readme_content or END_MARKER not in readme_content:
-        print(f"Error: README.md missing catalog markers.")
-        print(f"Add these markers where you want the catalog:")
+        print("Error: README.md missing catalog markers.")
+        print("Add these markers where you want the catalog:")
         print(f"  {START_MARKER}")
         print(f"  {END_MARKER}")
         return False
-    
+
     # Replace content between markers
     pattern = re.compile(
         rf"{re.escape(START_MARKER)}.*?{re.escape(END_MARKER)}",
-        re.DOTALL
+        re.DOTALL,
     )
-    
+
     new_catalog = generate_catalog()
     new_content = pattern.sub(new_catalog, readme_content)
-    
+
     README_PATH.write_text(new_content)
     print(f"Updated {README_PATH}")
     return True

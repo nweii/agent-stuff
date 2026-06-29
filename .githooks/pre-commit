@@ -1,18 +1,25 @@
 #!/bin/bash
-# Updates catalog in README.md when skills or commands change.
+# Regenerates the README catalog and the zips/ mirror when skills change.
 # Enable via: git config core.hooksPath .githooks
 
 set -e
 
-STAGED=$(git diff --cached --name-only | grep -E '^(skills|commands)/' || true)
+STAGED=$(git diff --cached --name-only | grep -E '^skills/' || true)
 [ -z "$STAGED" ] && exit 0
 
-echo "Updating catalog (skills/commands changed)..." >&2
+echo "Skills changed — regenerating catalog and zips..." >&2
 python3 scripts/update-catalog.py
+python3 scripts/build-zips.py
 
 if ! git diff --quiet README.md 2>/dev/null; then
     git add README.md
     echo "Staged README.md with catalog update" >&2
+fi
+
+# Stage the rebuilt zip mirror (additions, content changes, and deletions of stale zips).
+if ! git diff --quiet zips/ 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard zips/)" ]; then
+    git add -A zips/
+    echo "Staged zips/ mirror" >&2
 fi
 
 exit 0

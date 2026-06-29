@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.11.0"
+  version: "1.12.0"
   internal: true
 ---
 
@@ -18,17 +18,33 @@ Skills live in two paired repos:
 - **[nweii/agent-stuff](https://github.com/nweii/agent-stuff)** — public + internal-but-public skills. Cloned at `~/Developer/LLMs/agent-stuff/`.
 - **`nweii/agent-stuff-private`** — truly private skills (career materials, personal workflows, confidential content). Cloned at `~/Developer/LLMs/agent-stuff-private/`. Pushed to a private GitHub remote; never made public.
 
-Both repos use the same layout:
+Both repos share a core layout, with some folders specific to one:
 
 ```
 <repo>/
 ├── skills/          # Skill folders
-├── commands/        # Slash commands (agent-stuff only)
-├── templates/       # SKILL_TEMPLATE.md, RULE_TEMPLATE.md (agent-stuff only)
-└── reference/       # Platform docs (agent-stuff only)
+├── agents/          # Subagent definitions (public: inspiration set; private: backups)
+├── zips/            # Auto-built per-skill zips for drag-into-Claude.ai (generated)
+├── scripts/         # update-catalog.py + build-zips.py (run by the pre-commit hook)
+└── templates/       # SKILL_TEMPLATE.md, RULE_TEMPLATE.md (agent-stuff only)
 ```
 
-`agent-stuff` has a git hook that auto-updates `README.md` with a skills catalog on every commit. `agent-stuff-private` does not (kept simple).
+Both repos have a `.githooks/pre-commit` that, when a skill changes, regenerates the `README.md` catalog (`update-catalog.py`) and rebuilds the `zips/` mirror (`build-zips.py`) into the same commit.
+
+### The `zips/` mirror
+
+Each skill is also packaged as a `<name>.zip` (one top-level folder named after the skill, containing its files) so a non-CLI user can drag it straight into Claude.ai. Key properties:
+
+- **Built locally by the pre-commit hook**, not a GitHub Action — the zip lands in the same commit as the skill edit, and reverts with it.
+- **Deterministic** — `build-zips.py` uses fixed timestamps, sorted entries, and **git-tracked files only** (so `.DS_Store` and other junk never get in). An unchanged skill produces a byte-identical zip, so editing one skill diffs exactly one zip; no churn.
+- **Self-healing** — the hook wipes and fully rebuilds `zips/` each run, so a deleted, renamed, or newly-internal skill drops its stale zip automatically.
+- **Per-repo scope** — `build-zips.py` carries a `ZIP_INCLUDE_INTERNAL` constant: `False` in `agent-stuff` (general-purpose skills only — don't encourage dropping internal ones in unmodified), `True` in `agent-stuff-private` (every skill is personal, so zip all).
+
+The `agent-stuff` README catalog also splits skills into a general list and an `### Internal` section (the script's existing `is_internal` flag). The private README stays a flat list (everything is personal).
+
+### The `agents/` folders
+
+Claude Code subagent definitions (`*.md`), **not** installed by `bunx skills` — copy them into `~/.agents/agents/` by hand. In `agent-stuff` this is a small curated inspiration set (`vault-reader`, `vault-writer`) with a framing README; in `agent-stuff-private` it's version-controlled backups of Nathan's personal subagents.
 
 ## Source of truth: the repos, not the install dir
 
