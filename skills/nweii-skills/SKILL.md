@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.12.0"
+  version: "1.13.0"
   internal: true
 ---
 
@@ -16,7 +16,7 @@ Reference context for Nathan's skills ecosystem. Read this before creating, edit
 Skills live in two paired repos:
 
 - **[nweii/agent-stuff](https://github.com/nweii/agent-stuff)** — public + internal-but-public skills. Cloned at `~/Developer/LLMs/agent-stuff/`.
-- **`nweii/agent-stuff-private`** — truly private skills (career materials, personal workflows, confidential content). Cloned at `~/Developer/LLMs/agent-stuff-private/`. Pushed to a private GitHub remote; never made public.
+- **`nweii/agent-stuff-private`** — truly private skills (sensitive materials, personal workflows, confidential content). Pushed to a private GitHub remote.
 
 Both repos share a core layout, with some folders specific to one:
 
@@ -33,26 +33,26 @@ Both repos have a `.githooks/pre-commit` that, when a skill changes, regenerates
 
 ### The `zips/` mirror
 
-Each skill is also packaged as a `<name>.zip` (one top-level folder named after the skill, containing its files) so a non-CLI user can drag it straight into Claude.ai. Key properties:
+Each skill is also packaged as a `<name>.zip` (one top-level folder named after the skill, containing its files) for non-CLI user convenience. Key properties:
 
 - **Built locally by the pre-commit hook**, not a GitHub Action — the zip lands in the same commit as the skill edit, and reverts with it.
 - **Deterministic** — `build-zips.py` uses fixed timestamps, sorted entries, and **git-tracked files only** (so `.DS_Store` and other junk never get in). An unchanged skill produces a byte-identical zip, so editing one skill diffs exactly one zip; no churn.
 - **Self-healing** — the hook wipes and fully rebuilds `zips/` each run, so a deleted, renamed, or newly-internal skill drops its stale zip automatically.
 - **Per-repo scope** — `build-zips.py` carries a `ZIP_INCLUDE_INTERNAL` constant: `False` in `agent-stuff` (general-purpose skills only — don't encourage dropping internal ones in unmodified), `True` in `agent-stuff-private` (every skill is personal, so zip all).
 
-The `agent-stuff` README catalog also splits skills into a general list and an `### Internal` section (the script's existing `is_internal` flag). The private README stays a flat list (everything is personal).
+The `agent-stuff` README catalog also splits skills into a general list and an `### Internal` section (the script's existing `is_internal` flag). The private README stays a flat list.
 
 ### The `agents/` folders
 
-Claude Code subagent definitions (`*.md`), **not** installed by `bunx skills` — copy them into `~/.agents/agents/` by hand. In `agent-stuff` this is a small curated inspiration set (`vault-reader`, `vault-writer`) with a framing README; in `agent-stuff-private` it's version-controlled backups of Nathan's personal subagents.
+Subagent definitions (`*.md`), **not** installed by `bunx skills` — copy them into `~/.agents/agents/` by hand. In `agent-stuff` this is a small curated inspiration set (`vault-reader`, `vault-writer`) with a framing README; in `agent-stuff-private` it's version-controlled backups of Nathan's personal subagents.
 
-## Source of truth: the repos, not the install dir
+## Use the repos as a source of truth over local installs
 
-**All edits to a skill happen in the repo working copy** (`~/Developer/LLMs/agent-stuff/skills/<name>/` or `~/Developer/LLMs/agent-stuff-private/skills/<name>/`). The installed skill under `~/.agents/skills/<name>/` is a **downstream copy** placed there by `bunx skills add` and overwritten on the next install — it isn't version-controlled and never reaches GitHub, so edits there are silently ephemeral. If you find yourself reaching for `~/.agents/skills/<name>/SKILL.md`, stop: edit the matching repo folder instead, then reinstall to sync the change down.
+**All edits to a skill happen in the repo working copy** (`~/Developer/LLMs/agent-stuff/skills/<name>/` or `~/Developer/LLMs/agent-stuff-private/skills/<name>/`). The installed skill under `~/.agents/skills/<name>/` is a **downstream copy** placed there by `bunx skills add` and overwritten on the next install — it isn't version-controlled and never reaches GitHub. If you find yourself reaching for `~/.agents/skills/<name>/SKILL.md`, stop: edit the matching repo folder instead, then reinstall to sync the change down.
 
 ## Installing and updating skills
 
-Always install via `bunx skills add`, from the GitHub slug — same form for every repo, public or private:
+Always install via `bunx skills add`, from the GitHub slug for every repo, public or private:
 
 - **Public (`agent-stuff`)** → `nweii/agent-stuff`. Updates via `bunx skills update`.
 - **Private (`agent-stuff-private`)** → `nweii/agent-stuff-private`. Cloning a private repo relies on an authenticated `gh` (it falls back to `gh repo clone`, then SSH); make sure `gh auth status` is logged in.
@@ -60,7 +60,7 @@ Always install via `bunx skills add`, from the GitHub slug — same form for eve
 
 Don't install private skills from the local clone path or an SSH URL — the slug works for private repos through `gh` and keeps the recorded source portable across machines.
 
-To try a skill without installing it, `bunx skills use <owner/repo> --skill <name>` generates a usage prompt.
+To try a skill without installing it, `bunx skills use <owner/repo> -s <name>` generates a usage prompt.
 
 ### Architecture: how the install is laid out
 
@@ -106,7 +106,7 @@ bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code zed -g -
 
 First check `readlink ~/.claude/skills` — if the skills dir is itself a symlink to `~/.agents/skills` (as on Nathan's MacBook), real directories inside it are the canonical copies and there is nothing to repair. Otherwise: if `~/.claude/skills/<name>` is a real directory rather than a symlink into `~/.agents/skills/`, it was installed in copy mode. Reinstall it with the two-agent command above — that rebuilds the canonical copy and the symlink, and refreshes the skill from upstream in the same step (so a drifted local copy is reconciled to source, not preserved).
 
-`--skill` takes the **frontmatter `name:`**, not the repo folder name. When the two differ (e.g. repo folder `lennys-podcast-transcripts-slim` with frontmatter `name: lennys-podcast-transcripts`), pass the frontmatter name. Bunx will silently install nothing if you pass the folder name in this case.
+`--skill` takes the **frontmatter `name:`**, not the repo folder name. When the two differ, pass the frontmatter name. Bunx will silently install nothing if you pass the folder name in this case.
 
 ### Cleaning up multi-agent spread
 
@@ -125,13 +125,23 @@ Commit freely in either repo working copy — that's local-only. Pushing is wher
 
 ## Writing conventions
 
-Skill content gets read by a human as often as by an agent, so write it to be read. Sort the substance first — the actual instructions, gotchas, and structure — then make a separate succinctness pass over the finished draft: cut filler, merge split sentences, tighten wording. Aim for succinctness, not raw brevity. The point is to drop words that don't earn their place, not to compress the prose into something terse or cryptic. If a trim makes a sentence harder to read or forces a re-parse, it went too far — keep the words that carry the meaning.
+Skill content gets read by a human as often as by an agent, so write it to be read. Sort the substance first (the instructions, gotchas, and structure), then make a separate succinctness pass over the finished draft: cut filler, merge split sentences, tighten wording. Drop words that don't earn their place, but don't compress the prose into something illegibly terse. If a trim makes a sentence harder to read, it went too far. Compactness should serve readability.
 
-**Keep procedure skills operational.** When a skill exists to *do* something — write a note, scaffold a file, drive a tool — write the body as the steps to follow, in order, with the decision-points and gotchas inline. Lead with what to do, not with background or rationale the agent doesn't need in order to act. Defer anything it already knows or can read elsewhere (the vault's `AGENTS.md`, a sibling skill) rather than restating it. Reference skills that exist to *explain* — a system, a set of conventions — can carry more exposition; a procedure skill padded with it is just harder to execute against.
+**Keep procedure skills operational.** When a skill exists to *do* something (write a note, scaffold a file, drive a tool) write the body as the steps to follow, in order, with the decision-points and gotchas inline. Lead with what to do, not with background or rationale the agent doesn't need. Defer anything it already knows or can read elsewhere (the vault's `AGENTS.md`, a sibling skill) rather than restating it. However, reference skills that exist to *explain* (a system, a set of conventions) may carry more exposition.
 
 ## Skill content craft
 
-Cross-cutting habits for what goes in the body, condensed from the agentskills.io guides (linked below for the fuller treatment):
+When available, lean on the /writing-great-skills skill (user-invoked — type its name) for any new skill or non-trivial edit.
+
+Essentials:
+
+- **Skills give agents more predictable behavior** A skill exists to pull determinism out of a stochastic agent. The aim isn't to produce identical output, but to run the same process each time — or reliably understand important context.
+- **Lead with a completion criterion the agent can check.** End a step (or a rule) on a condition that distinguishes done from not-done, and make it exhaustive where it matters ("every modified file accounted for", not "produce a change list"). Vague criteria invite the agent to stop early.
+- **Reach for leading words** — a compact concept the model already holds from pretraining (*tight loop*, *tracer bullet*, *red*, *fog of war*) anchors a whole region of behaviour in one token by recruiting priors the agent already has. Prefer one strong word to a restated triad ("fast, deterministic, low-overhead" → *tight*). It sharpens both execution (same behaviour each time the word appears) and invocation (shared language across prompts/docs makes the agent fire the skill more reliably).
+- **Diagnose with the failure-mode names.** When a skill misbehaves, name what's wrong: *premature completion* (ending a step before it's done — fix the completion criterion first, split the sequence only if that fails), *duplication* (same meaning in two places — costs tokens and inflates its apparent importance), *sediment* (stale layers that pile up because adding feels safe), *sprawl* (too long even when every line is live — cure with progressive disclosure and splitting), *no-op* (a line the agent already obeys by default — pays load to say nothing).
+- **Single source of truth.** Keep each meaning in one authoritative place so changing behaviour is a one-place edit. On the pruning pass, run the no-op test sentence by sentence and delete whole sentences that fail rather than trimming words.
+
+Cross-cutting habits for what goes in the body:
 
 - **Add what the agent lacks, omit what it knows.** Spend tokens on project conventions, domain procedures, non-obvious edge cases, and which exact tool/API to use — not on explaining what a PDF or an HTTP request is. The test per line: would the agent get this wrong without it? If no, cut it.
 - **Provide defaults, not menus.** When several tools or approaches work, pick one and mention alternatives briefly as an escape hatch, rather than listing equals the agent has to choose between.
@@ -176,13 +186,13 @@ metadata:
 
 **Description quoting is required** — always wrap in double quotes. YAML chokes on unquoted descriptions that contain `: ` (colon-space), em dashes, or other special characters. This is a silent failure: the skill file appears valid but bunx can't parse the name and won't find the skill.
 
-**Write the description for routing, not summary.** Its job is to make the model pick this skill at the right moment and skip it otherwise, so spend the words on concrete triggers — what the user says or does, the file types or contexts involved — over a thorough account of what the skill contains. Detail belongs in the body; the description is the matcher. Treat ~200–300 characters as a ceiling rather than a target: shorter is always welcome and often sharper, but don't drop a trigger or a distinction that routing needs just to hit a lower count. (1024 is the hard limit.)
+**Write the description for routing, not summary.** Its job is to make the model pick this skill at the right moment and skip it otherwise, so spend the words on concrete triggers — what the user says or does, the file types or contexts involved — over a thorough account of what the skill contains. Scrutinize whether any detail earns its place. Detailed elaborations belong in the skill body. Treat ~200–300 characters as a ceiling rather than a target: shorter is always welcome and often sharper, but don't drop a trigger or a distinction that routing needs just to hit a lower count. (1024 is the hard limit.)
 
-Phrase it imperatively and from the user's side — "Use when…" over "This skill does…", describing what the user is trying to do rather than the skill's mechanics. Be a little pushy: name the contexts where it applies, including ones where the user won't say the domain outright ("even if they don't mention 'CSV'"). One nuance — agents skip skills for tasks they can already handle in a step or two, so a description earns its trigger on specialized or multi-step work, not trivial one-liners. For systematic tuning (eval queries, train/validation split, trigger-rate loop) see the optimizing-descriptions reference under [Skill content craft](#skill-content-craft), or let `skill-creator` automate it.
+Phrase skill descriptions imperatively and from the user's side — "Use when…" over "This skill does…", describing user intent rather than the skill's mechanics. Be a little pushy: name the contexts where it applies, including ones where the user won't say the domain outright ("even if they don't mention 'CSV'"). Agents skip skills for tasks they can already handle in a step or two, so a description earns its trigger on specialized or multi-step work. For systematic tuning (eval queries, train/validation split, trigger-rate loop) see the optimizing-descriptions reference under [Skill content craft](#skill-content-craft).
 
 `metadata.internal: true` marks personal workflows that are pushed to GitHub but not intended for general use. Use it on any skill that's specifically tuned to Nathan's setup, regardless of which repo it lives in.
 
-**Versioning.** Keep a skill (or agent) at `0.y.z` while it's still in development or dogfooding — not yet in real use. That's what the pre-1.0 range is for in semver: anything can still change. Promote to `1.0.0` once it's actually adopted and stable; after that, bump the minor for new capability and the patch for fixes. This applies to agent files too, which borrow the same `metadata` block for tracking even though their runtime ignores it.
+**Versioning.** Keep a skill (or agent) at `0.y.z` while it's still in development or dogfooding — not yet in real use. That's what the pre-1.0 range is for in semver: anything can still change. Promote to `1.0.0` once it's mature and stable; after that, bump the minor for new capability and the patch for fixes. This applies to agent files too, which borrow the same `metadata` block for tracking even though their runtime ignores it.
 
 **Attribution** uses two fields, by provenance shape:
 
@@ -196,12 +206,24 @@ They can coexist (source for the artifact, credit for the story). When someone e
 Three tiers, two repos:
 
 | Tier | Repo | Visibility | Use for |
-|---|---|---|---|
+|------|------|------------|---------|
 | Public | `agent-stuff` | Public on GitHub, no `internal` flag | Skills genuinely useful to others |
 | Internal-but-public | `agent-stuff` | Public on GitHub, `metadata.internal: true` | Personal workflows that aren't sensitive but aren't general-purpose either |
 | Private | `agent-stuff-private` | Private GitHub remote, `metadata.internal: true` | Career materials, project-specific assistants, anything that shouldn't leave Nathan's environment |
 
 The previous `skills/private/` (gitignored subfolder of agent-stuff) tier is retired — that pattern was fragile (one stray `git add -A` and content leaks) and made cross-machine sync impossible. All formerly-private skills now live in `agent-stuff-private`.
+
+### Writing register per tier
+
+The tier decides who the reader is, so it also decides how specific the prose should be. Match the register to the tier:
+
+- **Public (no `internal` flag)** — write vendor-neutral and user-neutral. The reader is a stranger with their own vault, stack, and conventions. State conventions as general practice, tell the skill to adapt to *the user's* existing setup rather than assuming Nathan's, and give escape hatches ("skip if the target vault stores these as plain strings"). No references to Nathan, his vault paths, his folder names, or his specific tooling.
+
+- **Internal-but-public (`internal: true` in `agent-stuff`)** — Nathan-specific is fine, but write it so a stranger reading it on GitHub can still follow the reasoning and adapt it as an example. This tier is for personal workflows that aren't sensitive and that others might reasonably want to copy or configure for themselves. Name Nathan's conventions concretely, but explain *why* enough that the pattern transfers; don't assume the reader shares his setup silently.
+
+- **Private (`agent-stuff-private`)** — write straight to Nathan's environment with no translation. Hard-code paths, folder names, tool wiring, personal conventions. Nothing here is read by a stranger, so spend zero words generalizing.
+
+The deciding question when a skill is Nathan-specific: is this something others might want to configure for themselves or use as an example (→ internal-but-public), or is it too tied to his private conventions/quirks to want to reveal (→ private)? When a skill mixes a general capability with Nathan-specific conventions, prefer keeping the general capability vendor-neutral in the public skill and pushing the personal layer into a separate private or internal skill, rather than baking his quirks into the reusable one.
 
 ## Migrating a locally-developed skill into a repo
 
@@ -213,6 +235,7 @@ When a skill has been developed directly in `~/.agents/skills/` and needs to mov
 4. Commit and push (private repo: ensure the remote is private)
 5. Trash the local install: `trash ~/.agents/skills/<name>`
 6. Reinstall via bunx from the appropriate slug:
+
    ```bash
    # Public
    bunx skills add nweii/agent-stuff --skill <name> -a claude-code zed -g -y
