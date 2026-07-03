@@ -1,18 +1,18 @@
 ---
 name: things-app
-description: "Read, capture, schedule, and update tasks and projects in Things 3 across three modalities: the `things` CLI on a Mac (full read + write), the `things:///` URL scheme on any device including iPhone, and email-to-Things for headless capture; if a Things MCP is connected, prefer it for full read + write from anywhere. Use to add todos, build a project, show Today/Inbox, find tagged tasks, or schedule from desktop, phone, or a serverless routine."
+description: "Read, capture, schedule, and update tasks and projects in Things 3. Prefer the `things` CLI whenever there's command-line access to Things; otherwise use a connected Things MCP for headless or remote environments (full read + write, any device), the `things:///` URL scheme (any device with Things, write-only), or email-to-Things for unattended capture. Use to add todos, build a project, show Today/Inbox, find tagged tasks, or schedule from desktop, phone, or a serverless routine."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   source: ossianhempel/things3-cli
   credit: "CLI skill adapted from Peter Steinberger (@steipete); wraps ossianhempel/things3-cli and the Things 3 URL scheme by Cultured Code."
 ---
 
 # Things 3
 
-Drive Things 3 (tasks, projects, areas) through whichever of three modalities fits the environment: the `things` CLI (desktop, full read + write), the `things:///` URL scheme (any device with Things, write-only), or email-to-Things (unattended, Inbox-only capture).
+Drive Things 3 (tasks, projects, areas) through whichever modality fits the environment. Prefer the **`things` CLI** whenever there's command-line access to Things — it reads and writes the local database directly, so it's fast and needs no network round-trip. Where there's no CLI access, the fallbacks are: a connected **Things MCP** (full read + write that syncs across devices, from anywhere), the `things:///` URL scheme (any device with Things, write-only), and email-to-Things (unattended, Inbox-only capture).
 
-If the environment exposes a **Things MCP** — a self-hosted server, or an official one Cultured Code may ship — prefer it: an MCP gives full read + write that syncs across devices, the role the CLI plays locally but reachable from anywhere. Match its tools by their `things_*` base names; the MCP host prepends its own namespace, so the full identifier varies by client.
+A **Things MCP** — a self-hosted server, or an official one Cultured Code may ship — plays the role the CLI plays locally, but reachable from anywhere, so it's the first fallback when there's no command-line access. Match its tools by their `things_*` base names; the MCP host prepends its own namespace, so the full identifier varies by client.
 
 ## Pick a modality first
 
@@ -26,8 +26,8 @@ The real axis is **attended vs unattended**, not headless. A headless session so
 
 Decision rules:
 
-- **If a Things MCP is connected → use it.** Some setups expose Things through an MCP server (self-hosted, or a future official one); its `things_*` tools give full read + write that syncs across devices, with no Mac or device interaction required. Prefer it when present; the modalities below are the fallback for environments without one.
-- **On a Mac → use the CLI.** The only modality that can READ Things state (Inbox, Today, search, projects, areas, tags), and it does the full write surface. Default here.
+- **Command-line access to Things (a terminal with the local Things database) → use the CLI.** The default: reads (Inbox, Today, search, projects, areas, tags) and the full write surface, all against the local DB.
+- **No CLI access, but a Things MCP is connected → use it.** Some setups expose Things through an MCP server (self-hosted, or a future official one); its `things_*` tools give full read + write that syncs across devices, with no Mac or device interaction required. The path for headless, remote, or cloud-routine environments.
 - **No terminal, but the user can act on the output → build a URL.** You construct the `things:///...` link; the user (or an iOS Shortcut) opens it on a device with Things to execute. This holds even when the agent itself is headless — being headless doesn't rule out the URL scheme; only the absence of anyone to open the link does. The mobile and attended-remote write/schedule path.
 - **Fully unattended (a remote/NAS routine with no one watching) → email-to-Things.** The only path that needs neither a Mac nor a human. Lands in the Inbox only — no scheduling, no project placement, no updates. Good for dropping raw captures that get triaged later on desktop.
 
