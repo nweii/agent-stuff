@@ -63,6 +63,7 @@ tags: [index, {relevant topical tags, drawn from the grouped notes}]
 
 #### Description guidelines
 
+- Describe the bucket, not the current members. A topic note's membership grows over time, so the description must stay true as notes accumulate: name the theme and its recurring dimensions, never specific member notes, sources, examples, or events ("performance as a product-feel discipline, not just an engineering fix" — not "Linear and Raycast breakdowns, parser speedups"). If a detail would go stale when ten more notes join, it doesn't belong.
 - Synthesize a shorthand summary that captures what connects the grouped notes
 - Use terse telegraphic style: semicolons, commas, dashes over conjunctive adverbs
 - Stay under 200 characters when possible
