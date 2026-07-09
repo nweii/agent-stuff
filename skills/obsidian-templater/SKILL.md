@@ -1,10 +1,10 @@
 ---
 name: obsidian-templater
-description: "Help with templates/snippets for the Obsidian Templater plugin. Use to help generate Obsidian templates from natural language, understand and debug existing tp.* snippets, and adapt vault notes and workflows to Templater when users mention Templater, tp.*, or <% %>."
+description: "Help with templates/snippets for the Obsidian Templater plugin. Use to help generate Obsidian templates from natural language, understand and debug existing tp.* snippets, and adapt vault notes and workflows to Templater when users mention Templater, tp.*, templater syntax."
 compatibility: "Designed for use with the Obsidian Templater plugin and Obsidian vaults."
 metadata:
   author: nweii
-  version: "1.0.2"
+  version: "1.0.3"
 ---
 
 # Templater template generation
@@ -13,13 +13,13 @@ Templater is an Obsidian plugin for dynamic note templates. Commands embedded in
 
 ## Core template syntax
 
-| Tag                 | Behavior                                         |
-| ------------------- | ------------------------------------------------ |
-| `<% expression %>`  | Outputs the result of the expression             |
-| `<%* code %>`       | Executes JS code; no output by default           |
+| Tag | Behavior |
+|-----|----------|
+| `<% expression %>` | Outputs the result of the expression |
+| `<%* code %>` | Executes JS code; no output by default |
 | `<%+ expression %>` | Re-evaluated in preview mode (deprecated, avoid) |
-| `<%-` / `-%>`       | Trims one newline before/after the tag           |
-| `<%_` / `_%>`       | Trims all whitespace before/after the tag        |
+| `<%-` / `-%>` | Trims one newline before/after the tag |
+| `<%_` / `_%>` | Trims all whitespace before/after the tag |
 
 To output from a `<%* %>` execution block, append to the special `tR` string:
 
