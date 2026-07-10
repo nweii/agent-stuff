@@ -6,7 +6,7 @@ model: sonnet
 argument-hint: "Note title(s)"
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Summarize frontmatter
@@ -126,7 +126,7 @@ For periodic notes in meta mode (rare, but possible if requested): focus on doma
 
 ## Output
 
-Stay under 1024 characters for the description value; avoid paragraph length.
+Fit the length to what the note holds: as a soft default, aim for roughly 150–250 characters (a sentence or two), and go well under for a simple or sparse note — never pad to fill space. Treat that as a starting point and adjust to the note and to how the user works with descriptions in their own system. Stay well under 1024 characters; avoid paragraph length.
 
 ## Frontmatter placement
 
