@@ -3,7 +3,7 @@ name: set-note-description
 description: "Generate or update the description frontmatter property for a note. Selects Summary mode or Meta mode based on content type. Use when asked to create a description frontmatter summary for a note."
 context: fork
 model: sonnet
-argument-hint: "[note-title]"
+argument-hint: "Note title(s)"
 metadata:
   author: nweii
   version: "1.2.0"
