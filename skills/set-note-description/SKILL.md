@@ -2,11 +2,11 @@
 name: set-note-description
 description: "Generate or update the description frontmatter property for a note. Selects Summary mode or Meta mode based on content type. Use when asked to create a description frontmatter summary for a note."
 context: fork
-model: haiku
+model: sonnet
 argument-hint: "[note-title]"
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Summarize frontmatter
@@ -87,9 +87,9 @@ Default to summary. Capturing what's actually there is more useful than a vague 
 
 ## Summary mode
 
-Create a concise 1-2 sentence summary crystallizing what the content says—insights, conclusions, main points. For logs, include memorable events, proper nouns, and landmarks that jog memory. For exploratory content, capture main themes.
+In a sentence or two, summarize what the content says or what happened: the crystallized takeaways, plus the concrete names, events, and small details that anchor recall. For exploratory content, capture the main themes.
 
-Write in telegraphic style: use semicolons, commas, and dashes to separate ideas rather than conjunctive adverbs or transition words (avoid "followed by", "and then", "however", "moreover" etc. unless truly needed for comprehension). Substance over connective tissue.
+Keep it plain and light. Lead with the thing itself, not an evaluative or framing opener ("Productive morning…", "A day spent…"). Trim articles and filler at the word level, but keep plain sentences over dense semicolon-stacked fragments. Avoid connective adverbs ("followed by", "then", "however") and narrative arc (causation, resolution); capture the essence, not exhaustive detail.
 
 For periodic notes:
 
@@ -101,7 +101,7 @@ For periodic notes:
 
 - `"Timeline padding 20-30% prevents Acme Corp delays; upfront alignment with Sarah's team saves more time than detailed technical planning."`
 - `"Struggling to delegate Marcus's onboarding—equate doing it myself with caring; reframe delegation as trust-building."`
-- `"Productive morning on Shopify integration; afternoon derailed—AWS outage, mom's appointment; Kleppmann reading exposed distributed systems gaps."`
+- `"Shopify integration through the morning; afternoon lost to an AWS outage and a family appointment. Kleppmann reading surfaced gaps in distributed systems."`
 
 ---
 
