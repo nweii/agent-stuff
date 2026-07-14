@@ -4,7 +4,7 @@ description: "Use when the user wants Codex to handle a task from Claude Code: i
 compatibility: "Designed for Claude Code. Requires the Codex CLI, authenticated with a ChatGPT subscription or an OpenAI API key, plus OpenAI's Codex plugin installed from the openai-codex marketplace. Dispatches that run shell network commands also need network_access enabled in Codex's own config; web search needs nothing extra."
 metadata:
   author: nweii
-  version: "0.1.0"
+  version: "0.2.0"
   source: openai/codex-plugin-cc
 ---
 
@@ -15,6 +15,8 @@ A dispatch is one complete, self-contained prompt sent to Codex. Give it the del
 Use the companion as the contract. The companion speaks Codex `app-server` JSON-RPC over a socket through a persistent broker, which provides resumable threads, background jobs, and structured review output. `codex exec` bypasses that broker, loses those, and has no remaining advantage.
 
 ## Send a dispatch
+
+The plugin's `codex:*` surfaces are designed entry points the main thread reaches on its own: the `codex-rescue` subagent, and the `review`, `adversarial-review`, and `setup` companion subcommands the commands wrap. Prefer one when the task carries little session context and ergonomics beat a hand-tuned brief: `setup` for readiness, `review` or `adversarial-review` for a structured pass, the subagent for a quick throw-over. Author the `task` prompt yourself when the brief benefits from folding in the session's skills, conventions, and decisions.
 
 The main thread writes the prompt, chooses the scope, submits the dispatch, pulls its result, and verifies the outcome. The `codex:codex-rescue` subagent is a pipe by design: its instructions confine it to forwarding one `task` call and returning stdout verbatim, and bar it from inspecting the repository, polling status, or fetching results. Treat that as its contract rather than a guarantee, and keep inspection, polling, result retrieval, and follow-up work in the main thread.
 
