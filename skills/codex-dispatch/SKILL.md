@@ -4,7 +4,7 @@ description: "Use when the user wants Codex to handle a task from Claude Code: i
 compatibility: "Designed for Claude Code. Requires the Codex CLI, authenticated with a ChatGPT subscription or an OpenAI API key, plus OpenAI's Codex plugin installed from the openai-codex marketplace. Dispatches that run shell network commands also need network_access enabled in Codex's own config; web search needs nothing extra."
 metadata:
   author: nweii
-  version: "0.2.2"
+  version: "0.2.3"
   source: openai/codex-plugin-cc
 ---
 
@@ -97,12 +97,12 @@ These instructions were verified against codex plugin 1.0.0 and codex-cli 0.144.
 
 `task` produces a named, resumable thread visible in the Codex app at `codex://threads/<id>`, and `--resume-last` continues it. Every delegation therefore leaves an inspectable record outside Claude Code.
 
-The companion prints `Thread ready (<id>)` as the thread opens, ahead of the work. As soon as that line appears, give the user a clickable recovery link in this exact form:
+The companion prints `Thread ready (<id>)` as the thread opens, ahead of the work. As soon as that line appears, give the user the raw recovery URI in this exact form:
 
-```md
-Codex task: [Open in Codex](codex://threads/<id>)
+```text
+Codex task: codex://threads/<id>
 ```
 
-Do this for foreground and background dispatches. Repeat the same link with the terminal result so it remains recoverable after the progress output scrolls away. A `task` dispatch is not fully handed off until the user has received its link.
+Do this for foreground and background dispatches. Repeat the same URI with the terminal result so it remains recoverable after the progress output scrolls away. A `task` dispatch is not fully handed off until the user has received its URI.
 
 The app is an optional viewer: where it is absent (a headless box), the thread still opens and resumes, so inspect it with `status` and `result` in place of the GUI. `review` and `adversarial-review` are ephemeral by design and leave no visible thread, so a missing thread after a review is not a failure. Raw `codex exec` leaves no app-server thread at all.
