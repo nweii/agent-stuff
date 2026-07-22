@@ -51,7 +51,7 @@ All frontmatter fields for `SKILL.md`:
 ```yaml
 metadata:
   author: nweii # GitHub username; use someone else's username if this is primarily their work
-  version: "1.0.0" # semver, matched to the skill's changelog.md if one exists
+  version: "1.0.0" # semver
   source:
     skills/some-skill # relative GitHub path to skill folder if using their username as author;
     # full URL if using your own username as author
@@ -59,7 +59,7 @@ metadata:
 ```
 
 - `author` — typically a GitHub username. Use the original author's username if the skill is primarily their work.
-- `version` — semver string. Increment it alongside the skill's `changelog.md` when one exists.
+- `version` — semver string. Increment it for meaningful changes to the skill.
 - `source` — attribution link to the upstream skill. Use a GitHub-relative path when `author` is set to the upstream author's username; use the full URL when `author` is set to your own username.
 - `internal` — boolean flag; **only include this key when the value is `true`**. Applies to anything in the gitignored `skills/private/` subfolder, or public skills that are really internal workflows not intended for outside use.
 

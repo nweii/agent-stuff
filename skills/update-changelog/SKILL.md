@@ -1,9 +1,9 @@
 ---
 name: update-changelog
-description: "Add or revise entries in a Keep-a-Changelog-format changelog.md, including version bumps and change-type groupings. Use when the user says 'update the changelog', 'log this change', 'bump the changelog', or after a notable edit in a skill or project that has a changelog.md."
+description: "Add or revise a project's Keep-a-Changelog-format changelog, including version bumps and change-type groupings. Use when the user says 'update the changelog', 'log this change', or 'bump the changelog' for a project or plugin."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Update Changelog
@@ -14,7 +14,6 @@ Update changelog files following [Keep a Changelog](https://keepachangelog.com) 
 
 ```
 /update-changelog <version> <change_type> <message>
-/update-changelog <skill_path> <version> <change_type> <message>
 ```
 
 ## Parameters
@@ -22,7 +21,6 @@ Update changelog files following [Keep a Changelog](https://keepachangelog.com) 
 - `<version>`: Version number (e.g., "1.1.0")
 - `<change_type>`: One of: "added", "changed", "deprecated", "removed", "fixed", "security"
 - `<message>`: Description of the change
-- `<skill_path>` (optional): Path to skill folder for skill changelogs
 
 ## Process
 
@@ -54,6 +52,6 @@ Update changelog files following [Keep a Changelog](https://keepachangelog.com) 
 
 ---
 
-## Skill & Plugin Changelogs
+## Plugin changelogs
 
-For skill-specific conventions (updating `metadata.version` in SKILL.md) or plugin changelog formats, see [skill-plugin-conventions.md](skill-plugin-conventions.md).
+For plugin changelog formats, see [skill-plugin-conventions.md](skill-plugin-conventions.md).
