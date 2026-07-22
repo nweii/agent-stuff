@@ -4,7 +4,6 @@ description: "Operate a tirith setup — the terminal command analyzer guarding 
 metadata:
   author: nweii
   version: "1.0.0"
-  internal: true
 ---
 
 # tirith-config
