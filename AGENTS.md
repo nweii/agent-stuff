@@ -17,6 +17,12 @@ agent-stuff/
 └── scripts/          # Catalog + zip build scripts (run by the pre-commit hook)
 ```
 
+## Reference skills
+
+- Read `nweii-skills` before creating, editing, migrating, or installing skills.
+- If `nweii-loops` is available, read it before working on scheduled tasks, routines, or recurring automations.
+- Treat those skills as the sources of truth. Do not duplicate their conventions here.
+
 ## Creating skills
 
 Use `templates/SKILL_TEMPLATE.md` as a starting point. Key requirements:
