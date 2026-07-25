@@ -47,16 +47,38 @@ To update a specific skill, run `skills add` again with the same skill.
 
 ### Internal skills
 
-Skills under the **Internal** heading in the catalog below have `metadata.internal: true` set — they're personal workflows tied to my own setup (vault paths, tools, naming conventions). You can still install them, but expect to tweak SKILL.md to fit your own folders, tool stack, and conventions before they're useful. They're also excluded from the `zips/` mirror, so as not to encourage dropping them in unmodified.
+Skills under the **Internal** heading in the catalog below have `metadata.internal: true` set — they're personal workflows tied to my own setup (vault paths, tools, naming conventions). They're excluded from the `zips/` mirror.
 
-The `skills` CLI treats internal skills differently:
+#### Install it as-is
 
-- `bunx skills add nweii/agent-stuff` (no `--skill` flag) **skips** internal skills. To install one, name it explicitly with `--skill [skill-name]`.
-- `bunx skills update` **silently skips** internal skills (you'll see "Failed to update" with no detail). To refresh an installed internal skill after a repo change, re-run `add` with `--skill` — it overwrites in place, and naming the skill installs it despite the internal flag:
+Some of them don't hardcode anything of mine — they assume a convention (a `related` property, a daily/weekly note hierarchy) or a tool (Granola MCP, `gh`) and otherwise work anywhere. If nothing in the SKILL.md names a folder or template you don't have, just install it:
 
-  ```bash
-  bunx skills add nweii/agent-stuff --skill [skill-name]
-  ```
+```bash
+bunx skills add nweii/agent-stuff --skill [skill-name]
+```
+
+Two CLI behaviors to know about:
+
+- `bunx skills add nweii/agent-stuff` (no `--skill` flag) **skips** internal skills — naming one is what opts it in.
+- `bunx skills update` **silently skips** internal skills (you'll see "Failed to update" with no detail). To refresh one after a repo change, re-run `add` with `--skill` — it overwrites in place.
+
+For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s [skill-name]` prints it as a ready-to-paste prompt without installing anything.
+
+#### Tailor a copy
+
+For the ones carrying my folder structure and template names throughout, have your agent read mine and write you your own version instead of installing and then editing:
+
+```
+Read skills/[skill-name]/SKILL.md from the github.com/nweii/agent-stuff repo —
+use a local checkout if there's one on this machine, otherwise fetch it.
+It's written for someone else's setup, so some of the folder paths, tools, and
+naming conventions in it won't match mine. List what you'd need to substitute,
+ask me about anything you can't infer from my environment, then write the
+tailored version into my skills directory under a name of my choosing. Leave
+everything that isn't setup-specific alone. Don't install the original.
+```
+
+Giving your copy its own name keeps a later `add` or `update` from overwriting it.
 
 ---
 
