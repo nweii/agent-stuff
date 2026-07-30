@@ -49,7 +49,8 @@ To update a specific skill, run `skills add` again with the same skill.
 
 Skills under the **Internal** heading in the catalog below have `metadata.internal: true` set — they're personal workflows tied to my own setup (vault paths, tools, naming conventions). They're excluded from the `zips/` mirror.
 
-#### Install it as-is
+<details>
+<summary><strong>Install it as-is</strong> — when the skill's assumptions already match your setup</summary>
 
 Some of them don't hardcode anything of mine — they assume a convention (a `related` property, a daily/weekly note hierarchy) or a tool (Granola MCP, `gh`) and otherwise work anywhere. If nothing in the SKILL.md names a folder or template you don't have, just install it:
 
@@ -64,21 +65,28 @@ Two CLI behaviors to know about:
 
 For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s [skill-name]` prints it as a ready-to-paste prompt without installing anything.
 
-#### Tailor a copy
+</details>
+
+<details>
+<summary><strong>Tailor a copy</strong> — when it carries folder conventions you don't share</summary>
 
 For the ones carrying my folder structure and template names throughout, have your agent read mine and write you your own version instead of installing and then editing:
 
 ```
 Read skills/[skill-name]/SKILL.md from the github.com/nweii/agent-stuff repo —
-use a local checkout if there's one on this machine, otherwise fetch it.
-It's written for someone else's setup, so some of the folder paths, tools, and
-naming conventions in it won't match mine. List what you'd need to substitute,
-ask me about anything you can't infer from my environment, then write the
-tailored version into my skills directory under a name of my choosing. Leave
-everything that isn't setup-specific alone. Don't install the original.
+use a local checkout if there's one on this machine, otherwise fetch it. It's
+one of that repo's internal skills, written for someone else's setup, so some
+of the folder paths, tools, and naming conventions in it won't match mine.
+List what you'd need to substitute, ask me about anything you can't infer from
+my environment, then write the tailored version into my skills directory under
+a name of my choosing, with `metadata.source: nweii/agent-stuff` in its
+frontmatter. Leave everything that isn't setup-specific alone. Don't install
+the original.
 ```
 
 Giving your copy its own name keeps a later `add` or `update` from overwriting it.
+
+</details>
 
 ---
 
