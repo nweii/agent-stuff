@@ -3,7 +3,7 @@ name: things-app
 description: "Read, capture, schedule, and update tasks and projects in Things 3. Prefer the `things` CLI whenever there's command-line access to Things; otherwise use a connected Things MCP for headless or remote environments (full read + write, any device), the `things:///` URL scheme (any device with Things, write-only), or email-to-Things for unattended capture. Use to add todos, build a project, show Today/Inbox, find tagged tasks, or schedule from desktop, phone, or a serverless routine."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
   source: ossianhempel/things3-cli
   credit: "CLI skill adapted from Peter Steinberger (@steipete); wraps ossianhempel/things3-cli and the Things 3 URL scheme by Cultured Code."
 ---
@@ -38,17 +38,14 @@ Two values are specific to the user's Things setup:
 - **Auth token** — needed only for commands that modify existing data (`update`, `update-project`, `json` with an `update` op); plain `add` / `add-project` / `add-area` don't. Things → Settings → General → Enable Things URLs → **Manage**.
 - **Mail-to-Things address** — the capture address for the email modality. Things → Settings → **Mail to Things**.
 
-Resolve each at use time: env var first (`THINGS_AUTH_TOKEN`, `THINGS_EMAIL`), then the inline values below, then ask. Never invent one; never echo either into output, commits, or logs.
+Resolve each at use time: env var first (`THINGS_AUTH_TOKEN`, `THINGS_EMAIL`), then private hosted configuration, then ask. Never invent one; never echo either into output, commits, or logs.
 
 In a shell, these belong in the shell profile so an update can't overwrite them; the `things` CLI reads `THINGS_AUTH_TOKEN` on its own:
 
     export THINGS_AUTH_TOKEN=…
     export THINGS_EMAIL=…@things.email
 
-As a hosted skill (Claude.ai, ChatGPT) there's no shell and nothing overwrites the file — paste the values here instead:
-
-    THINGS_AUTH_TOKEN =
-    THINGS_EMAIL      =
+In hosted environments, check for `things.local.md` in the skill folder and apply any configuration it contains before asking the user for missing values. This file belongs only in the user's personal copy of the skill; do not commit, share, or redistribute it.
 
 ---
 
