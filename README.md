@@ -79,9 +79,9 @@ one of that repo's internal skills, written for someone else's setup, so some
 of the folder paths, tools, and naming conventions in it won't match mine.
 List what you'd need to substitute, ask me about anything you can't infer from
 my environment, then write the tailored version into my skills directory under
-a name of my choosing, with `metadata.source: nweii/agent-stuff` in its
-frontmatter. Leave everything that isn't setup-specific alone. Don't install
-the original.
+a name of my choosing, with a `metadata.credit` line in its frontmatter noting
+what it was adapted from. Leave everything that isn't setup-specific alone.
+Don't install the original.
 ```
 
 Giving your copy its own name keeps a later `add` or `update` from overwriting it.
