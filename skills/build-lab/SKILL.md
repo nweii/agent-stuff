@@ -1,5 +1,5 @@
 ---
-name: lab-shell
+name: build-lab
 description: "Set up a /lab section in a website — a sidebar-navigated home for durable design experiments (tuning panels, prototypes) — or add a new lab to one. Use when the user wants a lab endpoint, experiment shell, or prototyping wing in a web project."
 disable-model-invocation: true
 metadata:
