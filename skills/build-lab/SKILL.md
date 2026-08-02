@@ -1,6 +1,6 @@
 ---
 name: build-lab
-description: "Set up a /lab section in a website — a sidebar-navigated home for durable design experiments (tuning panels, prototypes) — or add a new lab to one. Use when the user wants a lab endpoint, experiment shell, or prototyping wing in a web project."
+description: "Set up a /lab section in a website: a sidebar-navigated home for durable design experiments (tuning panels, prototypes), plus the agents-file conventions that make future lab authoring work. Use when the user wants a lab endpoint, experiment shell, or prototyping wing in a web project."
 disable-model-invocation: true
 metadata:
   author: nweii
@@ -14,7 +14,7 @@ A **lab** is a durable experiment surface inside a website the user runs: a page
 
 Labs are the opposite of throwaway prototypes. Never delete a lab; a settled exploration gets annotated (status, winning variant), not cleaned up. This posture is the load-bearing decision — everything else follows from it.
 
-This skill has two branches. **Scaffold** installs the shell into a project; **author** adds a lab to an existing shell. If the project has no `app`-style routing or the user wants a standalone playground, the host can be a bare app whose only content is `/lab` — the pattern is unchanged.
+This skill is for **setup**: it installs the shell and teaches the host repo the vocabulary. Day-to-day lab authoring is then driven by the section it writes into the project's agents file — after setup, "make me a lab for X" needs no skill at all. If the project has no `app`-style routing or the user wants a standalone playground, the host can be a bare app whose only content is `/lab` — the pattern is unchanged.
 
 ## The conventions (both branches rest on these)
 
@@ -27,7 +27,7 @@ This skill has two branches. **Scaffold** installs the shell into a project; **a
 - **Public, unlinked, unindexed** by default: no links from the main site, `noindex` metadata, absent from any sitemap. Access control, when wanted, is infrastructure in front of the path (Cloudflare Access or equivalent) — never auth code in the app.
 - **Variants** inside a lab use a `?v=<name>` search param. Variants diverge on a nameable axis (layout, density, personality, motion) and get real names, never "Option A/B/C". Losing variants stay, marked in metadata.
 
-## Branch: scaffold the shell
+## Setup
 
 Read [references/nextjs-scaffold.md](references/nextjs-scaffold.md) before writing code — it holds the concrete module shapes and the gotchas that cost real debugging time. For a non-Next host, translate its shapes; the conventions above are framework-neutral.
 
@@ -39,12 +39,3 @@ Read [references/nextjs-scaffold.md](references/nextjs-scaffold.md) before writi
 6. **Verify**: registry tests green, production build green, every migrated lab loads in a browser with a clean console, and the lab index responds with `noindex` in its rendered head.
 
 Completion criterion: every experiment page the recon found is reachable from the sidebar, the agents-file section exists, and the verification list above passes.
-
-## Branch: author a lab
-
-1. Create the folder and file split inside the lab directory. Confirm it appears in the sidebar with zero registration.
-2. Wire controls. For continuous parameter tuning, use the project's control-panel library if one is present (e.g. dialkit, leva); import defaults from the production module under test. For discrete design directions, use `?v=` variants with named axes.
-3. If the lab settles a decision, add or update its `meta` module (status, winner) and apply accepted values back to production — the lab then shows production's new defaults, closing the loop.
-4. A lab worth revisiting is worth annotating: title and one-line description in `meta` once the lab is more than a scratch page.
-
-Completion criterion: the lab renders inside the shell, its controls change what's on screen, and its defaults come from (not copies of) production values.

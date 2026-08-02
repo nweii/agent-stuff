@@ -31,5 +31,14 @@ Conventions:
 
 The registry (`[lib/lab-registry.ts]`) is a pure, tested module — keep the test
 suite green after changes. Variant exploration inside a lab uses a `?v=` search
-param with named variants that diverge on a stated axis.
+param with named variants that diverge on a stated axis (layout, density,
+personality, motion) — real names, never "Option A/B/C"; losing variants stay.
+
+Authoring a new lab: create the folder and file split (it appears in the
+sidebar with no registration), wire controls with [the project's control-panel
+library] importing defaults from the production module under test, and verify
+the controls change what's on screen. When a lab settles a decision, apply the
+accepted values back to the production source, then mark its `[meta.ts]`
+(status, winner) — the lab now shows production's new defaults, closing the
+loop.
 ```
