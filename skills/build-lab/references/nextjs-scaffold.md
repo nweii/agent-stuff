@@ -46,7 +46,7 @@ export type LabNavItem = LabMeta & {
   modified?: string;
 };
 
-/** Sentence-cases a folder slug: "hero-shader" → "Hero shader". */
+/** Sentence-cases a folder slug: "color-picker" → "Color picker". */
 export function titleFromSlug(slug: string): string {
   const words = slug.replace(/-/g, " ").trim();
   return words.charAt(0).toUpperCase() + words.slice(1);
