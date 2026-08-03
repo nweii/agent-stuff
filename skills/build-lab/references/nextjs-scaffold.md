@@ -68,7 +68,7 @@ export function buildLabRegistry(entries: LabEntry[]): LabNavItem[] {
 }
 ```
 
-Keep exactly **one** sort implementation. The registry preserves input order; whatever renders the nav owns ordering (a client sort by mtime/name, a user preference). A registry that also sorts is dead code the moment the nav re-sorts — this was a real review finding, not a hypothetical.
+Keep exactly **one** sort implementation. The registry preserves input order; whatever renders the nav owns ordering (a client sort by mtime/name, a user preference). A registry that also sorts is dead code the moment the nav re-sorts.
 
 Test exactly this module's external behavior: slug fallback, input-order preservation, metadata passthrough, no `undefined` keys. Also give the loader a small contract test against the real lab folder (every entry's folder has a page, every `modified` parses). Nothing else in the shell needs tests.
 
@@ -78,8 +78,14 @@ Test exactly this module's external behavior: slug fallback, input-order preserv
 const LAB_DIR = path.join(process.cwd(), "app", "lab");
 
 export async function loadLabEntries(): Promise<LabEntry[]> {
+  // A lab is a folder with a page.tsx — asset folders and strays are not entries.
   const dirs = fs.readdirSync(LAB_DIR, { withFileTypes: true })
-    .filter((e) => e.isDirectory()).map((e) => e.name);
+    .filter(
+      (e) =>
+        e.isDirectory() &&
+        fs.existsSync(path.join(LAB_DIR, e.name, "page.tsx")),
+    )
+    .map((e) => e.name);
   return Promise.all(dirs.map(async (slug) => {
     if (!fs.existsSync(path.join(LAB_DIR, slug, "meta.ts"))) return { slug };
     const meta = (await import(`./${slug}/meta.ts`)).default as LabMeta;
@@ -88,7 +94,9 @@ export async function loadLabEntries(): Promise<LabEntry[]> {
 }
 ```
 
-Only folders bearing a `page.tsx` become entries — a stray asset folder must not appear as a dead nav link. The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty. Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort; guard the empty-folder case (`Math.max()` of no files is `-Infinity`, which throws when stamped into a Date), and know the sort is meaningful locally only — deploy checkouts flatten mtimes.
+- The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty.
+- Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort. Guard the empty-folder case: `Math.max()` of no files is `-Infinity`, which throws when stamped into a Date.
+- The mtime sort is meaningful locally only — deploy checkouts flatten mtimes.
 
 ## The layout
 
@@ -99,7 +107,7 @@ export const metadata: Metadata = { title: "Lab", robots: { index: false, follow
 
 No sitemap entry, no links from the main site. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), not a per-request check — request-time APIs in the layout would force every lab route dynamic.
 
-## Gotchas (each cost real debugging time)
+## Gotchas
 
 - **The shell must not paint over labs.** Content-pane wrappers often ship an opaque background (shadcn's `SidebarInset` has `bg-background`). A lab that renders a `fixed` backdrop at negative z-index gets covered: positioned ancestors paint after root-level negative-z elements. Make the inset `bg-transparent`; the page body's background is the canvas.
 - **The sidebar needs its own background behind its border.** If only an inner element carries the fill, the 1px border column is transparent to the body behind it and reads as a dark seam. Put the background on the bordered container.
