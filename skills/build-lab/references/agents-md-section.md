@@ -21,8 +21,8 @@ Conventions:
 - **File split**: `[page.tsx]` (thin server wrapper) + `[lab.tsx]` (client
   component with the controls).
 - **Optional `[meta.ts]`**: default-exports a `[LabMeta]` (`[lib/lab-registry.ts]`)
-  — title, description, date, status (`tuning`/`settled`/`superseded`), outcome
-  (what it settled on). Absent meta falls back to the folder slug.
+  — title, description, date, outcome (a short note on what the lab decided).
+  Absent meta falls back to the folder slug.
 - **Defaults flow from production**: a tuning lab imports its defaults from the
   module it tunes; accepted values travel back via [the control panel's
   copy-to-clipboard], applied by an agent.
@@ -38,7 +38,7 @@ Authoring a new lab: create the folder and file split (it appears in the
 sidebar with no registration), wire controls with [the project's control-panel
 library — e.g. dialkit] importing defaults from the production module under test, and verify
 the controls change what's on screen. When a lab settles a decision, apply the
-accepted values back to the production source, then mark its `[meta.ts]`
-(status, outcome) — the lab now shows production's new defaults, closing the
-loop.
+accepted values back to the production source, then record the decision as the
+outcome note in its `[meta.ts]` — the lab now shows production's new defaults,
+closing the loop.
 ```

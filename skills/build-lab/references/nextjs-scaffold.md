@@ -25,14 +25,11 @@ lib/lab-registry.test.ts
 This module is framework-neutral — use it verbatim:
 
 ```ts
-export type LabStatus = "tuning" | "settled" | "superseded";
-
 export type LabMeta = {
   title?: string;
   description?: string;
   /** ISO date (YYYY-MM-DD): when the lab started, or was last meaningfully revisited. */
   date?: string;
-  status?: LabStatus;
   /** What the exploration settled on — a variant name or a short phrase. */
   outcome?: string;
 };

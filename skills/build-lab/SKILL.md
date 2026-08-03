@@ -12,7 +12,7 @@ metadata:
 
 A **lab** is a durable experiment surface inside a website the user runs: a page where a design idea gets built against real production components, tuned with live controls, and then *kept* — as an instrument to revisit and as design history. The `/lab` section is the wing of the site that holds them, with a sidebar to move between labs.
 
-Labs are the opposite of throwaway prototypes. Never delete a lab — keep every lab, and record what a settled exploration decided in its metadata (status, outcome).
+Labs are the opposite of throwaway prototypes. Never delete a lab — keep every lab, and record what a settled exploration decided in its metadata (the outcome note).
 
 This skill is for **setup**: it installs the shell and teaches the host repo the vocabulary. Day-to-day lab authoring is then driven by the section it writes into the project's agents file — after setup, "make me a lab for X" needs no skill at all. If the project has no `app`-style routing or the user wants a standalone playground, the host can be a bare app whose only content is `/lab`.
 
@@ -22,7 +22,7 @@ Canonical statement of the pattern. The agents-file template restates these for 
 
 - **Folder = lab.** A new folder with a page inside the lab directory appears in the sidebar automatically. No registration step, ever.
 - **File split**: a thin server/route wrapper (`page`) plus a client component holding the experiment and its controls (`lab`).
-- **Optional metadata**: a lab may carry a small `meta` module — title, description, date, status (`tuning` / `settled` / `superseded`), outcome (what it settled on). Absent metadata falls back to the folder slug. Metadata is never required.
+- **Optional metadata**: a lab may carry a small `meta` module — title, description, date, outcome (a short note on what the lab decided, written once when accepted values go back to production; its absence just means the lab hasn't decided anything). Absent metadata falls back to the folder slug. Metadata is never required — there is deliberately no status field to keep fresh.
 - **Defaults flow from production.** A tuning lab imports its starting values from the production module it tunes, so the lab can never drift from what ships. Accepted values travel back by copying the control panel's output and applying it to the production source — so whatever control-panel library is chosen must export its current values in copyable form.
 - **The dependency points one way.** The shell reads labs' metadata; labs stay independent of shell components, so swapping shells touches zero labs.
 - **Labs own their canvas.** The shell stays background-free edge to edge; an opaque shell layer silently covers labs that paint fixed or negative-z backdrops.
