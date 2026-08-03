@@ -27,7 +27,7 @@ Canonical statement of the pattern. The agents-file template restates these for 
 - **The dependency points one way.** The shell reads labs' metadata; labs stay independent of shell components, so swapping shells touches zero labs.
 - **Labs own their canvas.** The shell stays background-free edge to edge; an opaque shell layer silently covers labs that paint fixed or negative-z backdrops.
 - **Direct-access section**: `noindex` metadata, absent from the sitemap and the main site's navigation — reachable by URL. Access control, when wanted, lives in infrastructure in front of the path (Cloudflare Access or equivalent).
-- **Variants** inside a lab use a `?v=<name>` search param, each named for the axis it diverges on (layout, density, personality, motion). Variants that don't get adopted stay, marked in metadata.
+- **Variants** inside a lab use a `?v=<name>` search param, each named for the axis it diverges on (layout, density, personality, motion). Variants that don't get adopted stay; the outcome note names the one that did.
 
 ## Shell design defaults
 
