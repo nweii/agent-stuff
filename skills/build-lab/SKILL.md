@@ -12,7 +12,7 @@ metadata:
 
 A **lab** is a durable experiment surface inside a website the user runs: a page where a design idea gets built against real production components, tuned with live controls, and then *kept* — as an instrument to revisit and as design history. The `/lab` section is the wing of the site that holds them, with a sidebar to move between labs.
 
-Labs are the opposite of throwaway prototypes. Never delete a lab; a settled exploration gets annotated (status, winning variant), not cleaned up. This posture is the load-bearing decision — everything else follows from it.
+Labs are the opposite of throwaway prototypes. Never delete a lab; a settled exploration gets annotated (status, outcome), not cleaned up. This posture is the load-bearing decision — everything else follows from it.
 
 This skill is for **setup**: it installs the shell and teaches the host repo the vocabulary. Day-to-day lab authoring is then driven by the section it writes into the project's agents file — after setup, "make me a lab for X" needs no skill at all. If the project has no `app`-style routing or the user wants a standalone playground, the host can be a bare app whose only content is `/lab` — the pattern is unchanged.
 

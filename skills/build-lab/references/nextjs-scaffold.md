@@ -22,19 +22,55 @@ lib/lab-registry.test.ts
 
 ## The registry (pure, tested)
 
+This module is framework-neutral — use it verbatim:
+
 ```ts
 export type LabStatus = "tuning" | "settled" | "superseded";
-export type LabMeta = { title?: string; description?: string; date?: string; status?: LabStatus; outcome?: string };
-export type LabEntry = { slug: string; meta?: LabMeta; modified?: string };
-export type LabNavItem = { slug: string; href: string; title: string } & LabMeta & { modified?: string };
 
+export type LabMeta = {
+  title?: string;
+  description?: string;
+  /** ISO date (YYYY-MM-DD): when the lab started, or was last meaningfully revisited. */
+  date?: string;
+  status?: LabStatus;
+  /** What the exploration settled on — a variant name or a short phrase. */
+  outcome?: string;
+};
+
+export type LabEntry = { slug: string; meta?: LabMeta; modified?: string };
+
+export type LabNavItem = LabMeta & {
+  slug: string;
+  href: string;
+  title: string;
+  modified?: string;
+};
+
+/** Sentence-cases a folder slug: "hero-shader" → "Hero shader". */
+export function titleFromSlug(slug: string): string {
+  const words = slug.replace(/-/g, " ").trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+/**
+ * Builds the sidebar nav model. Metadata is optional throughout — a bare
+ * folder yields a nav item titled from its slug. Input order is preserved:
+ * ordering is the nav's concern (it sorts client-side by user preference).
+ */
 export function buildLabRegistry(entries: LabEntry[]): LabNavItem[] {
-  // title fallback: sentence-cased slug ("hero-shader" → "Hero shader")
-  // order: dated newest-first, undated alphabetical after
+  return entries.map(({ slug, meta, modified }) => ({
+    ...meta,
+    slug,
+    href: `/lab/${slug}`,
+    title: meta?.title || titleFromSlug(slug),
+    ...(modified ? { modified } : {}),
+  }));
 }
 ```
 
-Test exactly this module's external behavior: slug fallback, ordering, metadata passthrough, no `undefined` keys. Nothing else in the shell needs tests.
+Keep exactly **one** sort implementation. The registry preserves input order; whatever renders the nav owns ordering (a client sort by mtime/name, a user preference). A registry that also sorts is dead code the moment the nav re-sorts — this was a real review finding, not a hypothetical.
+
+Test exactly this module's external behavior: slug fallback, input-order preservation, metadata passthrough, no `undefined` keys. Also give the loader a small contract test against the real lab folder (every entry's folder has a page, every `modified` parses). Nothing else in the shell needs tests.
 
 ## The loader
 
@@ -52,7 +88,7 @@ export async function loadLabEntries(): Promise<LabEntry[]> {
 }
 ```
 
-The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty. Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort (meaningful locally; deploy checkouts flatten mtimes).
+Only folders bearing a `page.tsx` become entries — a stray asset folder must not appear as a dead nav link. The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty. Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort; guard the empty-folder case (`Math.max()` of no files is `-Infinity`, which throws when stamped into a Date), and know the sort is meaningful locally only — deploy checkouts flatten mtimes.
 
 ## The layout
 
