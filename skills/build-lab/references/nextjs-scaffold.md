@@ -24,7 +24,7 @@ lib/lab-registry.test.ts
 
 ```ts
 export type LabStatus = "tuning" | "settled" | "superseded";
-export type LabMeta = { title?: string; description?: string; date?: string; status?: LabStatus; winner?: string };
+export type LabMeta = { title?: string; description?: string; date?: string; status?: LabStatus; outcome?: string };
 export type LabEntry = { slug: string; meta?: LabMeta; modified?: string };
 export type LabNavItem = { slug: string; href: string; title: string } & LabMeta & { modified?: string };
 

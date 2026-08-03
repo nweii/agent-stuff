@@ -20,7 +20,7 @@ This skill is for **setup**: it installs the shell and teaches the host repo the
 
 - **Folder = lab.** A new folder with a page inside the lab directory appears in the sidebar automatically. No registration step, ever.
 - **File split**: a thin server/route wrapper (`page`) plus a client component holding the experiment and its controls (`lab`).
-- **Optional metadata**: a lab may carry a small `meta` module — title, description, date, status (`tuning` / `settled` / `superseded`), winning variant. Absent metadata falls back to the folder slug. Metadata is never required.
+- **Optional metadata**: a lab may carry a small `meta` module — title, description, date, status (`tuning` / `settled` / `superseded`), outcome (what it settled on). Absent metadata falls back to the folder slug. Metadata is never required.
 - **Defaults flow from production.** A tuning lab imports its starting values from the production module it tunes, so the lab can never drift from what ships. Accepted values travel back by copying the control panel's output and applying it to the production source.
 - **Labs never import shell components.** The shell reads labs' metadata; the dependency never points the other way. Swapping shells must touch zero labs.
 - **The shell asserts no background.** Labs own their canvas edge to edge; an opaque shell layer will silently cover labs that paint fixed or negative-z backdrops.
