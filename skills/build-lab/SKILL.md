@@ -27,6 +27,17 @@ This skill is for **setup**: it installs the shell and teaches the host repo the
 - **Public, unlinked, unindexed** by default: no links from the main site, `noindex` metadata, absent from any sitemap. Access control, when wanted, is infrastructure in front of the path (Cloudflare Access or equivalent) — never auth code in the app.
 - **Variants** inside a lab use a `?v=<name>` search param. Variants diverge on a nameable axis (layout, density, personality, motion) and get real names, never "Option A/B/C". Losing variants stay, marked in metadata.
 
+## Shell design defaults
+
+The shell is chrome, not a contestant — labs are the show. These are defaults, stated so the shell comes out consistent without a design brief; where the host's design language disagrees, the host wins.
+
+- **Native but quieter.** Build the shell from the host's existing design tokens, one register down from content: muted text at rest, small type, no ornament. It should feel like the site *and* recede behind whatever a lab renders.
+- **Separate by tone, not lines.** The sidebar/content boundary is a tonal step between surface colors with at most a hairline — never a hard divider.
+- **Sit on the content's rhythm.** The shell's wordmark, toggle controls, and a content pane's heading share one title line, so chrome reads as part of the page rather than floating over it.
+- **Elevation reads lighter (dark UIs).** A surface resting on another — active-item fill, a raised pill — is lighter than its parent, never a darker hole. Component-library dark defaults often invert this.
+- **Dim stroke icons with solid colors.** Semi-transparent strokes brighten where an icon's paths overlap; pick the solid gray that matches the intended level.
+- **Motion is quiet and intentional.** The sidebar slides on an eased curve (never linear), list reorders animate items to their new slots instead of teleporting, and everything degrades to cross-fades under reduced motion. Switching labs itself stays instant — it's the highest-frequency action.
+
 ## Setup
 
 Read [references/nextjs-scaffold.md](references/nextjs-scaffold.md) before writing code — it holds the concrete module shapes and the gotchas that cost real debugging time. For a non-Next host, translate its shapes; the conventions above are framework-neutral.
