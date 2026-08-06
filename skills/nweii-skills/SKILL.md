@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.13.0"
+  version: "1.14.0"
   internal: true
 ---
 
@@ -56,7 +56,9 @@ Always install via `bunx skills add`, from the GitHub slug for every repo, publi
 
 - **Public (`agent-stuff`)** → `nweii/agent-stuff`. Updates via `bunx skills update`.
 - **Private (`agent-stuff-private`)** → `nweii/agent-stuff-private`. Cloning a private repo relies on an authenticated `gh` (it falls back to `gh repo clone`, then SSH); make sure `gh auth status` is logged in.
-- **Third-party** → their GitHub slug.
+- **Third-party** → their GitHub slug, unless they ship a Claude Code plugin.
+
+**A plugin beats bunx whenever a third-party set offers one.** One `/plugin` install serves both Claude Code and Codex, so adding the same skills through bunx only duplicates them into `~/.agents/skills/` and leaves two copies to update. Matt Pocock's skills come from the `mattpocock-skills` plugin for this reason — don't `bunx skills add mattpocock/skills`. Reach for bunx only for a skill the plugin's manifest leaves out (its `in-progress/` and `misc/` folders ship in the repo but not the plugin).
 
 Don't install private skills from the local clone path or an SSH URL — the slug works for private repos through `gh` and keeps the recorded source portable across machines.
 
@@ -131,7 +133,7 @@ Skill content gets read by a human as often as by an agent, so write it to be re
 
 ## Skill content craft
 
-When available, lean on the /writing-great-skills skill (user-invoked — type its name) for any new skill or non-trivial edit.
+Read the `writing-for-agents` skill (from the `mattpocock-skills` plugin) for any new skill or non-trivial edit — it covers context pointers, the information hierarchy, completion criteria, leading words, and pruning in depth.
 
 Essentials:
 
