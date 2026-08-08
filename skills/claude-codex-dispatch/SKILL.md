@@ -1,15 +1,17 @@
 ---
 name: claude-codex-dispatch
-description: "Use when handing work between Claude Code and Codex: dispatching a task, choosing terminal or desktop ownership, recovering or continuing dispatched work, and retrieving its result."
-compatibility: "Designed for Claude Code and Codex surfaces with local shell access. Claude-to-Codex dispatch uses OpenAI's Codex plugin for Claude Code. Codex-to-Claude dispatch uses the Claude Code CLI; native background sessions require Claude Code 2.1.139 or later."
+description: "Use when handing work between Claude Code and Codex: dispatching a task, choosing terminal or desktop ownership, messaging a running Claude session, recovering or continuing dispatched work, and retrieving its result."
+compatibility: "Designed for Claude Code and Codex surfaces with local shell access. Claude-to-Codex dispatch uses OpenAI's Codex plugin for Claude Code. Codex-to-Claude dispatch uses the Claude Code CLI; native background sessions require Claude Code 2.1.139 or later, and messaging a running Claude session requires 2.1.224 or later on macOS or Linux."
 metadata:
   author: nweii
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Claude-Codex dispatch
 
-A dispatch hands one self-contained task to the other provider. It owns the task it creates through completion or an explicit transfer to a desktop surface; it does not provide general access to unrelated sessions.
+A dispatch hands one self-contained task to the other provider. It owns the task it creates through completion or an explicit transfer to a desktop surface.
+
+A Claude Code session already carrying the work takes a message instead: `/list-agents` shows the sessions this one can reach, each answering to its own name.
 
 ## Dispatch the task
 

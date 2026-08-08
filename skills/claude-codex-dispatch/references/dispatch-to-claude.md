@@ -48,6 +48,12 @@ Use the full `sessionId` from `claude agents --json --all` when a programmatic f
 
 For short blocking work, `claude -p "<prompt>" --output-format json` returns the result and session ID. Print-mode sessions stay resumable by ID but do not appear in the interactive session picker.
 
+## Message the running session
+
+On Claude Code 2.1.224 or later (macOS and Linux), the background task appears in another Claude Code session's `/list-agents` under the `--name` given above, so the user can query or steer it from one of their own Claude sessions while it runs. Both sessions must see the same files: one inside a container and one on the host cannot reach each other. Sending needs a Claude Code session, so Codex keeps ownership and reads the task through `claude logs`.
+
+A message carries plain text. The target's own permission prompts still fire, and it can hold the message for the user's approval, so a task stalled on a permission waits for the user rather than for a message.
+
 ## Choose the Claude surface
 
 The automated target is a Claude CLI session. It can continue in Claude Desktop through a one-way ownership transfer:
