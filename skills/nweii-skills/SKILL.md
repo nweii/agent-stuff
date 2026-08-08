@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.14.0"
+  version: "1.15.0"
   internal: true
 ---
 
@@ -59,6 +59,10 @@ Always install via `bunx skills add`, from the GitHub slug for every repo, publi
 - **Third-party** → their GitHub slug, unless they ship a Claude Code plugin.
 
 **A plugin beats bunx whenever a third-party set offers one.** One `/plugin` install serves both Claude Code and Codex, so adding the same skills through bunx only duplicates them into `~/.agents/skills/` and leaves two copies to update. Matt Pocock's skills come from the `mattpocock-skills` plugin for this reason — don't `bunx skills add mattpocock/skills`. Reach for bunx only for a skill the plugin's manifest leaves out (its `in-progress/` and `misc/` folders ship in the repo but not the plugin).
+
+**A third-party set can ship the same skill name at two tiers**, where a licensed or purchased version and a freely available one share a folder name and carry no version numbers. Installing the free tier unscoped then overwrites the fuller copies with no trace. Always pass `--skill` with explicit names for a set like this, and check `agent-stuff-private/vendor/*/README.md` for one before installing — a vendored set keeps its own install script, which is the safe path.
+
+Any install token is a credential: never commit it to either repo, and never paste it into a skill.
 
 Don't install private skills from the local clone path or an SSH URL — the slug works for private repos through `gh` and keeps the recorded source portable across machines.
 
