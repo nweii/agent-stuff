@@ -1,13 +1,13 @@
 ---
-name: herdr-cross-agent-coordination
+name: herdr-agent-coordination
 description: "Use whenever an agent sends, receives, interprets, verifies, or responds to another agent through Herdr. Covers peer tasks, reports, questions, corrections, origin-pane checks, and stalled prompt delivery."
 compatibility: "Pinned to Herdr 0.8.0 and its agent prompt, agent wait, agent read, agent get, and agent send-keys commands. Requires recognized interactive agents."
 metadata:
   author: nweii
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
-# Herdr cross-agent coordination
+# Herdr agent coordination
 
 Use the managed `herdr` skill for environment checks, session discovery, pane topology, agent startup, and terminal control. This skill supplies the shared coordination contract for every agent participating in a Herdr exchange.
 
