@@ -2,6 +2,8 @@
 
 Concrete shapes for an App Router host. Adapt names to the project; keep the seams.
 
+If the shell uses shadcn's Sidebar, read [shadcn-sidebar.md](shadcn-sidebar.md) before building the layout. Skip it for other component systems.
+
 ## Module layout
 
 ```
@@ -99,17 +101,15 @@ export async function loadLabEntries(): Promise<LabEntry[]> {
 
 ```tsx
 export const metadata: Metadata = { title: "Lab", robots: { index: false, follow: false } };
-// SidebarProvider > Sidebar (header wordmark + nav + footer) > SidebarInset > children
+// LabShell > sidebar (header wordmark + nav + footer) > transparent content pane > children
 ```
 
-No sitemap entry, no links from the main site. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), not a per-request check — request-time APIs in the layout would force every lab route dynamic.
+Adapt metadata and discovery to the chosen exposure. A direct-access lab normally stays out of the sitemap and main navigation. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), not a per-request check — request-time APIs in the layout would force every lab route dynamic.
 
 ## Gotchas
 
-- **The shell must not paint over labs.** Content-pane wrappers often ship an opaque background (shadcn's `SidebarInset` has `bg-background`). A lab that renders a `fixed` backdrop at negative z-index gets covered: positioned ancestors paint after root-level negative-z elements. Make the inset `bg-transparent`; the page body's background is the canvas.
+- **The shell must not paint over labs.** Content-pane wrappers often ship an opaque background. A lab that renders a `fixed` backdrop at negative z-index gets covered: positioned ancestors paint after root-level negative-z elements. Keep the content pane transparent; the page body's background is the canvas.
 - **The sidebar needs its own background behind its border.** If only an inner element carries the fill, the 1px border column is transparent to the body behind it and reads as a dark seam. Put the background on the bordered container.
 - **The mobile sidebar is a different element.** Sheet/drawer implementations portal to `body`, so classes on the desktop container and scoped CSS under a wrapper never reach it. Style it via its own attribute (e.g. `[data-slot="sidebar"][data-mobile="true"]`).
-- **shadcn styles differ by registry style.** Base-UI-based styles (e.g. base-maia) use a `render` prop where Radix styles use `asChild`; check the installed component before wiring links into buttons.
-- **Default motion may be off-brand.** shadcn's sidebar slides with `ease-linear` on inner divs its props never reach; override with scoped CSS (`.lab-shell [data-slot="sidebar-gap"], .lab-shell [data-slot="sidebar-container"] { transition-timing-function: …; }`).
 - **Trigger placement**: inside the sidebar header when expanded; a floating twin in the content pane fades in when collapsed. Make the twin `sticky` (not `fixed`, which overlaps the open sidebar), sit it on the content's title line, give it a page-colored translucent backing so it survives content scrolling under it, and right-align it on small screens where content titles start flush left.
-- **Framework CSS variables may not re-resolve in theme subtrees.** Aliases declared at `:root` (`--accent`, `--sidebar-*`) capture values at declaration scope; forcing a theme on a subtree requires re-declaring the alias set inside it. Simplest escape: keep the whole lab wing single-theme.
+- **Framework CSS variables may not re-resolve in theme subtrees.** Aliases declared at `:root` can capture values at declaration scope. When a lab forces an appearance inside a subtree, re-declare the needed aliases there and pass an explicit appearance to portaled controls. The control surface follows the lab by default; keep it independent when that separation serves the experiment.
