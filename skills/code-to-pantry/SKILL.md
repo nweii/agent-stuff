@@ -1,15 +1,35 @@
 ---
 name: code-to-pantry
-description: "Extract a code pattern from the current codebase into Nathan's pantry repo as a reusable recipe. Use when Nathan says 'add to pantry', 'save this code pattern', or wants to preserve a technique for reuse."
+description: "Read from or write to Nathan's pantry, his personal repo of reusable code recipes. Use when he says 'check my pantry', 'is that in the pantry', 'what's in my pantry', or names a component he thinks he already has — and when he says 'add to pantry', 'save this code pattern', or wants to preserve a technique for reuse."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
   internal: true
 ---
 
 # Code to pantry
 
 Nathan's pantry (`github.com/nweii/pantry`) is a personal collection of modular, self-contained code recipes. The goal is to capture the *technique*, stripped of its original context, in a form that can be dropped into any future project without modification.
+
+Two directions, and the first is one command:
+
+- **Looking something up** — he wants to know whether the pantry already has a thing, or wants it pulled into the current project. See [Looking something up](#looking-something-up) and stop there.
+- **Putting something in** — he's pointing at code worth keeping. Work through Steps 1–4 below.
+
+## Looking something up
+
+The pantry ships its own CLI, so neither direction needs the repo cloned:
+
+```bash
+bunx github:nweii/pantry list
+bunx github:nweii/pantry add <name>
+```
+
+`list` prints every component with its description. `add` writes the component's source into the current directory — raw source he owns and edits, not a dependency — and names any packages to install.
+
+Read the list before answering whether something exists, rather than answering from memory: the pantry changes without this skill changing. Where a component matches, name it and offer to add it. Where the match is partial, say what the existing one actually does and let him decide between adapting it and building fresh.
+
+Nothing matching is a normal outcome — say so plainly and build the thing. If what gets built turns out to be worth keeping, that's the other direction, and Step 1 starts below.
 
 ## What makes a good pantry entry
 
