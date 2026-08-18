@@ -4,7 +4,7 @@ description: "Use alongside bb-cli when coordinating work across bb threads: del
 compatibility: "Requires bb and the managed bb-cli skill."
 metadata:
   author: nweii
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # bb agent coordination
@@ -21,6 +21,8 @@ Read and follow the managed `bb-cli` skill before operating bb. It owns current 
 ## Delegate work
 
 Delegate only a concrete task that can proceed independently. Keep work local when coordination would cost more than execution.
+
+Spawn with a model id the provider actually accepts. `bb provider models <provider-id> --json` is the source of truth; resolve any shorthand or display name against its `id` field before spawning, because a wrong id fails inside the provisioned thread rather than at spawn. Omitting `--model` uses the provider's default.
 
 Give the thread a self-contained contract containing:
 
