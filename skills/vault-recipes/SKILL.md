@@ -1,6 +1,6 @@
 ---
 name: vault-recipes
-description: "Search, read, filter, combine, adapt, and save recipes in the Brain vault collection. Use whenever cooking and the collection are relevant — 'what should I make', 'recipes with miso', 'save this one' all imply it."
+description: "Use for cooking recipes in the Brain vault collection. Search, read, filter, combine, adapt, and save them; 'what should I make', 'recipes with miso', and 'save this one' all imply it."
 metadata:
   author: nweii
   version: "1.0.0"

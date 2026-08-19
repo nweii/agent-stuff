@@ -145,7 +145,7 @@ Personal workflows tied to my own setup (vault paths, tools, naming conventions)
 - [periodic-rollup](skills/periodic-rollup/) — Synthesize child periodic note descriptions into a parent weekly/quarterly/yearly note. For history rollup (compiling mentions of a project/topic into a Histories note), follow references/history-rollup.md.
 - [save-napkin-note](skills/save-napkin-note/) — Turn raw capture material into a properly structured Brain vault note (template, frontmatter, folder, links), or integrate a fragment into an existing note after confirmation. Use when filing a quick capture — triggers: 'save this as a note', 'file this', 'napkin note', 'process this dump'.
 - [save-term](skills/save-term/) — Save a term, phrase, or coined concept as a Term note in the Brain vault under 02-Evergreen/Terms/. Two modes: capturing a nice term encountered in reading (with source quote) or recording one coined during conversation (with brief gloss). Triggers: '/save-term <term>', 'save this term', 'add this to my terms'.
-- [vault-recipes](skills/vault-recipes/) — Search, read, filter, combine, adapt, and save recipes in the Brain vault collection. Use whenever cooking and the collection are relevant — 'what should I make', 'recipes with miso', 'save this one' all imply it.
+- [vault-recipes](skills/vault-recipes/) — Use for cooking recipes in the Brain vault collection. Search, read, filter, combine, adapt, and save them; 'what should I make', 'recipes with miso', and 'save this one' all imply it.
 
 ### Agents
 
