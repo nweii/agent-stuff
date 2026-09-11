@@ -3,7 +3,7 @@ name: nweii-skills
 description: "Reference for Nathan's agent skills setup: the nweii/agent-stuff and nweii/agent-stuff-private repos, install/symlink mechanics, frontmatter and writing conventions, skill content craft, privacy tiers, and migrating local skills into a repo. Use when creating, editing, migrating, or installing skills in Nathan's environment."
 metadata:
   author: nweii
-  version: "1.15.0"
+  version: "1.16.0"
   internal: true
 ---
 
@@ -49,6 +49,8 @@ Subagent definitions (`*.md`), **not** installed by `bunx skills` — copy them 
 ## Use the repos as a source of truth over local installs
 
 **All edits to a skill happen in the repo working copy** (`~/Developer/LLMs/agent-stuff/skills/<name>/` or `~/Developer/LLMs/agent-stuff-private/skills/<name>/`). The installed skill under `~/.agents/skills/<name>/` is a **downstream copy** placed there by `bunx skills add` and overwritten on the next install — it isn't version-controlled and never reaches GitHub. If you find yourself reaching for `~/.agents/skills/<name>/SKILL.md`, stop: edit the matching repo folder instead, then reinstall to sync the change down.
+
+When a skill ships templates or configuration for another application, update the source artifact and reconcile its deployed copy in the same change. Record separately whether it was saved, imported, and exercised; an import does not prove the downstream workflow. Keep demonstrations in chat unless Nathan asks for saved examples. Automated checks may use temporary directories that clean themselves up.
 
 ## Installing and updating skills
 
