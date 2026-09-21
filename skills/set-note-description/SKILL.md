@@ -1,17 +1,19 @@
 ---
 name: set-note-description
-description: "Generate or update the description frontmatter property for a note. Selects Summary mode or Meta mode based on content type. Use when asked to create a description frontmatter summary for a note."
+description: "Use when writing a note's description property for recall or retrieval. Summarizes a note's own content; parent-period synthesis belongs to periodic-rollup or the environment's specific rollup workflow."
 context: fork
 model: sonnet
 argument-hint: "Note title(s)"
 metadata:
   author: nweii
-  version: "1.2.1"
+  version: "1.3.0"
 ---
 
 # Summarize frontmatter
 
 Generate a `description` property for **$ARGUMENTS** and write it to the note's YAML frontmatter.
+
+Read the target vault's instructions first. For a periodic note, prefer the vault's specific rollup workflow when it covers the requested scale. For a parent period synthesized from child notes, use `periodic-rollup` if available. Use this skill for a note's own content, or as a fallback when no more specific workflow is available.
 
 If no note is specified, ask which note to summarize before proceeding.
 
@@ -154,15 +156,4 @@ For periodic notes:
 
 ### Hierarchical rollup pattern
 
-When summarizing a parent note (like a periodic weekly note) that links to component child notes (like daily notes) via properties like `related` or body links:
-
-1. Check if the child notes already have `description` properties in their frontmatter
-2. If they do, synthesize the parent note's summary from those existing summaries rather than re-reading all original content
-3. Create increasingly high-level overviews as you move up the hierarchy:
-   - **Weekly summary**: Synthesize from linked daily summaries
-   - **Quarterly summary**: Synthesize from linked weekly summaries
-   - **Yearly summary**: Synthesize from linked quarterly summaries
-
-This creates hierarchical abstraction where each level captures the essence of its component parts.
-
-Note: Some expected child notes (like a specific daily note) may not exist — that simply means one may not have been created for that period.
+For weekly, quarterly, or yearly synthesis from child notes, follow the environment's rollup workflow or `periodic-rollup`. That workflow owns child selection, missing-note handling, and parent synthesis; do not combine its procedure with a second independent summary pass here.

@@ -5,7 +5,7 @@ argument-hint: "[optional note-title-or-path when source is a file]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.3.0"
   internal: true
 ---
 
@@ -41,7 +41,7 @@ Illustrative `obsidian …` commands below are **examples** for vaults where the
 
 Parse lightly: subject, entities (people, places, projects, dates, URLs), intent (event record vs concept vs reference vs active work), tone (fragment, decision log, meeting-shaped, etc.).
 
-**Candidate home note:** For fragments or clear continuations, search the vault for a note this could extend. **Never merge or append without explicit confirmation** — see **Integrate vs. new note**.
+**Candidate home note:** For fragments or clear continuations, search the vault for a note this could extend. Merge or append only when the user names or approves that target; see **Integrate vs. new note**. An explicit request for a new note does not need to pause merely because a related note exists.
 
 ---
 
@@ -60,7 +60,7 @@ Only generate what is missing.
 
 For fragments or addendum-shaped captures, you may offer **integration** into `[[Existing note]]` instead of a new file.
 
-**Rule:** If integration is plausible, **pause** for **explicit confirmation** before editing the target. Never silently fold content into another note because it “fits.”
+**Rule:** Ask before integrating into an existing note when the target or merge is not already authorized. If the user explicitly named the merge target, proceed within that scope. Preserve an explicit request for a new note.
 
 Present:
 
@@ -114,7 +114,7 @@ For generic names or new files: sentence case, declarative or noun-phrase for ev
 
 ## Output and approval
 
-Before writing, show a **filing plan**. If integration is plausible, show **both** options and **do not edit** until the user chooses (and confirms the merge target for B).
+An explicit save or filing request authorizes creating a new note using the vault's conventions. Give a brief filing summary and proceed unless there is a filename collision, an unapproved merge, a material ambiguity, or a requested review checkpoint. When that choice is unresolved, present the relevant options below before writing.
 
 **New note:**
 
@@ -140,9 +140,9 @@ Before writing, show a **filing plan**. If integration is plausible, show **both
 - Edits to target frontmatter: [e.g. description, last, related]
 ```
 
-Ask once for approval; for two paths, ask whether to create new or fold into `[[X]]`.
+Ask once when a choice remains; for two unresolved paths, ask whether to create new or fold into `[[X]]`. Do not ask again for an already-approved target or routine new-note save.
 
-**After approval:**
+**Once the requested operation and target are clear:**
 
 1. Create, update in place, or link-safe move/rename (e.g. `obsidian move file="Note" to=folder/newpath.md` when available). For integration, only touch the **confirmed** target and agreed `related` updates elsewhere.
 2. Preserve substance — light structure/cleanup only unless they ask to summarize.

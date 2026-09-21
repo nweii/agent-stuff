@@ -1,9 +1,9 @@
 ---
 name: obsidian-clis
-description: "Control Obsidian notes from the terminal via the `obsidian` app CLI, with `notesmd-cli` as a headless fallback. Covers CRUD, search, vault structure (orphans, backlinks, unresolved links), tasks, properties, Bases, and plugin dev. Use when the user mentions Obsidian CLI, notesmd-cli, or shell automation of vault notes."
+description: "Use when operating Obsidian from the terminal: notes, search, properties, links, tasks, Bases, or plugin development. Uses the app CLI, with notesmd-cli as a headless fallback."
 metadata:
   author: nweii
-  version: "1.5.3"
+  version: "1.5.4"
   source: kepano/obsidian-cli
 ---
 

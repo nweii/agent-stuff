@@ -1,10 +1,10 @@
 ---
 name: obsidian-publish-customize
-description: "Customize an Obsidian Publish site through the publish.css and publish.js root hooks — theming with Publish CSS variables, and scripting the rendered page (injecting frontmatter blocks, nav, widgets). Use when editing publish.css/publish.js files, theming a Publish site, or working around Publish's undocumented client-side behavior. NOT for Publish usage, Obsidian desktop-app theming, or plugin development."
+description: "Use when theming or scripting an Obsidian Publish site through publish.css or publish.js, including client-side workarounds. Excludes ordinary Publish usage, desktop themes, and plugins."
 compatibility: "Assumes an Obsidian Publish subscription and an active Publish website to customize. A custom domain is required for javascript-driven customizations."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
   last: 2026-06-14
 ---
 

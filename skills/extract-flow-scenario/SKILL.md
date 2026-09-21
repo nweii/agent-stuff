@@ -1,11 +1,11 @@
 ---
 name: extract-flow-scenario
-description: Extracts a sequence of workflow events from conversation context into a structured markdown list. Surfaces actors, state changes, and pain points to serve as raw data for any later synthesis, design planning, or spec development. Use when asked to document an actual operational flow, user journey, or scenario from a conversation to capture exactly what happened.
-argument-hint: [flow-scenario]
+description: "Use when extracting an actual workflow, user journey, or operational scenario from a conversation into a sequence of actors, state changes, and pain points."
+argument-hint: "[flow-scenario]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 When asked to document a workflow or scenario, output a fenced markdown code block containing a numbered list. Rules:

@@ -3,7 +3,7 @@ name: semantic-compression
 description: "Compress wordy language or loosely expressed thinking into a smaller, sharper form without flattening its meaning. Use when revising an explanation, phrase, sentence, paragraph, concept, label, or coined term whose nuance, implication, or texture must survive the edit."
 metadata:
   author: nweii
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Semantic compression
@@ -23,9 +23,11 @@ Read the surrounding conversation, source material, and writing guidelines befor
 - its audience, register, and role in the larger passage
 - any distinctions that nearby words or concepts already carry
 
+Determine whether the source and request support one semantic payload or several. When faithful alternatives depend on the user's unstated priority, taste, or point of view, show the alternatives and what each would preserve or lose, then ask what must survive. If the user delegates the choice, state the assumption you will use.
+
 Infer only what the available context supports. If a missing detail could materially change the result, ask one specific question at a time until the required payload is clear. Do not ask the user to repeat context already available.
 
-This step is complete when you can state what the compressed expression must preserve and what it may discard.
+This step is complete when you can state what the compressed expression must preserve and what it may discard, and any selection judgment has been supplied or explicitly delegated.
 
 ### 2. Separate meaning from wording
 

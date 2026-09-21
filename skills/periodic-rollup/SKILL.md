@@ -1,16 +1,18 @@
 ---
 name: periodic-rollup
-description: "Synthesize child periodic note descriptions into a parent weekly/quarterly/yearly note. For history rollup (compiling mentions of a project/topic into a Histories note), follow references/history-rollup.md."
+description: "Use when synthesizing child periodic-note descriptions into a parent week, quarter, or year, or compiling project/topic history. Prefer a vault-specific rollup workflow when the environment provides one."
 argument-hint: "[[Project or topic]] [timespan] | [periodic note title]"
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
 # Periodic rollup
 
 Roll up periodic vault notes by synthesizing child descriptions into a parent note's `description`. If $ARGUMENTS is provided, use it to identify the periodic note to target.
+
+Use the vault's specific rollup workflow instead when one covers the requested scale. This skill supplies the general parent-period procedure; `set-note-description` handles a note's own content. Read the target vault's instructions before accessing or changing notes.
 
 **History rollup** — When asked to roll up history for a project or topic, or to compile periodic mentions into a Histories note, follow [references/history-rollup.md](references/history-rollup.md) instead of this workflow.
 

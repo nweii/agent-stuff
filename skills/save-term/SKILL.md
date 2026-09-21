@@ -1,11 +1,11 @@
 ---
 name: save-term
-description: "Save a term, phrase, or coined concept as a Term note in the Brain vault under 02-Evergreen/Terms/. Two modes: capturing a nice term encountered in reading (with source quote) or recording one coined during conversation (with brief gloss). Triggers: '/save-term <term>', 'save this term', 'add this to my terms'."
+description: "Use when saving an encountered term or a concept coined in conversation as a Brain Term note, with its source quote or a brief gloss."
 argument-hint: "[term or phrase]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.0.2"
   internal: true
 ---
 

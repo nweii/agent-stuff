@@ -1,9 +1,9 @@
 ---
 name: code-to-pantry
-description: "Read from or write to Nathan's pantry, his personal repo of reusable code recipes. Use when he says 'check my pantry', 'is that in the pantry', 'what's in my pantry', or names a component he thinks he already has — and when he says 'add to pantry', 'save this code pattern', or wants to preserve a technique for reuse."
+description: "Use when looking up reusable components in Nathan's pantry, bringing one into a project, or saving a code technique to the pantry for reuse."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
@@ -48,9 +48,11 @@ Then identify:
 - **App-specific shell**: what parts are wired to this specific app's state, routing, styling system, or data model?
 - **The stack**: what language/framework is this? (React/TSX, plain JS/TS, CSS, Python, etc.)
 
-## Step 2: Design the abstraction — discuss before writing
+## Step 2: Choose the abstraction
 
-Propose an abstraction plan and get Nathan's approval before writing any files. Cover:
+An explicit request to save a specified technique authorizes routine local file edits. Use the source and existing pantry conventions to choose the details below. Ask before writing only when an unresolved choice would materially change the technique, public API, dependencies, or requested scope, or when Nathan requested a review checkpoint.
+
+Account for:
 
 1. **Name**: a short, lowercase, hyphenated identifier for the technique (this becomes the filename)
 2. **What gets extracted**: the essential mechanism, described in one sentence
@@ -61,7 +63,7 @@ Propose an abstraction plan and get Nathan's approval before writing any files. 
 
 If the source code is deeply entangled with app-specific concerns, surface that tension explicitly. Sometimes the right call is to extract a *narrower* slice of the technique rather than trying to abstract everything at once.
 
-**Wait for approval before proceeding.**
+Honor choices Nathan already supplied or approved without asking again.
 
 ## Step 3: Write the pantry entry
 
@@ -97,7 +99,9 @@ Match the idioms of the target language. For plain TypeScript/JavaScript utiliti
 
 The pantry uses a pre-commit hook (`scripts/sync.js`) that auto-generates `registry.json` and `src/index.ts`. Do not edit those files manually — just commit and the hook handles them.
 
-## Step 4: Commit and push
+## Step 4: Save and publish within the approved scope
+
+Check the entry and follow the pantry repository's instructions before committing. Push only when publication is authorized; a local save request alone does not authorize a public release. If publication remains pending, report the saved local state.
 
 From the pantry repo directory:
 
@@ -109,7 +113,7 @@ git push
 
 The pre-commit hook will stage `registry.json` and `src/index.ts` automatically as part of the commit.
 
-Confirm to Nathan that the component is live and available via:
+After a successful push and remote read-back, confirm that the component is live and available via:
 ```bash
 bunx github:nweii/pantry add <name>
 ```

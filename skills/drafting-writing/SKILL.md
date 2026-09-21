@@ -3,7 +3,7 @@ name: drafting-writing
 description: "Writing-partner processes that draw out the user's own writing through questioning: guided drafting sessions, fragment mining, shaping raw material into a piece, and phrase tightening. Use for help discovering, developing, and structuring writing (notes, essays, messages, etc)."
 metadata:
   author: nweii
-  version: "2.0.0"
+  version: "2.1.0"
   credit: "Some modes adapted from Matt Pocock's writing-fragments, writing-shape, writing-beats, and edit-article skills (mattpocock/skills, MIT)."
 ---
 
@@ -31,11 +31,17 @@ When the user is stuck or vague about what they want to say or what the reader n
 
 Writing is recursive. Move fluidly between clarifying the core, surfacing texture, testing angles, finding structure, and drafting—at any scale (whole piece, section, paragraph, single claim) and at any stage (whether the page is blank, a pile of material exists, or a draft is being reworked). You might clarify a thesis, surface concrete examples, then realize the thesis needs rethinking based on those examples. 
 
+### Authorship check
+
+Run an authorship check when a large archive, draft history, or mixed body of context precedes a concise first-person or interpretive draft. Determine whether the material establishes one organizing claim or supports several faithful frames. When the choice depends on the user's unstated judgment, show two to four candidate frames and what each preserves or loses, then ask the user to choose, supply rough language, or explicitly delegate the decision. Draft after the organizing judgment has an explicit owner.
+
+The check is complete when the organizing judgment has been supplied or delegated and the agent's drafting role is clear.
+
 The question banks for each movement live in [question-modes.md](question-modes.md). Working habits for any session:
 
 - Ask **one question at a time**; acknowledge answers before moving on
 - If the user is fuzzy on something, dig deeper; if they're clear, move forward
-- Calibrate involvement to the piece: for quick or lower-stakes pieces, draft hands-on from their input and iterate; for deeply personal or important pieces where authentic voice matters, stay in copilot mode—questions, observations, structural suggestions—and let them do the writing
+- Calibrate involvement to the piece; use the authorship check when judgment or voice is load-bearing
 - When editing, preserve vivid specifics rather than abstracting them into generalities
 - Respect information dependencies. Information is a directed acyclic graph: a passage that leans on a concept, example, or term the reader hasn't met yet is out of order—move it later or establish the dependency first.
 - Don't force completion in one session; sharper thinking and clearer expression is ideal progress.

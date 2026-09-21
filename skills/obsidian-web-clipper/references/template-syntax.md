@@ -1,0 +1,194 @@
+# Template syntax
+
+```json
+{
+  "schemaVersion": "0.1.0",
+  "name": "Template Name",
+  "behavior": "create",
+  "noteNameFormat": "{{title}} - {{site}}",
+  "noteContentFormat": "{{content}}",
+  "vault": "VaultName",
+  "path": "folder/subfolder",
+  "context": "",
+  "properties": [],
+  "triggers": []
+}
+```
+
+| Field               | Type   | Description                                                 |
+| ------------------- | ------ | ----------------------------------------------------------- |
+| `schemaVersion`     | string | Always `"0.1.0"`                                            |
+| `name`              | string | Display name shown in the extension                         |
+| `behavior`          | string | How the note is created (see below)                         |
+| `noteNameFormat`    | string | Filename for the note, supports variables                   |
+| `noteContentFormat` | string | Note body content, supports variables                       |
+| `vault`             | string | Target vault name (optional — omit to use default)          |
+| `path`              | string | Folder path within the vault (optional)                     |
+| `context`           | string | Limits what page content the interpreter AI sees (optional) |
+| `properties`        | array  | Frontmatter properties (optional)                           |
+| `triggers`          | array  | Auto-match rules for URLs/schemas (optional)                |
+
+When exporting a single template, the JSON is the template object directly (no wrapper). When part of a full settings export, templates are stored as `template_[id]` keys.
+
+### Behaviors
+
+| Value              | Description                         |
+| ------------------ | ----------------------------------- |
+| `create`           | Create a new note                   |
+| `append-daily`     | Append to today's daily note        |
+| `prepend-daily`    | Prepend to today's daily note       |
+| `append-specific`  | Append to a specific existing note  |
+| `prepend-specific` | Prepend to a specific existing note |
+
+## Variables
+
+All variables use `{{variableName}}` syntax. Filters chain with pipes: `{{variable|filter1|filter2:"arg"}}`. There are four kinds:
+
+- **Preset variables** — built-in page metadata: `{{title}}`, `{{url}}`, `{{author}}`, `{{site}}`, `{{published}}`, `{{description}}`, `{{content}}` (full article markdown), `{{date}}`, `{{highlights}}`, etc. Look up the full list in the live docs.
+- **Schema variables** — extract Schema.org JSON-LD from the page. Patterns:
+
+  ```
+  {{schema:name}}                    — first match anywhere
+  {{schema:@Recipe:name}}            — scoped to a specific @type
+  {{schema:author.name}}             — nested keys via dots
+  {{schema:image[0].contentUrl}}     — array index
+  {{schema:actors[*].name}}          — flatten arrays
+  ```
+
+  Schema-driven templates are usually the right choice for domain-specific clippers (recipes, films, books, jobs) since one `schema:@Type` trigger matches across many sites.
+
+- **Selector variables** — pull content via CSS selectors when there's no schema:
+
+  ```
+  {{selector:h1}}                    — text content
+  {{selector:img.hero?src}}          — attribute value
+  {{selectorHtml:article}}           — raw HTML
+  {{selectorHtml:body|markdown}}     — HTML → Markdown
+  ```
+
+- **Interpreter variables** — natural-language prompts evaluated by an LLM (requires the user has an LLM provider configured in extension settings):
+
+  ```
+  {{"a summary of the page"}}
+  {{"3 tags describing this content"}}
+  {{"return JSON array with fields: author, text"|map:item => item.text|join:"\n"}}
+  ```
+
+  The `context` field at the template top level controls what page content the AI sees. Use `{{selectorHtml:#main}}` or wrap structured context like `<page>\nTitle: {{title}}\n{{content}}\n</page>` to keep prompts focused.
+
+## Filters
+
+Chain filters with `|`. Look up specific filter signatures in the [live documentation](../SKILL.md#reference). The patterns and gotchas below are the operationally non-obvious parts.
+
+### Filter gotchas (verified via testing)
+
+Minutiae that might trip up template authors:
+
+- **String concatenation with `+` doesn't work inside `map` callbacks.** The expression parser treats `+` as an unexpected character and fails the template import with `"Unexpected character '+' in template"`. Use template literals instead:
+
+  ```
+  ✗ |map:item => "- " + item               (parse error on import)
+  ✓ |map:item => "- ${item}"               (template literal — correct)
+  ```
+
+- **Built-in filters cannot be chained inside `map`.** Flatten or transform inside `map`, then apply filters to the result outside:
+
+  ```
+  ✗ |map:item => item.text|trim            (filter not allowed inside map)
+  ✓ |map:item => item.text|join:"\n"|trim  (filter chain outside map)
+  ```
+
+- **For arrays of objects with multi-line per-item output, use `map` to flatten to flat keys, then `template`.** Nested key access in `template` literals is not documented and unreliable; flattening first is the safe pattern:
+
+  ```
+  |map:item => ({name: item.author.name, body: item.reviewBody})
+  |template:"${name}:\n> ${body}\n\n"
+  ```
+
+- **`duration` outputs `HH:mm:ss`, not compact human format.** For something like `45m` or `1h 30m`, skip the filter and chain `replace` on the raw ISO 8601 string:
+
+  ```
+  {{schema:@Recipe:prepTime|replace:"PT":""|replace:"H":"h "|replace:"M":"m"|trim}}
+  → "PT1H30M" becomes "1h 30m"
+  → "PT45M"   becomes "45m"
+  ```
+
+- **`|list` works on string arrays directly** — no need to map a `"- " + item` prefix yourself. Use `|list` for bullets, `|list:numbered` for numbered, `|list:task` for checkboxes.
+
+### Common Filter Chains
+
+```
+{{url|split:"?"|slice:0,1}}                              — strip query params
+{{schema:actors[*].name|wikilink|slice:0,4|join}}         — first 4 actors as wikilinks
+{{highlights|map:item => item.text|join:"\n\n"|blockquote}} — highlights as blockquote
+{{date|date:"YYYY-MM-DD-ddd"}}                            — formatted date with day name
+{{"return JSON..."|map:item => item.title|join:"\n"}}     — AI → structured → formatted
+```
+
+## Template logic
+
+Templates support Twig/Liquid-style logic in `noteContentFormat`, `noteNameFormat`, and property values: `{% if %}`/`{% elseif %}`/`{% else %}` conditionals, `{% for %}` loops (with a `loop` object: `loop.index`, `loop.first`, `loop.last`, etc.), `{% set %}` variable assignment, and `??` fallbacks (`{{title ?? "Untitled"}}`). Full syntax lives in `Logic.md` in the [live documentation](../SKILL.md#reference). The non-obvious parts:
+
+- **Evaluation order: template logic runs first, interpreter prompts after.** Logic can construct a prompt dynamically, but a prompt's *result* can never feed a conditional or loop.
+- **Filters bind tighter than `??`** — `{{title|upper ?? "X"}}` applies `upper` before the fallback check; parenthesize if the fallback needs the filter instead.
+- `{% set %}` accepts selector results (`{% set comments = selector:.comment %}`), which pairs with bracket indexing (`{{timestamps[loop.index0]}}`) to walk two parallel arrays in one loop.
+
+## Properties
+
+Properties become Obsidian frontmatter fields. **Order matters:** the extension writes properties to frontmatter in the order they appear in the array. If the target vault uses a YAML sort plugin (Linter, etc.), match the template's property order to the user's sort order so freshly clipped notes don't reshuffle on lint.
+
+Each property in the array:
+
+```json
+{
+  "name": "property_name",
+  "value": "{{variable|filter}}",
+  "type": "text"
+}
+```
+
+| Type        | Description                                      |
+| ----------- | ------------------------------------------------ |
+| `text`      | Single string value                              |
+| `multitext` | Array (comma-separated values become list items) |
+| `date`      | Date value (ISO format or use `date` filter)     |
+| `number`    | Numeric value                                    |
+| `checkbox`  | Boolean — expects `"true"` or `"false"`          |
+
+### JSON Escaping for Interpreter Prompts in Properties
+
+Interpreter prompts inside JSON property `value` strings require escaped quotes. The inner `"` that delimit the prompt must be escaped as `\\\"` in the JSON:
+
+```json
+{
+  "name": "description",
+  "value": "{{\\\"Summarize in 1-2 sentences\\\"}}",
+  "type": "text"
+}
+```
+
+The escaping layers:
+
+1. Outer `"` → JSON string delimiter
+2. `\\\"` → produces literal `\"` in the parsed string
+3. Template engine sees `{{"Summarize in 1-2 sentences"}}` and sends to interpreter
+
+Static values and preset variables don't need this escaping — only interpreter prompts inside JSON strings.
+
+Filters on interpreter prompts in properties also need escaping:
+
+```json
+"value": "{{\\\"author's full name\\\"|wikilink}}"
+```
+
+## Triggers
+
+Auto-select this template when the URL or page schema matches.
+
+| Type        | Format           | Example                                         |
+| ----------- | ---------------- | ----------------------------------------------- |
+| URL prefix  | Plain URL string | `"https://letterboxd.com/film/"`                |
+| Regex       | Enclosed in `/`  | `"/^https?:\\/\\/docs\\.google\\.com\\/forms/"` |
+| Schema type | `schema:@Type`   | `"schema:@NewsArticle"`                         |
+
+Multiple triggers in the array act as OR — any match selects the template.

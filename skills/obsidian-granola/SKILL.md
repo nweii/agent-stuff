@@ -1,13 +1,13 @@
 ---
 name: obsidian-granola
-description: Sync meetings from Granola to Obsidian — pulls notes and transcripts and imports them as formatted meeting/transcript notes. Use when the user says "sync my last granola meeting", "note for my last meeting", or asks to pull in a Granola transcript.
+description: "Sync meetings from Granola to Obsidian — pulls notes and transcripts and imports them as formatted meeting/transcript notes. Use when the user says \"sync my last granola meeting\", \"note for my last meeting\", or asks to pull in a Granola transcript."
 compatibility: Designed for a system that has Granola MCP and an Obsidian vault configured.
 context: fork
 model: haiku
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.3.1"
   internal: true
 ---
 
@@ -131,13 +131,15 @@ URL-encode the note name (spaces → `%20`, etc.). The note basename is sufficie
 
 ## 7. Log to the daily note
 
-After saving the notes, append a bullet to the daily note for the meeting's date.
+After saving the notes, append a bullet to the daily note for the meeting's date. The log records Nathan's day, so the bullet describes the meeting as an event that happened, not the import. Never write "synced", "imported", or "from Granola" in it.
 
 **Format:**
 
 ```
-- Synced [[Meeting Title]] from Granola — [one sentence: who the meeting was with and what it covered]
+- [[Meeting Title]]: [one sentence: who the meeting was with and what it covered]
 ```
+
+Example: `- [[PSERS death benefit and accounts with Paul at Lincoln 2026-09]]: call with Paul Dellamonica at Lincoln Investment about the PSERS death benefit and near-term cash access`
 
 Resolve the daily note for the meeting's `date` using the vault's standard daily note conventions. Read the note, find the `## Log - <Weekday>` section, and append the bullet after the last existing bullet there.
 

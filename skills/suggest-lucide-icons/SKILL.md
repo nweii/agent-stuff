@@ -1,10 +1,9 @@
 ---
 name: suggest-lucide-icons
 description: "Pick Lucide icons for a concept, UI placement, or vault note. Searches the full Lucide catalog for real, verified icon names. Use when the user says 'what icon for X', 'suggest a Lucide icon', 'pick an icon', or needs an icon for note frontmatter, a button, or a section header."
-model: sonnet, inherit
 metadata:
   author: nweii
-  version: "1.4.0"
+  version: "1.4.1"
 ---
 
 # Suggest Lucide Icons

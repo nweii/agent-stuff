@@ -1,9 +1,9 @@
 ---
 name: teach-me
-description: "Tutoring pass for understanding something deeply: a concept being learned, or work just done in the session. Locates where the learner is, teaches one step per turn, quizzes to verify, and continues until they can explain the material back and apply it. Can produce durable artifacts (a walkthrough of the work, a record of what was learned, a glossary) saved through whatever the environment supports. Use when the user wants to learn or understand something, or after substantive work to consolidate it; also via /teach-me."
+description: "Use when the user asks to learn a concept or understand completed work through stepwise tutoring, checks for understanding, or a saved walkthrough or learning record."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
   credit: "Synthesizes principles from a Socratic-teaching prompt by Suzanne at Anthropic (shared by Thariq in a June 2026 tweet), Anthropic's default `learn` skill, Matt Pocock's `teach` skill, and my earlier `project-teacher` skill."
 ---
 
@@ -62,4 +62,4 @@ Reach for either only when the subject calls for an artifact.
 
 ## Capturing anything durable
 
-When something is worth keeping, save it the way this environment allows and where the user already keeps such things. Follow the conventions in play: a notes vault, a repo, a project's own docs folder, whatever the setup or the user's instructions already define. Since these are personal to the user, don't commit them into a shared or team repo unless that's what they want. If there's no durable store, keep it in the conversation and offer it as copyable text. 
+When something is worth keeping, save it the way this environment allows and where the user already keeps such things. Follow the conventions in play: a notes vault, a repo, a project's own docs folder, whatever the setup or the user's instructions already define. Since these are personal to the user, don't commit them into a shared or team repo unless that's what they want. If there's no durable store, keep it in the conversation and offer it as copyable text.
