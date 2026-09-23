@@ -7,11 +7,11 @@ Check each item against every changed section. Rewrite toward the rule in `SKILL
 - The opening states what the project is and what the reader gets before any mechanism or term of art.
 - Every section applies to this project and its users, and sits in the document that owns it.
 - Each fact has one canonical home; other docs link to it.
-- No personal domains, IDs, or private references, and examples use fictional data.
+- In a public or soon-public repo, no personal domains, IDs, or private references, and examples use fictional data.
 - Each content section would stay correct if read in isolation or if someone else maintained the project; maintainer names, support links, credits, and build notes sit in meta sections.
 - Examples are framed as examples, not as the whole feature.
 - Optional paths read as optional; nothing assumes what the reader wants, owns, or has already bought.
-- Each step that creates an account, token, or setting says what it is and why the project needs it.
+- Each step that creates an account, token, or setting the reader may not know says what it is and why the project needs it.
 
 ## Claims
 
@@ -43,7 +43,7 @@ Check each item against every changed section. Rewrite toward the rule in `SKILL
 
 - The repo's own conventions are followed; defaults fill only what they leave open.
 - *(suggestion)* A README shows the project working near the top (an image with alt text, or a code block with real output). When it doesn't, name the shot that would help most.
-- Each heading lets a scanning reader predict the section: a direct label for reference and procedures, a succinct summary for a section that makes one point, common signposts as readers expect them; sentence case; no one-item sections.
+- Each heading lets a scanning reader predict the section: a direct label for reference and procedures, a succinct summary for a section that makes one point, common signposts as readers expect them; sentence case; no one-item sections apart from signposts such as License.
 - Troubleshooting entries quote the literal error or dialog the reader sees.
 - Paragraphs wrap naturally, with no hard line breaks.
 - Badges are functional and self-updating.

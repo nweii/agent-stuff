@@ -26,7 +26,7 @@ Showing the project doing its job, right after the opening, is strongly recommen
 
 ## Section order by project type
 
-Choose the list that matches the project and use only the sections it needs. License is always last.
+Choose the list that matches the project and use only the sections it needs. Move a section earlier when this project's readers need it sooner (limits that decide adoption, a warning every reader must see). License is always last.
 
 **App or plugin** (desktop utility, editor or note-app plugin, browser extension):
 
@@ -60,7 +60,7 @@ Once a second doc or a docs site exists, the README becomes a front door. Keep t
 
 ## Section conventions
 
-**Features.** Optional; skip it when the opening already carries the differentiator. Three to five bullets. Each opens with a bold sentence stating the outcome, ending in a period, followed by one plain sentence of support. Short concrete fragments work for a library ("Zero dependencies", "Works with server rendering"). Lead with the feature that sets the project apart.
+**Features.** Optional; skip it when the opening already carries the differentiator. A few bullets, one for each feature that sets the project apart. Each opens with a bold sentence stating the outcome, ending in a period, followed by one plain sentence of support. Short concrete fragments work for a library ("Zero dependencies", "Works with server rendering"). Lead with the feature that sets the project apart.
 
 **Install.** Label each alternate path with its real cost ("needs a rebuild for every update", "updated less often"). When a path stops working well, say so plainly and point to the better one.
 
@@ -72,7 +72,7 @@ Once a second doc or a docs site exists, the README becomes a front door. Keep t
 
 **Platform disclosures.** Plugin, extension, and package directories often set README requirements; check the directory's developer policy and meet it. Obsidian's community plugin policy, for example, requires naming each remote service and why it is used, and disclosing payments, required accounts, file access outside the vault, and telemetry.
 
-**Agent setup prompt.** Put a copyable prompt in a `text` block under "Let an agent set it up". Write it with the `writing-for-agents` skill: steps an agent can follow mechanically, each ending on a checkable result. It works with every install path, stays conditional about optional steps, and tells the agent to guide the user through secrets rather than receive them.
+**Agent setup prompt.** When setup has several steps an agent could carry out, put a copyable prompt in a `text` block under "Let an agent set it up". Write it with the `writing-for-agents` skill: steps an agent can follow mechanically, each ending on a checkable result. It works with every install path, stays conditional about optional steps, and tells the agent to guide the user through secrets rather than receive them.
 
 **Badges.** Functional and self-updating only: a deploy button, an install badge, a live package version. Never a hard-coded version.
 

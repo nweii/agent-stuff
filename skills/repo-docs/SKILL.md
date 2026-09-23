@@ -3,7 +3,7 @@ name: repo-docs
 description: "README and other user-facing repo docs (setup guides, docs/ pages, security and contributing notes, release notes). Use when writing, revising, or auditing them, or preparing a repo's docs for public release. Agent-facing files such as AGENTS.md belong to writing-for-agents."
 metadata:
   author: nweii
-  version: "0.1.0"
+  version: "0.2.0"
   internal: true
 ---
 
@@ -13,7 +13,7 @@ User-facing repo docs serve a **stranger**: someone who arrived cold, is decidin
 
 The guidance has two layers. The content rules apply to every user-facing doc in every repo. The format defaults apply only where the repo, its ecosystem, or its docs site has no convention of its own; when one exists, follow it.
 
-Most rules below are judgments, each with the test that decides it. Apply the test to the case in front of you: the same detail can belong in a reference table and not in a heading, or in a closing section and not in a setup step.
+Most rules below are judgments, each with the test that decides it. Apply the test to the case in front of you: the same detail can belong in a reference table and not in a heading, or in a closing section and not in a setup step. Scale the steps to the change as well: a one-line fix needs the facts it touches and their echoes, while a new doc or a public-release pass needs every step in full.
 
 ## Steps
 
@@ -41,11 +41,11 @@ Done when every claim in the changed sections is traced and every echo agrees.
 
 ### 5. Sweep
 
-Run [references/audit-checklist.md](references/audit-checklist.md) against every changed section. Done when every item has been checked against every changed section.
+Run [references/audit-checklist.md](references/audit-checklist.md) against every changed section. Done when every item that bears on the change has been checked against every changed section.
 
 ### 6. Preview before committing
 
-Show the changed prose in chat (or open the file for review) and wait for approval before committing. Publishing to a public repo needs its own explicit approval.
+Show the changed prose in chat (or open the file for review) and wait for approval before committing, unless the owner has already approved the wording or asked for a direct commit. Publishing to a public repo needs its own explicit approval.
 
 ## Where material belongs
 
@@ -59,13 +59,13 @@ Show the changed prose in chat (or open the file for review) and wait for approv
 | Version history and release specifics | `CHANGELOG.md` or release notes |
 | Vulnerability reporting; contribution process | `SECURITY.md`; `CONTRIBUTING.md` |
 | What a vendored dependency is and why it is committed | A short README in its folder |
-| Owner notes, research, plans, audits, handoffs, competitor analysis | Outside the repo, in the owner's private store |
+| Owner notes, research, plans, audits, handoffs, competitor analysis | Outside a public repo, in the owner's private store; a private repo may keep them in `docs/` |
 
 ## Content rules
 
 **Outcome first, then the specific.** Describe a feature or step by what the reader gets. Then weigh each concrete detail (a number, a list, a name) on two questions: does it inform the reader's decision, and how often will it change? Match its position to the answer. Headings, feature lead-ins, and openings are the most prominent and least often revisited lines, so they carry only details that are both decision-relevant and stable (a minimum runtime version, a measured speedup). A detail that is useful but likely to change (how many commands, templates, or integrations ship; which formats this release supports) goes where it is easy to keep current: a reference table, a docs page, or release notes. A detail that only describes internals (control names, implementation terms) goes nowhere.
 
-**Explain what and why.** When a step asks the reader to create an account, a project, a token, or a setting, say what that thing is and why the project needs it.
+**Explain what and why.** When a step asks the reader to create an account, a project, a token, or a setting the intended reader may not know, say what that thing is and why the project needs it.
 
 **State the boundary.** For privacy, security, network, and data behaviour, state what the software does and does not touch, and name each external service it contacts and why. Mechanics the reader only needs to trust belong in `docs/` or the code; steps the reader must take belong on the page.
 
@@ -89,11 +89,11 @@ When a reader needs a platform fact that may change, date it ("As of 2026-08, â€
 
 **One term per thing.** Choose one name for each concept and use it across every doc. Replace insider shorthand with what the reader will notice.
 
-**Stranger-safe.** Public docs carry no personal domains, account or deployment IDs, private references, or real personal data in examples. Use placeholders (`example.com`) and fictional sample data. A personal collection that says openly it is personal may speak in the first person throughout.
+**Stranger-safe.** Docs in a public repo, or one likely to become public, carry no personal domains, account or deployment IDs, private references, or real personal data in examples. Use placeholders (`example.com`) and fictional sample data. A private repo read by a known team may name the people, hosts, and infrastructure its readers need. A personal collection that says openly it is personal may speak in the first person throughout.
 
 **Content stands alone; meta stays in meta sections.** Content describes the project and how to use it: what it does, setup, usage, configuration, privacy, limits. Meta is material about the project as a project: who maintains it and how to support them, credits, how it was built (including AI usage), contribution stance, maintenance status, license. Write content so it would stay correct and complete if a different person maintained the project, or if the section were read in isolation (linked directly, quoted on a storefront, loaded by an agent). Gather meta into sections that exist for it, usually at the end of a README or in `CONTRIBUTING.md`, where a first-person voice, the maintainer's name, and support links fit. One exception: a maintenance or maturity status that changes whether someone should adopt the project goes where the reader sees it first.
 
-**Built before documented.** Document behaviour once it exists and works as described.
+**Built before documented.** Docs on the default branch describe behaviour that exists and works as described. A branch that builds a feature may document it alongside the code.
 
 ## Headings
 
@@ -102,7 +102,7 @@ Write each heading for a reader scanning the page, who should be able to predict
 - A section that holds reference, a procedure, or a category of material gets a simple, direct label ("Configuration", "Supported file types", "Privacy and network access").
 - A section that makes one point or explains one idea gets a succinct summary of that content ("Everything runs locally").
 
-Readers already know the common signposts ("Getting started", "Installation", "Usage", "FAQ", "Troubleshooting", "License"), so use those as readers expect them, whatever their grammar. Use sentence case. Fold a section that would hold one item into a neighbour, or into an FAQ.
+Readers already know the common signposts ("Getting started", "Installation", "Usage", "FAQ", "Troubleshooting", "License"), so use those as readers expect them, whatever their grammar. Use sentence case. Fold a section that would hold one item into a neighbour, or into an FAQ; a signpost section such as License may stay one line.
 
 ## Prose
 
