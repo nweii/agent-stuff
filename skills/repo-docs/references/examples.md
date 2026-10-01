@@ -1,18 +1,18 @@
 # Before and after
 
-The pairs below are real revisions to this owner's public READMEs, with the rule each shows. The last section describes patterns from other well-regarded projects.
+These fictional examples demonstrate README writing judgments. Adapt their wording only after checking the behaviour of the project being documented. The last section describes patterns from other well-regarded projects.
 
 ## Opening: outcome before mechanism
 
 Before:
 
-> Every gesture is a fix-tap. You hold one finger still, then tap with another. A resting hand cannot make this motion, so the gestures do not fire by accident.
+> Every recording is a clip-session. The recorder combines an input stream with a capture buffer. Background noise cannot start a session because capture requires a button press.
 
 After:
 
-> Trigger an action without taking your hand off the mouse.
+> Record a voice memo without leaving the app you are using.
 >
-> Trickpad turns finger gestures on a Magic Mouse or Magic Trackpad into keyboard shortcuts, built-in actions, custom URLs, or executable scripts.
+> This menu bar recorder captures audio from your chosen microphone when you press a keyboard shortcut.
 
 The first draft named an internal term and defended against a concern no reader had raised yet.
 
@@ -20,11 +20,11 @@ The first draft named an internal term and defended against a concern no reader 
 
 Before:
 
-> MCP ServerKit standardizes the server plumbing repeated across the owner's self-hosted MCP repositories.
+> This deployment toolkit packages the setup repeated across the owner's web services.
 
 After:
 
-> MCP ServerKit standardizes recurring server plumbing for long-lived Bun + Express MCP services, usually running in Docker behind a reverse proxy.
+> This deployment toolkit provides health checks, request logging, and graceful shutdown for persistent web services running in containers.
 
 A "When to use it" section follows, so a stranger can decide quickly.
 
@@ -32,35 +32,75 @@ A "When to use it" section follows, so a stranger can decide quickly.
 
 Before:
 
-> **Sixteen gestures per device.** Bind taps, swipes, and deliberate motions…
+> **Twelve export presets.** Export images at different sizes and quality levels…
 
 After:
 
-> **Flexible gestures for each device.** Configure taps, swipes, and hold gestures independently for a Magic Mouse and Magic Trackpad.
+> **Reusable export settings.** Save an image size, format, and quality level as a preset for later exports.
 
-"Sixteen" sat in a feature lead-in and would change whenever gestures were added. The default gestures table, which is built to be updated, carries the full list.
+The preset count can change without changing the capability. Put the full list in a reference table that is easy to keep current.
 
 ## Feature bullet: outcome, not controls
 
 Before:
 
-> **Explain what your tags mean.**
+> **Set your search folders.**
 
 After:
 
-> **Matches your tag system.** Your definitions and rules shape which tags fit a note, even when their names alone would suggest something else.
+> **Search the folders you choose.** Include shared reference folders and exclude archives from search results.
 
 ## Feature bullet: accurate model
 
 Before:
 
-> Hold Fn to give any gesture a second action.
+> Add a schedule to give any saved report a second way to run.
 
 After:
 
-> Bind gestures that run only while Fn is held.
+> Run a saved report on a schedule, whether or not you also run it manually.
 
-The Fn binding does not depend on the plain gesture being bound, so "second action" described a model the app does not follow.
+Scheduled runs do not depend on manual runs, so "second way" implies a dependency the software does not have.
+
+## Feature bullet: meaningful choice
+
+For a service with configurable access:
+
+Before:
+
+> **Read and write access.** Clients can read and edit calendar events.
+
+After:
+
+> **Configurable permissions.** Choose read-only access or allow connected clients to create and edit events.
+
+The lead-in names the choice; the support explains its effect. Use it only when those permission modes exist.
+
+## Feature lead-ins: useful overview and concrete support
+
+Read the bold lead-ins alone for an overview, then read the support for the reason each capability matters:
+
+> - **Include less-used sources.** Balance frequently searched folders with a sample of the rest, so older reference material still gets considered.
+> - **Configuration in one readable file.** Inspect, edit, and back up your settings without exporting them from a dashboard.
+> - **Protect documents from conflicting edits.** Version checks reject a save when another editor has changed the document since it was loaded.
+
+Each bullet has one main point. The support explains a consequence, a practical use, or the protection behind a claim.
+
+Keep the explanation as strong as the lead-in. A word such as "Flexible" gives little to a scanning reader; a controls bullet that accumulates unrelated settings can hide its main point. A technical feature list can use literal capabilities as lead-ins when those terms help its intended readers decide.
+
+## Privacy: control and access
+
+For a self-hosted service:
+
+Before:
+
+> Only you have access. The project maintainer has no access to your data.
+
+After:
+
+> Self-hosted and under your control. You control the server, credentials, and which clients can connect. Authorized clients receive the data they request; a hosting provider runs the server if you deploy it on hosted infrastructure.
+
+This describes ownership and access without introducing the author into product copy. Verify each boundary against the deployment and client model; self-hosting alone does not establish exclusive access.
 
 ## Privacy: the boundary, not the mechanics
 
@@ -72,7 +112,7 @@ After:
 
 > The app has no telemetry, analytics, or crash reporting. It uses the network only for updates.
 
-The removed sentence became false within a day, when the update behaviour changed.
+The automatic-update details belong in the update settings reference, where they can be maintained alongside the controls.
 
 ## Install: plain instruction, no personification
 
@@ -84,7 +124,7 @@ Before:
 
 After:
 
-> Trickpad requires macOS 13 or later. The first time you run the app, macOS asks for Accessibility permission so it can send keystrokes.
+> The utility requires macOS 13 or later. The first time you run the app, macOS asks for Accessibility permission so it can send keystrokes.
 >
 > A local build does not require the Gatekeeper steps above, but it still needs Accessibility permission.
 
@@ -124,11 +164,11 @@ After:
 
 Before:
 
-> By default it sends Return. Bind it to any shortcut you want. It runs in the background with no interface. Clicking is unchanged.
+> By default it checks every hour. Pick any interval you want. It runs in the background. Notifications are off.
 
-After (the owner's own edit):
+After:
 
-> By default it sends Return, but you can bind this to any shortcut you want. It runs in the background with no interface and does not affect normal clicks or existing gestures by default.
+> It checks for changes hourly by default, but you can choose another interval. It runs in the background and sends notifications only if you enable them.
 
 Simple English has a floor: once sentences turn staccato, rejoin them.
 

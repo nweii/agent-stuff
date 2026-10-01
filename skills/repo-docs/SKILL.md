@@ -3,7 +3,7 @@ name: repo-docs
 description: "README and other user-facing repo docs (setup guides, docs/ pages, security and contributing notes, release notes). Use when writing, revising, or auditing them, or preparing a repo's docs for public release. Agent-facing files such as AGENTS.md belong to writing-for-agents."
 metadata:
   author: nweii
-  version: "0.2.0"
+  version: "0.2.1"
   internal: true
 ---
 
@@ -31,7 +31,7 @@ Put each piece of material in the document that owns it, using the map below. Gi
 
 Apply the content rules, then the repo's conventions, then the format defaults for whatever the conventions leave open. For a README, read [references/readme.md](references/readme.md).
 
-When revising, change only what is awkward, wrong, stale, or misplaced. Keep phrasing that already works, and when feedback names one part, fix that part and keep the rest. When the owner asks for a file-wide fix, apply it to the whole file.
+When revising, change only what is awkward, wrong, stale, or misplaced. Keep phrasing that already works. When feedback reveals a pattern, check the whole affected list or section for it and revise every instance that fails the same test. When the owner asks for a file-wide fix, apply it to the whole file.
 
 ### 4. Verify every claim
 
@@ -67,7 +67,7 @@ Show the changed prose in chat (or open the file for review) and wait for approv
 
 **Explain what and why.** When a step asks the reader to create an account, a project, a token, or a setting the intended reader may not know, say what that thing is and why the project needs it.
 
-**State the boundary.** For privacy, security, network, and data behaviour, state what the software does and does not touch, and name each external service it contacts and why. Mechanics the reader only needs to trust belong in `docs/` or the code; steps the reader must take belong on the page.
+**State the boundary.** For privacy, security, network, and data behaviour, state what the software does and does not touch, and name each external service it contacts and why. Distinguish user control from exclusive access: account for authorized clients and hosting providers before making access claims. Explain who controls the server, credentials, and client access when those choices matter. Mechanics the reader only needs to trust belong in `docs/` or the code; steps the reader must take belong on the page.
 
 **Durable.** Write sentences that stay true as versions, vendors, and release states change. Release dates, "what's new" sections, listing status, renames, retired components, and provider names that may change belong in release notes or nowhere. Three kinds of time-bound fact earn a place:
 
@@ -91,7 +91,7 @@ When a reader needs a platform fact that may change, date it ("As of 2026-08, â€
 
 **Stranger-safe.** Docs in a public repo, or one likely to become public, carry no personal domains, account or deployment IDs, private references, or real personal data in examples. Use placeholders (`example.com`) and fictional sample data. A private repo read by a known team may name the people, hosts, and infrastructure its readers need. A personal collection that says openly it is personal may speak in the first person throughout.
 
-**Content stands alone; meta stays in meta sections.** Content describes the project and how to use it: what it does, setup, usage, configuration, privacy, limits. Meta is material about the project as a project: who maintains it and how to support them, credits, how it was built (including AI usage), contribution stance, maintenance status, license. Write content so it would stay correct and complete if a different person maintained the project, or if the section were read in isolation (linked directly, quoted on a storefront, loaded by an agent). Gather meta into sections that exist for it, usually at the end of a README or in `CONTRIBUTING.md`, where a first-person voice, the maintainer's name, and support links fit. One exception: a maintenance or maturity status that changes whether someone should adopt the project goes where the reader sees it first.
+**Content stands alone; meta stays in meta sections.** Content describes the project and how to use it: what it does, setup, usage, configuration, privacy, limits. Keep product copy reader-focused and impersonal: describe user ownership and control directly rather than through the maintainer's identity or first-person assurances. Meta is material about the project as a project: who maintains it and how to support them, credits, how it was built (including AI usage), contribution stance, maintenance status, license. Write content so it would stay correct and complete if a different person maintained the project, or if the section were read in isolation (linked directly, quoted on a storefront, loaded by an agent). Gather meta into sections that exist for it, usually at the end of a README or in `CONTRIBUTING.md`, where a first-person voice, the maintainer's name, and support links fit. One exception: a maintenance or maturity status that changes whether someone should adopt the project goes where the reader sees it first.
 
 **Built before documented.** Docs on the default branch describe behaviour that exists and works as described. A branch that builds a feature may document it alongside the code.
 

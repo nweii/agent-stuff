@@ -31,7 +31,7 @@ Choose the list that matches the project and use only the sections it needs. Mov
 **App or plugin** (desktop utility, editor or note-app plugin, browser extension):
 
 1. Opening and visual
-2. Features (optional)
+2. Features (see [Feature lead-ins](#feature-lead-ins))
 3. Install: the primary path first with the minimum OS or app version, alternates as subsections, "Let an agent set it up" last
 4. Usage: defaults, input-to-result tables (such as shortcut → action)
 5. Configuration
@@ -58,9 +58,19 @@ Choose the list that matches the project and use only the sections it needs. Mov
 
 Once a second doc or a docs site exists, the README becomes a front door. Keep the identity, the visual, install, the smallest working example, and a link to the docs for each topic. Move exhaustive reference, option lists, and version history out. Keep enough real text that a person, a search engine, or an agent reading the raw file learns what the project is and how to start; an image-only README fails that.
 
-## Section conventions
+## Feature lead-ins
 
-**Features.** Optional; skip it when the opening already carries the differentiator. A few bullets, one for each feature that sets the project apart. Each opens with a bold sentence stating the outcome, ending in a period, followed by one plain sentence of support. Short concrete fragments work for a library ("Zero dependencies", "Works with server rendering"). Lead with the feature that sets the project apart.
+Prefer a short Features list for repositories presented as products for others to use, or where adoption merits a fuller overview. It gives readers a quick view of the project's most distinctive aspects, especially when comparing alternatives. A small utility or reference repository can omit it when the opening already gives readers enough to decide.
+
+Use a few bullets, each with a **bold lead-in** stating a meaningful capability or benefit, followed by a plain supporting sentence. End the lead-in with a period. Short concrete fragments work for a library ("Zero dependencies", "Works with server rendering"). Select and order the bullets by what helps readers decide whether the project fits; lead with its strongest distinguishing capability. Cover meaningful differences in workflow, control, compatibility, or constraints rather than inventorying every feature. A feature need not be unique to help readers compare.
+
+Test every lead-in on its own: does it convey a concrete point, meaningful capability, or reader benefit? A category such as "Read and write access" or "Calendar details" leaves the reader to infer the point; "Configurable permissions" names a meaningful choice. The supporting sentence explains that choice or result. Apply this test across the entire feature list, keeping claims specific and literal.
+
+Read the bold text alone to check that the list gives a useful overview. Then read each full bullet: its support should add a concrete example, explain why the capability matters, or establish a condition. Give each bullet one main point; move exhaustive options to reference material.
+
+Give a distinctive capability its own bullet when it changes what readers can do or expect. State the conditions that make its benefit true. For example, verified coordinates may let AI-created or edited events retain native Apple Calendar map previews; that benefit deserves its own feature when supported, rather than a place in a generic event-details list. Evidence for one native preview does not establish support for other previews.
+
+## Section conventions
 
 **Install.** Label each alternate path with its real cost ("needs a rebuild for every update", "updated less often"). When a path stops working well, say so plainly and point to the better one.
 
