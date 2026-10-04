@@ -47,7 +47,7 @@ class PluginTests(unittest.TestCase):
         self.assertFalse((self.root / "skills/sample").exists())
 
     def test_release_rejects_each_manifest_and_catalog_version_mismatch(self):
-        self.assertEqual(release.check_release("example", self.root), "example--v0.1.0")
+        self.assertEqual(release.check_release("example", self.root), "example/v0.1.0")
         for path in generator.generated_documents(self.root):
             with self.subTest(path=str(path)):
                 target = self.root / path
@@ -67,9 +67,10 @@ class PluginTests(unittest.TestCase):
         self.assertEqual(json.loads(claude.read_text())["plugins"][0]["source"], "./plugins/example")
         source = json.loads(codex.read_text())["plugins"][0]["source"]
         self.assertEqual(source, {"source": "git-subdir", "url": self.data["repository"],
-                                  "path": "plugins/example", "ref": "example--v0.1.0"})
+                                  "path": "plugins/example", "ref": "example/v0.1.0"})
         for path, wrong in ((claude, source), (claude, "./plugins/wrong"),
-                            (codex, "./plugins/example"), (codex, {**source, "ref": "wrong"})):
+                            (codex, "./plugins/example"), (codex, {**source, "ref": "wrong"}),
+                            (codex, {**source, "ref": "example--v0.1.0"})):
             with self.subTest(path=str(path), source=wrong):
                 data = json.loads(path.read_text())
                 data["plugins"][0]["source"] = wrong
@@ -117,7 +118,7 @@ class PluginTests(unittest.TestCase):
         git("add", ".")
         git("commit", "-m", "Fixture")
         subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, check=True)
-        self.assertEqual(git("cat-file", "-t", "example--v0.1.0").strip(), "commit")
+        self.assertEqual(git("cat-file", "-t", "example/v0.1.0").strip(), "commit")
         self.member.write_text(self.member.read_text() + "Dirty.\n")
         refused = subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, capture_output=True, text=True)
         self.assertNotEqual(refused.returncode, 0)

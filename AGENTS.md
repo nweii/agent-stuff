@@ -32,7 +32,7 @@ Claude's catalog uses `./plugins/<id>` so [skills CLI 1.7.0 discovers bundled sk
 
 Migrate within the same repo, preserve the frontmatter name, and leave one copy plus a README-only pointer at the old path. [Relocation](https://github.com/vercel-labs/skills/blob/v1.7.0/src/skill-relocation.ts) requires skills CLI >=1.5.24 (fixture checked 1.7.0). Its [update discovery](https://github.com/vercel-labs/skills/blob/v1.7.0/src/update.ts) falsely calls moved and unmoved internal skills deleted; use `INSTALL_INTERNAL_SKILLS=1` or decline removal.
 
-Version each plugin only when cutting a release. `release-plugin.py --version` prepares metadata; after committing, `--tag` checks three manifests and both vendor sources/versions before plain `git tag <id>--v<version>`. Migrate one plugin per push. See the [plugin guide](plugins/obsidian-tools/README.md) for commands and validation limits.
+Version each plugin only when cutting a release. `release-plugin.py --version` prepares metadata; after committing, `--tag` checks three manifests and both vendor sources/versions before plain `git tag <id>/v<version>`. Migrate one plugin per push. See the [plugin guide](plugins/obsidian-tools/README.md) for commands and validation limits.
 
 ## Publishing
 

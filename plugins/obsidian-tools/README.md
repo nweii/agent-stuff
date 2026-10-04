@@ -22,7 +22,7 @@ Edit `plugin-source.json` for the plugin's promise and presentation. The generat
 
 The Claude catalog uses `./plugins/obsidian-tools`, which supports named and unscoped skills CLI discovery. Claude plugin payloads follow the marketplace checkout (normally the repository's default branch). Git-hosted installed plugins stay on their version until it changes; new installers can receive unreleased edits under the current version. This version gate does not apply to plugins loaded in place from a local marketplace directory.
 
-The Codex catalog pins `git-subdir` + `ref` to `obsidian-tools--v0.1.0`. That tag must exist remotely before Codex can fetch the release. Watch pending [skills PR 1334, remote marketplace sources](https://github.com/vercel-labs/skills/pull/1334): support for that source type could remove the discovery reason for the split (open/unmerged when checked October 4, 2026).
+The Codex catalog pins `git-subdir` + `ref` to `obsidian-tools/v0.1.0`. That tag must exist remotely before Codex can fetch the release. Watch pending [skills PR 1334, remote marketplace sources](https://github.com/vercel-labs/skills/pull/1334): support for that source type could remove the discovery reason for the split (open/unmerged when checked October 4, 2026).
 
 From the repository root:
 

@@ -68,7 +68,7 @@ def generated_documents(root=REPO_ROOT):
         documents[folder / ".claude-plugin/plugin.json"] = common
         documents[folder / ".codex-plugin/plugin.json"] = {**common, "skills": "./skills/", "interface": data["interface"]}
         codex_source = {"source": "git-subdir", "url": data["repository"],
-                        "path": f"plugins/{name}", "ref": f"{name}--v{data['version']}"}
+                        "path": f"plugins/{name}", "ref": f"{name}/v{data['version']}"}
         claude_entries.append({"name": name, "version": data["version"],
                                "description": data["description"], "author": data["author"],
                                "source": f"./plugins/{name}"})

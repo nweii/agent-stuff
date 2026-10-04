@@ -38,7 +38,7 @@ def check_release(name, root=ROOT):
             raise ValueError(f"Catalog source disagrees with the vendor's local path or release tag: {relative}")
         if entries[0] != wanted:
             raise ValueError(f"Catalog entry disagrees with source version {version} or metadata: {relative}")
-    return f"{name}--v{version}"
+    return f"{name}/v{version}"
 
 
 def main():
