@@ -32,8 +32,12 @@ def check_release(name, root=ROOT):
         actual = json.loads((root / relative).read_text())
         entries = [entry for entry in actual["plugins"] if entry.get("name") == name]
         wanted = next(entry for entry in expected[relative]["plugins"] if entry["name"] == name)
-        if len(entries) != 1 or entries[0] != wanted:
-            raise ValueError(f"Catalog entry disagrees with source version {version} or release ref: {relative}")
+        if len(entries) != 1:
+            raise ValueError(f"Catalog must contain exactly one entry for {name}: {relative}")
+        if entries[0].get("source") != wanted["source"]:
+            raise ValueError(f"Catalog source disagrees with the vendor's local path or release tag: {relative}")
+        if entries[0] != wanted:
+            raise ValueError(f"Catalog entry disagrees with source version {version} or metadata: {relative}")
     return f"{name}--v{version}"
 
 

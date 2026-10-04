@@ -14,12 +14,7 @@
       "author": {
         "name": "Nathan Cheng"
       },
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/nweii/agent-stuff.git",
-        "path": "plugins/obsidian-tools",
-        "ref": "obsidian-tools--v0.1.0"
-      }
+      "source": "./plugins/obsidian-tools"
     }
   ]
 }

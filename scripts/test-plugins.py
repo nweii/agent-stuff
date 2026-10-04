@@ -61,14 +61,25 @@ class PluginTests(unittest.TestCase):
                     release.check_release("example", self.root)
                 generator.generate(self.root)
 
-    def test_release_rejects_wrong_ref_and_duplicate_entry(self):
+    def test_split_catalog_sources_and_refusal_of_wrong_sources(self):
+        claude = self.root / ".claude-plugin/marketplace.json"
+        codex = self.root / ".agents/plugins/marketplace.json"
+        self.assertEqual(json.loads(claude.read_text())["plugins"][0]["source"], "./plugins/example")
+        source = json.loads(codex.read_text())["plugins"][0]["source"]
+        self.assertEqual(source, {"source": "git-subdir", "url": self.data["repository"],
+                                  "path": "plugins/example", "ref": "example--v0.1.0"})
+        for path, wrong in ((claude, source), (claude, "./plugins/wrong"),
+                            (codex, "./plugins/example"), (codex, {**source, "ref": "wrong"})):
+            with self.subTest(path=str(path), source=wrong):
+                data = json.loads(path.read_text())
+                data["plugins"][0]["source"] = wrong
+                path.write_text(json.dumps(data))
+                with self.assertRaisesRegex(ValueError, "Catalog source disagrees"):
+                    release.check_release("example", self.root)
+                generator.generate(self.root)
+
+    def test_release_rejects_duplicate_entry(self):
         path = self.root / ".claude-plugin/marketplace.json"
-        data = json.loads(path.read_text())
-        data["plugins"][0]["source"]["ref"] = "wrong"
-        path.write_text(json.dumps(data))
-        with self.assertRaises(ValueError):
-            release.check_release("example", self.root)
-        generator.generate(self.root)
         data = json.loads(path.read_text())
         data["plugins"].append(data["plugins"][0])
         path.write_text(json.dumps(data))

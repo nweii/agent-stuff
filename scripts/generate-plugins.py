@@ -67,11 +67,12 @@ def generated_documents(root=REPO_ROOT):
         documents[folder / "plugin.json"] = {"$schema": AGENT_SCHEMA, **common}
         documents[folder / ".claude-plugin/plugin.json"] = common
         documents[folder / ".codex-plugin/plugin.json"] = {**common, "skills": "./skills/", "interface": data["interface"]}
-        source = {"source": "git-subdir", "url": data["repository"],
-                  "path": f"plugins/{name}", "ref": f"{name}--v{data['version']}"}
+        codex_source = {"source": "git-subdir", "url": data["repository"],
+                        "path": f"plugins/{name}", "ref": f"{name}--v{data['version']}"}
         claude_entries.append({"name": name, "version": data["version"],
-                               "description": data["description"], "author": data["author"], "source": source})
-        codex_entries.append({"name": name, "version": data["version"], "source": source,
+                               "description": data["description"], "author": data["author"],
+                               "source": f"./plugins/{name}"})
+        codex_entries.append({"name": name, "version": data["version"], "source": codex_source,
                               "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
                               "category": data["interface"]["category"]})
     documents[Path(".claude-plugin/marketplace.json")] = {
