@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# ABOUTME: Builds per-skill .zip files into zips/ for drag-into-Claude.ai, mirroring the skills/ folder.
+# ABOUTME: Builds per-skill .zip files into zips/ for drag-into-Claude.ai from standalone and plugin skills.
 # ABOUTME: Deterministic (fixed timestamps, sorted entries) so unchanged skills produce byte-identical zips and no git churn.
 
 import os
@@ -9,6 +9,7 @@ import sys
 import zipfile
 from pathlib import Path
 from typing import List
+from skill_sources import read_index_file, tracked_skill_files
 
 # Public repo: zip general-purpose skills only. The private copy sets this True (all its skills are personal).
 ZIP_INCLUDE_INTERNAL = False
@@ -25,7 +26,7 @@ JUNK_NAMES = {".DS_Store", "Thumbs.db", "Desktop.ini"}
 
 
 def is_internal(skill_md: Path) -> bool:
-    content = skill_md.read_text()
+    content = read_index_file(REPO_ROOT, skill_md).decode()
     fm = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
     if not fm:
         return False
@@ -59,13 +60,13 @@ def build_zip(skill_dir: Path) -> bytes:
             info = zipfile.ZipInfo(arcname, date_time=FIXED_DATE_TIME)
             info.external_attr = 0o644 << 16
             info.compress_type = zipfile.ZIP_DEFLATED
-            zf.writestr(info, f.read_bytes())
+            zf.writestr(info, read_index_file(REPO_ROOT, f))
     return buf.getvalue()
 
 
 def skills_to_zip() -> List[Path]:
     dirs = []
-    for skill_md in SKILLS_DIR.glob("*/SKILL.md"):
+    for skill_md in tracked_skill_files(REPO_ROOT):
         if skill_md.parent.name == "private":
             continue
         if not ZIP_INCLUDE_INTERNAL and is_internal(skill_md):
@@ -75,15 +76,15 @@ def skills_to_zip() -> List[Path]:
 
 
 def rebuild() -> List[str]:
-    """Wipe zips/ and regenerate. Returns the list of skill names written."""
+    """Regenerate tracked archives and trash stale ones. Returns the names written."""
     ZIPS_DIR.mkdir(exist_ok=True)
-    for old in ZIPS_DIR.glob("*.zip"):
-        old.unlink()
-
     written = []
     for skill_dir in skills_to_zip():
         (ZIPS_DIR / f"{skill_dir.name}.zip").write_bytes(build_zip(skill_dir))
         written.append(skill_dir.name)
+    for old in ZIPS_DIR.glob("*.zip"):
+        if old.stem not in written:
+            subprocess.run(["trash", str(old)], check=True)
     return written
 
 

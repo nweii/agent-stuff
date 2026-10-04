@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Stuff Codex marketplace contract (project-owned subset)",
+  "description": "Derived from official packaging docs and codex-rs/core-plugins/src/marketplace.rs at de3721a7be07054c8c2a41102b5a501f34155361. Version is the flattened fallback manifest version. This is not an official published Codex schema.",
+  "type": "object",
+  "required": ["name", "interface", "plugins"],
+  "properties": {
+    "name": {"type": "string", "minLength": 1},
+    "interface": {"type": "object", "required": ["displayName"], "properties": {"displayName": {"type": "string"}}, "additionalProperties": false},
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "version", "source", "policy", "category"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+          "source": {
+            "type": "object",
+            "required": ["source", "url", "path", "ref"],
+            "properties": {
+              "source": {"const": "git-subdir"},
+              "url": {"type": "string", "minLength": 1},
+              "path": {"type": "string", "pattern": "^plugins/[a-z0-9.-]+$"},
+              "ref": {"type": "string", "pattern": "^[a-z0-9.-]+--v[0-9]+\\.[0-9]+\\.[0-9]+$"}
+            },
+            "additionalProperties": false
+          },
+          "policy": {
+            "type": "object",
+            "required": ["installation", "authentication"],
+            "properties": {"installation": {"const": "AVAILABLE"}, "authentication": {"const": "ON_INSTALL"}},
+            "additionalProperties": false
+          },
+          "category": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

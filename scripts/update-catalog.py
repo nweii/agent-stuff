@@ -4,6 +4,7 @@
 
 import re
 from pathlib import Path
+from skill_sources import read_index_file, tracked_skill_files
 
 from typing import List, Tuple, Optional
 
@@ -36,12 +37,12 @@ def get_skills() -> List[Tuple[str, str, str, bool]]:
     """Get all skills as a flat sorted list of (name, path, description, is_internal)."""
     skills: List[Tuple[str, str, str, bool]] = []
 
-    for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
+    for skill_file in tracked_skill_files(REPO_ROOT):
         # Skip private directory (gitignored)
         if skill_file.parent.name == "private":
             continue
 
-        content = skill_file.read_text()
+        content = read_index_file(REPO_ROOT, skill_file).decode()
         desc = extract_frontmatter_field(content, "description")
         if not desc:
             desc = "(no description)"
@@ -50,7 +51,7 @@ def get_skills() -> List[Tuple[str, str, str, bool]]:
         is_internal = str(internal).lower() == "true"
 
         name = skill_file.parent.name
-        path = f"skills/{name}/"
+        path = skill_file.parent.relative_to(REPO_ROOT).as_posix() + "/"
         skills.append((name, path, desc, is_internal))
 
     skills.sort(key=lambda x: x[0])

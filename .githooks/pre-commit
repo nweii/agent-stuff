@@ -1,13 +1,24 @@
 #!/bin/bash
-# Regenerates the README catalog and the zips/ mirror when skills change.
+# Regenerates skill catalogs, archives, and plugin metadata when their sources change.
 # Enable via: git config core.hooksPath .githooks
 
 set -e
 
-STAGED=$(git diff --cached --name-only | grep -E '^skills/' || true)
+STAGED=$(git diff --cached --name-only | grep -E '^(skills/|plugins/|scripts/|\.githooks/|\.claude-plugin/marketplace.json|\.agents/plugins/marketplace.json)' || true)
 [ -z "$STAGED" ] && exit 0
 
-echo "Skills changed — regenerating catalog and zips..." >&2
+echo "Agent sources changed — regenerating catalogs, zips, and plugin metadata..." >&2
+python3 scripts/generate-plugins.py
+for SOURCE in plugins/*/plugin-source.json; do
+    [ -f "$SOURCE" ] || continue
+    PLUGIN=${SOURCE#plugins/}
+    PLUGIN=${PLUGIN%/plugin-source.json}
+    python3 scripts/release-plugin.py "$PLUGIN" --check
+done
+git add -- .claude-plugin/marketplace.json .agents/plugins/marketplace.json
+for MANIFEST in plugins/*/plugin.json plugins/*/.claude-plugin/plugin.json plugins/*/.codex-plugin/plugin.json; do
+    [ -f "$MANIFEST" ] && git add -- "$MANIFEST"
+done
 python3 scripts/update-catalog.py
 python3 scripts/build-zips.py
 

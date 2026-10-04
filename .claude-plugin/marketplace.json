@@ -1,0 +1,25 @@
+{
+  "name": "agent-stuff",
+  "owner": {
+    "name": "Nathan Cheng"
+  },
+  "metadata": {
+    "description": "Reusable agent plugins for working with your own tools and conventions."
+  },
+  "plugins": [
+    {
+      "name": "obsidian-tools",
+      "version": "0.1.0",
+      "description": "Operate your Obsidian vault, write note descriptions, and create Templater and Web Clipper templates using your own conventions.",
+      "author": {
+        "name": "Nathan Cheng"
+      },
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/nweii/agent-stuff.git",
+        "path": "plugins/obsidian-tools",
+        "ref": "obsidian-tools--v0.1.0"
+      }
+    }
+  ]
+}

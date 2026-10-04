@@ -1,0 +1,23 @@
+{
+  "name": "agent-stuff",
+  "interface": {
+    "displayName": "Agent Stuff"
+  },
+  "plugins": [
+    {
+      "name": "obsidian-tools",
+      "version": "0.1.0",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/nweii/agent-stuff.git",
+        "path": "plugins/obsidian-tools",
+        "ref": "obsidian-tools--v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
