@@ -3,8 +3,7 @@ name: repo-docs
 description: "Use when writing, revising, or auditing READMEs, repo docs, RFCs, PR descriptions, or commit messages, or preparing docs for public release. Agent-facing files such as AGENTS.md belong to writing-for-agents."
 metadata:
   author: nweii
-  version: "0.3.0"
-  internal: true
+  version: "0.2.0"
   credit: "Adapted from https://github.com/cursor/plugins/blob/main/pstack/skills/technical-writing/SKILL.md"
 ---
 
