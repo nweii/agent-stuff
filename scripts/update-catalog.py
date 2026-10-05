@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-# ABOUTME: Generates the skills catalog section for README.md
+# ABOUTME: Generates the skills catalog and plugin list sections for README.md
 # ABOUTME: Reads frontmatter descriptions and outputs markdown lists, general skills first then an Internal section
 
+import json
 import re
+import subprocess
 from pathlib import Path
 from skill_sources import read_index_file, tracked_skill_files
 
@@ -15,6 +17,8 @@ AGENTS_DIR = REPO_ROOT / "agents"
 
 START_MARKER = "<!-- CATALOG:START -->"
 END_MARKER = "<!-- CATALOG:END -->"
+PLUGINS_START_MARKER = "<!-- PLUGINS:START -->"
+PLUGINS_END_MARKER = "<!-- PLUGINS:END -->"
 
 
 def extract_frontmatter_field(content: str, field: str) -> Optional[str]:
@@ -123,26 +127,50 @@ def generate_catalog() -> str:
     return "\n".join(lines)
 
 
+def get_plugins() -> List[Tuple[str, str, str]]:
+    """Plugins as a sorted list of (display name, path, description) from staged plugin-source.json files."""
+    paths = subprocess.check_output(
+        ["git", "ls-files", "-z", "--", "plugins/*/plugin-source.json"], cwd=REPO_ROOT
+    ).decode().split("\0")
+    plugins: List[Tuple[str, str, str]] = []
+    for text in filter(None, paths):
+        source = REPO_ROOT / text
+        data = json.loads(read_index_file(REPO_ROOT, source))
+        display = data.get("interface", {}).get("displayName") or data["name"]
+        plugins.append((display, source.parent.relative_to(REPO_ROOT).as_posix() + "/", data["description"]))
+    plugins.sort(key=lambda x: x[0].lower())
+    return plugins
+
+
+def generate_plugin_list() -> str:
+    """Generate the plugin list markdown for the README's Plugins section."""
+    lines = [PLUGINS_START_MARKER, ""]
+    for display, path, desc in get_plugins():
+        lines.append(f"- [{display}]({path}) — {desc}")
+    lines.extend(["", PLUGINS_END_MARKER])
+    return "\n".join(lines)
+
+
+def replace_between(content: str, start: str, end: str, replacement: str) -> str:
+    pattern = re.compile(rf"{re.escape(start)}.*?{re.escape(end)}", re.DOTALL)
+    return pattern.sub(lambda _: replacement, content)
+
+
 def update_readme():
-    """Update the README with the generated catalog."""
+    """Update the README with the generated skill catalog and plugin list."""
     readme_content = README_PATH.read_text()
 
     # Check for markers
-    if START_MARKER not in readme_content or END_MARKER not in readme_content:
-        print("Error: README.md missing catalog markers.")
-        print("Add these markers where you want the catalog:")
-        print(f"  {START_MARKER}")
-        print(f"  {END_MARKER}")
+    missing = [m for m in (START_MARKER, END_MARKER, PLUGINS_START_MARKER, PLUGINS_END_MARKER)
+               if m not in readme_content]
+    if missing:
+        print("Error: README.md missing generated-section markers:")
+        for marker in missing:
+            print(f"  {marker}")
         return False
 
-    # Replace content between markers
-    pattern = re.compile(
-        rf"{re.escape(START_MARKER)}.*?{re.escape(END_MARKER)}",
-        re.DOTALL,
-    )
-
-    new_catalog = generate_catalog()
-    new_content = pattern.sub(new_catalog, readme_content)
+    new_content = replace_between(readme_content, START_MARKER, END_MARKER, generate_catalog())
+    new_content = replace_between(new_content, PLUGINS_START_MARKER, PLUGINS_END_MARKER, generate_plugin_list())
 
     README_PATH.write_text(new_content)
     print(f"Updated {README_PATH}")

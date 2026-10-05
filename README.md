@@ -2,7 +2,58 @@
 
 [![skills.sh](https://skills.sh/b/nweii/agent-stuff)](https://skills.sh/nweii/agent-stuff)
 
-Agent skills, plugins, and subagent examples I use with Claude, Codex, and other agents. Some skills are specific to my own setup (like my Obsidian vault); public plugins are designed for other people's tools and conventions.
+Agent skills, plugins, and subagent examples I use with Claude, Codex, and other agents. Some skills are specific to my own setup (like my Obsidian vault).
+
+## Agent skills format
+
+A skill is a folder of instructions and any files an agent needs to follow them. Skills here use the [Agent Skills format](https://agentskills.io):
+
+```text
+skill-name/
+├── SKILL.md              # Metadata and instructions
+├── references/           # Optional: detailed docs or examples
+└── scripts/              # Optional: helper scripts
+```
+
+The metadata at the top of `SKILL.md` gives the skill its name and description. The description tells the agent when to load it; the instructions explain how to do the work.
+
+## Plugins
+
+A plugin installs a set of related skills at once. You can still install any of those skills on its own or download its ZIP. If you install a plugin, don't also install its skills separately, or you'll end up with duplicates.
+
+<!-- PLUGINS:START -->
+
+- [Obsidian Tools](plugins/obsidian-tools/) — Operate your Obsidian vault, write note descriptions, and create Templater and Web Clipper templates using your own conventions.
+
+<!-- PLUGINS:END -->
+
+### Claude
+
+On a paid plan, open **Customize → Plugins → Add → Add marketplace** and enter `nweii/agent-stuff`. The plugins appear under **Discover**; add the ones you want. They're saved to your account and also load in Claude Code when you sign in. See [Claude's plugin guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
+
+### ChatGPT and Codex
+
+In the ChatGPT desktop app, open **Plugins** from the sidebar, then **Add → Add a marketplace**, and enter `nweii/agent-stuff`. Install the plugins you want from the list.
+
+In the Codex CLI:
+
+```bash
+codex plugin marketplace add nweii/agent-stuff
+```
+
+<details>
+<summary><strong>ChatGPT workspace admins: import from GitHub</strong></summary>
+
+To keep a workspace's copies in sync with this repo:
+
+1. Open **Admin → Plugins → Add → Import marketplace**.
+2. Set **Source** to `https://github.com/nweii/agent-stuff`. Leave **Path** and **Branch, tag, or commit** empty.
+3. Import, authorize GitHub access, and make the plugins you want available to workspace members.
+4. Members install them from **Plugins**.
+
+ChatGPT checks for updates daily. See [OpenAI's marketplace import guide](https://learn.chatgpt.com/docs/enterprise/plugin-management) for permissions and sync controls.
+
+</details>
 
 ## Install individual skills
 
@@ -17,13 +68,13 @@ bunx skills add nweii/agent-stuff
 npx skills add nweii/agent-stuff
 ```
 
-Install a specific skill by name, including one that belongs to a plugin:
+Install a specific skill by name:
 
 ```bash
 bunx skills add nweii/agent-stuff --skill obsidian-clis
 ```
 
-By default, skills install in the project where you run the command. Add `-g` to make a skill available across projects for your chosen agents.
+By default, skills install in the project where you run the command. Add `-g` to make a skill available across projects.
 
 Update installed skills:
 
@@ -42,15 +93,9 @@ Every general-purpose skill has a ZIP in [`zips/`](zips/). For Claude, follow [i
 
 You can also copy a skill folder into the skills directory your agent reads. Copy the whole folder so the agent can find any references or scripts its instructions use. Some skills use other apps or services. Installing the skill doesn't install those.
 
-## Plugins
-
-A plugin installs a set of related skills at once. You can still install any of those skills on its own or download its ZIP. Choose one way per skill: if you install the plugin, don't also install its skills individually, or your agent loads each one twice.
-
-[Obsidian Tools](plugins/obsidian-tools/) covers vault operations, note descriptions, Templater templates, and Web Clipper templates. It adapts to how your vault is already set up: your folders, properties, and templates.
-
 ## Internal skills
 
-Skills under the **Internal** heading in the catalog have `metadata.internal: true`. They're personal workflows tied to my own setup (vault paths, tools, naming conventions) and are excluded from the ZIP downloads. "Internal" describes their intended use; their source is public.
+Skills under the **Internal** heading in the catalog have `metadata.internal: true`. They're personal workflows tied to my own setup (vault paths, tools, naming conventions) and are excluded from the ZIP downloads. "Internal" just means they're written for my setup; the source is still public.
 
 <details>
 <summary><strong>Install it as-is</strong> (when the skill's assumptions already match your setup)</summary>
@@ -64,7 +109,7 @@ bunx skills add nweii/agent-stuff --skill SKILL_NAME
 Replace `SKILL_NAME` with the name listed in the catalog. Two CLI behaviors matter here:
 
 - `bunx skills add nweii/agent-stuff` skips internal skills. Naming one with `--skill` opts it in.
-- After I move a skill to another folder in this repo, `bunx skills update` can falsely report internal skills as deleted, even ones I haven't moved. Use `INSTALL_INTERNAL_SKILLS=1 bunx skills update` (add `-g` for global installs), or decline removal so it doesn't delete a skill that's still here. If the command can't ask for confirmation, it leaves those skills alone. Re-running `add` with `--skill` also refreshes a named internal skill.
+- After I move a skill to another folder in this repo, `bunx skills update` can falsely report internal skills as deleted, even ones I haven't moved. Use `INSTALL_INTERNAL_SKILLS=1 bunx skills update` (add `-g` for global installs), or decline removal so it doesn't delete a skill that's still here. If the command can't ask for confirmation, it leaves those skills alone.
 
 For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s SKILL_NAME` prints it as a ready-to-paste prompt without installing anything.
 
@@ -91,11 +136,9 @@ Giving your copy its own name keeps a later `add` or `update` from overwriting i
 
 </details>
 
-## Skill folders and subagents
+## Folders and subagents
 
-Skills follow the [Agent Skills format](https://agentskills.io). Each folder contains a `SKILL.md` with metadata and instructions; its description tells the agent when to load it.
-
-Most skill folders are in `skills/`. Skills grouped in a plugin are in `plugins/<id>/skills/`. The catalog links to each folder so you can read the instructions before installing.
+Most skill folders are in `skills/`. Skills grouped in a plugin are in `plugins/<id>/skills/`.
 
 The [`agents/`](agents/) folder contains Claude Code subagent examples. Copy them into your own agents directory; the skills CLI does not install them.
 
