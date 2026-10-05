@@ -27,6 +27,13 @@ if ! git diff --quiet README.md 2>/dev/null; then
     echo "Staged README.md with catalog update" >&2
 fi
 
+for PLUGIN_README in plugins/*/README.md; do
+    if [ -f "$PLUGIN_README" ] && ! git diff --quiet -- "$PLUGIN_README" 2>/dev/null; then
+        git add -- "$PLUGIN_README"
+        echo "Staged $PLUGIN_README with plugin section update" >&2
+    fi
+done
+
 # Stage the rebuilt zip mirror (additions, content changes, and deletions of stale zips).
 if ! git diff --quiet zips/ 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard zips/)" ]; then
     git add -A zips/

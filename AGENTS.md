@@ -36,7 +36,20 @@ Claude's catalog uses `./plugins/<id>` so [skills CLI 1.7.0 discovers bundled sk
 
 Migrate within the same repo, preserve the frontmatter name, and leave one copy plus a README-only pointer at the old path. [Relocation](https://github.com/vercel-labs/skills/blob/v1.7.0/src/skill-relocation.ts) requires skills CLI >=1.5.24 (fixture checked 1.7.0). Its [update discovery](https://github.com/vercel-labs/skills/blob/v1.7.0/src/update.ts) falsely calls moved and unmoved internal skills deleted; use `INSTALL_INTERNAL_SKILLS=1` or decline removal.
 
-Version each plugin only when cutting a release. `release-plugin.py --version` prepares metadata; after committing, `--tag` checks three manifests and both vendor sources/versions before plain `git tag <id>/v<version>`. Migrate one plugin per push. See the [plugin guide](plugins/obsidian-tools/README.md) for commands and validation limits.
+Version each plugin only when cutting a release. `release-plugin.py --version` prepares metadata; after committing, `--tag` checks three manifests and both vendor sources/versions before plain `git tag <id>/v<version>`. Migrate one plugin per push. Run from the repository root:
+
+```bash
+python3 scripts/generate-plugins.py
+python3 scripts/test-plugins.py
+uv run scripts/validate-plugins.py
+claude plugin validate --strict plugins/<id>
+claude plugin validate --strict .claude-plugin/marketplace.json
+python3 scripts/release-plugin.py <id> --check
+```
+
+Agent Plugins validation uses the [published 1.0.0 schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Codex validation uses project-owned contract schemas derived from the [packaging reference](https://developers.openai.com/plugins/build/plugins), not published OpenAI schemas. Passing validation doesn't prove installation, runtime behavior, or update delivery.
+
+Each plugin's `README.md` is for people installing it: a hand-written intro above `<!-- PLUGIN:START -->`, then install commands and a skills table that `update-catalog.py` generates from each member's frontmatter. The table's requirements column reads the Agent Skills `compatibility` field; set it on any member that needs an app, extension, or tool.
 
 ## Publishing
 

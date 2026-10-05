@@ -1,9 +1,10 @@
 ---
 name: obsidian-clis
 description: "Use when operating Obsidian from the terminal: notes, search, properties, links, tasks, Bases, or plugin development. Uses the app CLI, with notesmd-cli as a headless fallback."
+compatibility: "The Obsidian desktop app with its CLI enabled, or notesmd-cli for headless use."
 metadata:
   author: nweii
-  version: "1.5.4"
+  version: "1.5.5"
   source: kepano/obsidian-cli
 ---
 

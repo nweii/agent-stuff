@@ -1,9 +1,10 @@
 ---
 name: obsidian-web-clipper
 description: "Use when creating, importing, or debugging Obsidian Web Clipper templates: JSON, variables, filters, selectors, interpreter prompts, and URL or schema triggers. Does not handle general scraping."
+compatibility: "The Obsidian Web Clipper browser extension."
 metadata:
   author: nweii
-  version: "1.7.0"
+  version: "1.7.1"
 ---
 
 # Obsidian Web Clipper Templates

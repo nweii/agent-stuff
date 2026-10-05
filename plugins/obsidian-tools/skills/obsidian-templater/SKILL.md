@@ -1,10 +1,10 @@
 ---
 name: obsidian-templater
 description: "Help with templates/snippets for the Obsidian Templater plugin. Use to help generate Obsidian templates from natural language, understand and debug existing tp.* snippets, and adapt vault notes and workflows to Templater when users mention Templater, tp.*, templater syntax."
-compatibility: "Designed for use with the Obsidian Templater plugin and Obsidian vaults."
+compatibility: "The Templater community plugin for Obsidian."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Templater template generation
