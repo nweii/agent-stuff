@@ -2,8 +2,6 @@
 
 Review the current session for durable changes to the skills that own its workflows. Prefer an existing skill over another entry point. A valid outcome is no proposed edits.
 
-Adapted from [Lauren Tan (poteto)'s pstack reflect](https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md), including its judgment, tooling, divergent, and synthesis prompts. The [upstream MIT notice](../LICENSE.pstack) accompanies this adaptation. This mode uses the active agent's tools and source ownership rules, with a local backlog instead of automatic external filing.
-
 ## 1. Establish the session evidence
 
 Use the current conversation and its exact transcript path when the environment provides one. Verify transcript identity against the active session ID and opening user request before sharing it. Keep transcript lookup within the active session; unrelated chats and project transcripts are outside scope.

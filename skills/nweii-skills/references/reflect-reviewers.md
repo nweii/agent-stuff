@@ -1,6 +1,6 @@
 # Reflection review contracts
 
-Use the shared contract with exactly one review lens per reviewer. Give the synthesizer all findings after the independent reviews complete. This file accompanies [reflection mode](reflect.md) and is adapted from the pstack prompts credited there.
+Use the shared contract with exactly one review lens per reviewer. Give the synthesizer all findings after the independent reviews complete.
 
 ## Shared reviewer contract
 

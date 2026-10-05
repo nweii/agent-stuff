@@ -4,9 +4,9 @@ description: "Use when creating, editing, migrating, installing, or publishing s
 argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.2.0"
+  version: "2.2.1"
   internal: true
-  credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect skill. Source and MIT notice are linked in references/reflect.md."
+  credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect: https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md. MIT notice: LICENSE.pstack."
 ---
 
 # nweii-skills
