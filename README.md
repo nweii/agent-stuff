@@ -4,25 +4,11 @@
 
 Agent skills, plugins, and subagent examples I use with Claude, Codex, and other agents. Some skills are specific to my own setup (like my Obsidian vault); public plugins are designed for other people's tools and conventions.
 
-## Agent skills format
+## Install individual skills
 
-This repo uses the [Claude Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) [format](https://agentskills.io). Skills are folders containing a `SKILL.md` with YAML frontmatter and instructions. The `description` field tells AI agents when to load and apply the skill.
+Copy whatever looks useful.
 
-```
-skill-name/
-├── SKILL.md              # Metadata + instructions
-├── reference.md          # Optional: detailed docs
-└── supporting-file.md    # Optional: additional context
-```
-
-## Using these
-
-Copy whatever looks useful into your own skills directory.
-
-There are a couple of ways to do that, depending on your setup:
-
-- **Using an app like Claude?** Every general-purpose skill is also packaged as a ready-made `.zip` in [`zips/`](zips/) that you can download and drag straight into *Claude.ai > Customize > Skills*. Updates are manual: re-download the zip and drop in the new version.
-- **Working in a coding agent or CLI** (Claude Code, Codex, Cursor, Hermes…)? Install with the [`skills`](https://github.com/vercel-labs/add-skill) CLI — it also makes updating a one-liner:
+With Bun or Node.js installed, use the [`skills` CLI](https://github.com/vercel-labs/skills) to choose skills and the coding agents that should load them:
 
 ```bash
 bunx skills add nweii/agent-stuff
@@ -31,52 +17,61 @@ bunx skills add nweii/agent-stuff
 npx skills add nweii/agent-stuff
 ```
 
-Install a specific skill:
+Install a specific skill by name, including one that belongs to a plugin:
 
 ```bash
-bunx skills add nweii/agent-stuff --skill [skill-name] --full-depth
+bunx skills add nweii/agent-stuff --skill obsidian-clis
 ```
 
-Updating skills:
+By default, skills install in the project where you run the command. Add `-g` to make a skill available across projects for your chosen agents.
+
+Update installed skills:
 
 ```bash
 bunx skills update
+
+# Global installs
+bunx skills update -g
 ```
 
-To update a specific skill, run `skills add` again with the same skill.
+To refresh one skill, run `skills add` again with its name. Use skills CLI 1.5.24 or later. Older versions can lose track of a skill when I reorganize this repo. Internal skills have one update quirk, explained under [Internal skills](#internal-skills).
 
-### Plugins
+### ZIP downloads and manual copies
 
-[Obsidian Tools](plugins/obsidian-tools/) bundles four general-purpose tools for vault operations, note descriptions, Templater, and Web Clipper. Bundled skills live in `plugins/<id>/skills/`; standalone skills stay in `skills/`. The old bundled folders contain navigation pointers only. Individual ZIP names and contents are preserved.
+Every general-purpose skill has a ZIP in [`zips/`](zips/). For Claude, follow [its skill setup guide](https://support.claude.com/en/articles/12512180-use-skills-in-claude) to enable code execution and upload the ZIP. Uploaded copies need manual updates.
 
-The plugin catalogs at `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` pin each plugin to its own release tag. Skills CLI 1.7.0 does not follow those remote catalog sources during ordinary named discovery, so pass `--full-depth` for a bundled standalone install. An unscoped install also needs `--full-depth` to include the bundled skills. Use skills CLI 1.5.24 or later for existing locks to follow folder moves; relocation was tested with 1.7.0. Keep one active delivery route per skill in an environment.
+You can also copy a skill folder into the skills directory your agent reads. Copy the whole folder so the agent can find any references or scripts its instructions use. Some skills use other apps or services. Installing the skill doesn't install those.
 
-See the plugin README for prerequisites, metadata generation, validation, and per-plugin release commands. The `0.1.0` catalog ref is a release candidate; remote plugin installation requires the corresponding published tag.
+## Plugins
 
-### Internal skills
+A plugin installs a set of related skills at once. You can still install any of those skills on its own or download its ZIP. Choose one way per skill: if you install the plugin, don't also install its skills individually, or your agent loads each one twice.
 
-Skills under the **Internal** heading in the catalog below have `metadata.internal: true` set — they're personal workflows tied to my own setup (vault paths, tools, naming conventions). They're excluded from the `zips/` mirror.
+[Obsidian Tools](plugins/obsidian-tools/) covers vault operations, note descriptions, Templater templates, and Web Clipper templates. It adapts to how your vault is already set up: your folders, properties, and templates.
+
+## Internal skills
+
+Skills under the **Internal** heading in the catalog have `metadata.internal: true`. They're personal workflows tied to my own setup (vault paths, tools, naming conventions) and are excluded from the ZIP downloads. "Internal" describes their intended use; their source is public.
 
 <details>
-<summary><strong>Install it as-is</strong> — when the skill's assumptions already match your setup</summary>
+<summary><strong>Install it as-is</strong> (when the skill's assumptions already match your setup)</summary>
 
-Some of them don't hardcode anything of mine — they assume a convention (a `related` property, a daily/weekly note hierarchy) or a tool (Granola MCP, `gh`) and otherwise work anywhere. If nothing in the SKILL.md names a folder or template you don't have, just install it:
+Some don't hardcode anything of mine. They assume a convention (a `related` property, a daily/weekly note hierarchy) or a tool (Granola MCP, `gh`) and otherwise work anywhere. If nothing in the SKILL.md names a folder or template you don't have, just install it:
 
 ```bash
-bunx skills add nweii/agent-stuff --skill [skill-name]
+bunx skills add nweii/agent-stuff --skill SKILL_NAME
 ```
 
-Two CLI behaviors to know about:
+Replace `SKILL_NAME` with the name listed in the catalog. Two CLI behaviors matter here:
 
-- `bunx skills add nweii/agent-stuff` (no `--skill` flag) **skips** internal skills — naming one is what opts it in.
-- During a repository move, `bunx skills update` can falsely report both moved and unmoved internal skills as deleted upstream. Use `INSTALL_INTERNAL_SKILLS=1 bunx skills update`, or decline removal. Noninteractive updates skip deletion. Re-running `add` with `--skill` also refreshes a named internal skill.
+- `bunx skills add nweii/agent-stuff` skips internal skills. Naming one with `--skill` opts it in.
+- After I move a skill to another folder in this repo, `bunx skills update` can falsely report internal skills as deleted, even ones I haven't moved. Use `INSTALL_INTERNAL_SKILLS=1 bunx skills update` (add `-g` for global installs), or decline removal so it doesn't delete a skill that's still here. If the command can't ask for confirmation, it leaves those skills alone. Re-running `add` with `--skill` also refreshes a named internal skill.
 
-For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s [skill-name]` prints it as a ready-to-paste prompt without installing anything.
+For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s SKILL_NAME` prints it as a ready-to-paste prompt without installing anything.
 
 </details>
 
 <details>
-<summary><strong>Tailor a copy</strong> — when it carries folder conventions you don't share</summary>
+<summary><strong>Tailor a copy</strong> (when it carries folder conventions you don't share)</summary>
 
 For the ones carrying my folder structure and template names throughout, have your agent read mine and write you your own version instead of installing and then editing:
 
@@ -86,7 +81,7 @@ use a local checkout if there's one on this machine, otherwise fetch it. It's
 one of that repo's internal skills, written for someone else's setup, so some
 of the folder paths, tools, and naming conventions in it won't match mine.
 List what you'd need to substitute, ask me about anything you can't infer from
-my environment, then write the tailored version into my skills directory under
+my setup, then write the tailored version into my skills directory under
 a name of my choosing, with a `metadata.credit` line in its frontmatter noting
 what it was adapted from. Leave everything that isn't setup-specific alone.
 Don't install the original.
@@ -96,7 +91,13 @@ Giving your copy its own name keeps a later `add` or `update` from overwriting i
 
 </details>
 
----
+## Skill folders and subagents
+
+Skills follow the [Agent Skills format](https://agentskills.io). Each folder contains a `SKILL.md` with metadata and instructions; its description tells the agent when to load it.
+
+Most skill folders are in `skills/`. Skills grouped in a plugin are in `plugins/<id>/skills/`. The catalog links to each folder so you can read the instructions before installing.
+
+The [`agents/`](agents/) folder contains Claude Code subagent examples. Copy them into your own agents directory; the skills CLI does not install them.
 
 ## Catalog
 
@@ -164,3 +165,7 @@ Claude Code subagents — copy the `*.md` into your own agents directory (not in
 - [vault-writer](agents/vault-writer.md) — Create and edit notes in an Obsidian vault. Use when the user wants to write, update, or organize notes. Follows vault conventions for metadata, linking, and structure.
 
 <!-- CATALOG:END -->
+
+## License
+
+MIT. See [LICENSE](LICENSE).
