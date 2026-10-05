@@ -1,15 +1,21 @@
 ---
 name: nweii-skills
-description: "Use when finding or using a repository skill without installing it, or creating, editing, migrating, installing, or publishing skills in Nathan's environment. Routes source ownership, public/private placement, authoring conventions, install mechanics, and release boundaries."
+description: "Use when creating, editing, migrating, installing, or publishing skills, loading repository skills on demand, or reflecting on a session to improve skills in Nathan's environment."
+argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.1.0"
+  version: "2.2.0"
   internal: true
+  credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect skill. Source and MIT notice are linked in references/reflect.md."
 ---
 
 # nweii-skills
 
 Treat repository skill folders as source and installed skills as downstream copies. Complete skill work only after every changed artifact has an owner, privacy tier, validation result, and explicit publish state.
+
+## Reflect on a session
+
+When Nathan supplies `reflect` as an argument or explicitly asks to review a session for skill improvements, follow [references/reflect.md](references/reflect.md). This mode reviews session evidence through judgment, tooling, and divergent lenses, then returns proposed edits, rejected findings, and a local backlog. Run it only on request. Present concrete edits for approval unless Nathan already authorized applying them; an ordinary skill task does not start reflection.
 
 ## Use a skill on demand
 
