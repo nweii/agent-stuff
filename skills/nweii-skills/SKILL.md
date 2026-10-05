@@ -1,15 +1,21 @@
 ---
 name: nweii-skills
-description: "Use when creating, editing, migrating, installing, or publishing skills in Nathan's environment. Routes source ownership, public/private placement, authoring conventions, install mechanics, and release boundaries."
+description: "Use when finding or using a repository skill without installing it, or creating, editing, migrating, installing, or publishing skills in Nathan's environment. Routes source ownership, public/private placement, authoring conventions, install mechanics, and release boundaries."
 metadata:
   author: nweii
-  version: "2.0.0"
+  version: "2.1.0"
   internal: true
 ---
 
 # nweii-skills
 
 Treat repository skill folders as source and installed skills as downstream copies. Complete skill work only after every changed artifact has an owner, privacy tier, validation result, and explicit publish state.
+
+## Use a skill on demand
+
+When Nathan names a skill to use, load and follow it for the current task. Keep frequently discovered skills installed; use repository skills on demand for occasional tasks Nathan invokes by name. A request to use a skill authorizes loading it, not installing it.
+
+Read [references/installation.md](references/installation.md) for repository discovery and `bunx skills use`. Read the returned instructions and resolve relative references from the downloaded supporting-files directory, then carry out the task in this conversation. Leave off `--agent` to keep execution here.
 
 ## Source ownership
 
@@ -30,7 +36,7 @@ Read only the reference needed for the current branch:
 
 - Read [references/authoring.md](references/authoring.md) before creating or substantially editing a skill. It defines frontmatter, writing, versions, attribution, and validation.
 - Read [references/privacy-and-migration.md](references/privacy-and-migration.md) before choosing or changing a privacy tier, moving a local skill into a repository, or transferring content between repositories.
-- Read [references/installation.md](references/installation.md) before installing, updating, repairing, removing, or diagnosing a skill installation.
+- Read [references/installation.md](references/installation.md) before discovering or using a repository skill on demand, or installing, updating, repairing, removing, or diagnosing a skill installation.
 
 ## Publish boundaries
 
