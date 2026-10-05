@@ -32,11 +32,23 @@ class PluginTests(unittest.TestCase):
         self.member.write_text('---\nname: sample\ndescription: "Use when testing."\n---\nBody.\n')
         self.data = json.loads((ROOT / "plugins/obsidian-tools/plugin-source.json").read_text())
         self.data["name"] = "example"
+        self.data["version"] = "0.1.0"  # fixed so tests don't track the real plugin's releases
+        for key in generator.ASSET_FIELDS:
+            if key in self.data["interface"]:
+                asset = self.folder / self.data["interface"][key]
+                asset.parent.mkdir(parents=True, exist_ok=True)
+                asset.write_bytes(b"png")
         self.write_source()
         generator.generate(self.root)
 
     def write_source(self):
         (self.folder / "plugin-source.json").write_text(json.dumps(self.data))
+
+    def test_missing_interface_asset_is_refused(self):
+        self.data["interface"]["logo"] = "./assets/missing.png"
+        self.write_source()
+        with self.assertRaisesRegex(ValueError, "Missing logo asset"):
+            generator.generate(self.root)
 
     def test_generation_preserves_payload_and_is_deterministic(self):
         before = self.member.read_bytes()

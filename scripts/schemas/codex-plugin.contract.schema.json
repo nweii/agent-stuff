@@ -3,27 +3,108 @@
   "title": "Agent Stuff Codex manifest contract (project-owned subset)",
   "description": "Derived from OpenAI plugin packaging/submission docs and codex-rs/core-plugins/src/manifest.rs at de3721a7be07054c8c2a41102b5a501f34155361. This is not an official published Codex schema.",
   "type": "object",
-  "required": ["name", "version", "description", "author", "skills", "interface"],
+  "required": [
+    "name",
+    "version",
+    "description",
+    "author",
+    "skills",
+    "interface"
+  ],
   "properties": {
-    "name": {"type": "string", "pattern": "^(?!.*(?:--|\\.\\.))[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$", "maxLength": 64},
-    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
-    "description": {"type": "string", "minLength": 1},
-    "author": {"type": "object", "required": ["name"], "properties": {"name": {"type": "string", "minLength": 1}}, "additionalProperties": false},
-    "homepage": {"type": "string"},
-    "repository": {"type": "string"},
-    "license": {"type": "string"},
-    "keywords": {"type": "array", "items": {"type": "string"}},
-    "skills": {"const": "./skills/"},
+    "name": {
+      "type": "string",
+      "pattern": "^(?!.*(?:--|\\.\\.))[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$",
+      "maxLength": 64
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "author": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "homepage": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "skills": {
+      "const": "./skills/"
+    },
     "interface": {
       "type": "object",
-      "required": ["displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities"],
+      "required": [
+        "displayName",
+        "shortDescription",
+        "longDescription",
+        "developerName",
+        "category",
+        "capabilities"
+      ],
       "properties": {
-        "displayName": {"type": "string", "minLength": 1},
-        "shortDescription": {"type": "string", "minLength": 1},
-        "longDescription": {"type": "string", "minLength": 1},
-        "developerName": {"type": "string", "minLength": 1},
-        "category": {"type": "string", "minLength": 1},
-        "capabilities": {"type": "array", "items": {"type": "string"}}
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shortDescription": {
+          "type": "string",
+          "minLength": 1
+        },
+        "longDescription": {
+          "type": "string",
+          "minLength": 1
+        },
+        "developerName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "websiteURL": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "composerIcon": {
+          "type": "string",
+          "pattern": "^\\./"
+        },
+        "logo": {
+          "type": "string",
+          "pattern": "^\\./"
+        }
       },
       "additionalProperties": false
     }

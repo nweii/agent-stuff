@@ -1,12 +1,19 @@
 {
   "name": "obsidian-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Operate your Obsidian vault, write note descriptions, and create Templater and Web Clipper templates using your own conventions.",
-  "author": { "name": "Nathan Cheng" },
+  "author": {
+    "name": "Nathan Cheng"
+  },
   "homepage": "https://github.com/nweii/agent-stuff",
   "repository": "https://github.com/nweii/agent-stuff.git",
   "license": "MIT",
-  "keywords": ["obsidian", "notes", "templates", "web-clipper"],
+  "keywords": [
+    "obsidian",
+    "notes",
+    "templates",
+    "web-clipper"
+  ],
   "audience": "public",
   "interface": {
     "displayName": "Obsidian Tools",
@@ -14,6 +21,9 @@
     "longDescription": "Operate your Obsidian vault, write note descriptions, and create Templater and Web Clipper templates using your own conventions.",
     "developerName": "Nathan Cheng",
     "category": "Productivity",
-    "capabilities": []
+    "capabilities": [],
+    "websiteURL": "https://github.com/nweii/agent-stuff",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
   }
 }

@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 AGENT_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 NAME_PATTERN = r"(?!.*(?:--|\.\.))[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?"
 VERSION_PATTERN = r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
+ASSET_FIELDS = ("composerIcon", "logo")
 COMMON_FIELDS = ("name", "version", "description", "author", "homepage", "repository", "license", "keywords")
 
 
@@ -64,9 +65,18 @@ def generated_documents(root=REPO_ROOT):
         name = data["name"]
         common = {key: data[key] for key in COMMON_FIELDS if key in data}
         folder = Path("plugins") / name
-        documents[folder / "plugin.json"] = {"$schema": AGENT_SCHEMA, **common}
-        documents[folder / ".claude-plugin/plugin.json"] = common
-        documents[folder / ".codex-plugin/plugin.json"] = {**common, "skills": "./skills/", "interface": data["interface"]}
+        interface = data["interface"]
+        for key in ASSET_FIELDS:
+            if key in interface and not (root / folder / interface[key]).is_file():
+                raise ValueError(f"Missing {key} asset {interface[key]}: {folder / 'plugin-source.json'}")
+        # OpenAI reads this extension in place of .codex-plugin/plugin.json; the overlay stays for older clients.
+        documents[folder / "plugin.json"] = {"$schema": AGENT_SCHEMA, **common,
+                                             "extensions": {"com.openai": {"interface": interface}}}
+        claude = {**common, "displayName": interface["displayName"]}
+        if "logo" in interface:
+            claude["icon"] = interface["logo"]
+        documents[folder / ".claude-plugin/plugin.json"] = claude
+        documents[folder / ".codex-plugin/plugin.json"] = {**common, "skills": "./skills/", "interface": interface}
         codex_source = {"source": "git-subdir", "url": data["repository"],
                         "path": f"plugins/{name}", "ref": f"{name}/v{data['version']}"}
         claude_entries.append({"name": name, "version": data["version"],

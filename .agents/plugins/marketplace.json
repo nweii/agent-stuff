@@ -6,12 +6,12 @@
   "plugins": [
     {
       "name": "obsidian-tools",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/nweii/agent-stuff.git",
         "path": "plugins/obsidian-tools",
-        "ref": "obsidian-tools/v0.1.0"
+        "ref": "obsidian-tools/v0.1.1"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "obsidian-tools",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Operate your Obsidian vault, write note descriptions, and create Templater and Web Clipper templates using your own conventions.",
       "author": {
         "name": "Nathan Cheng"
