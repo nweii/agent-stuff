@@ -4,7 +4,7 @@ description: "Use when writing, revising, or auditing READMEs, repo docs, RFCs, 
 metadata:
   author: nweii
   version: "0.2.0"
-  credit: "Adapted from https://github.com/cursor/plugins/blob/main/pstack/skills/technical-writing/SKILL.md"
+  credit: "Technical-writing guidance adapted from https://github.com/cursor/plugins/blob/main/pstack/skills/technical-writing/SKILL.md"
 ---
 
 # Repo docs
