@@ -1,10 +1,11 @@
 ---
 name: repo-docs
-description: "README and other user-facing repo docs (setup guides, docs/ pages, security and contributing notes, release notes). Use when writing, revising, or auditing them, or preparing a repo's docs for public release. Agent-facing files such as AGENTS.md belong to writing-for-agents."
+description: "Use when writing, revising, or auditing READMEs, repo docs, RFCs, PR descriptions, or commit messages, or preparing docs for public release. Agent-facing files such as AGENTS.md belong to writing-for-agents."
 metadata:
   author: nweii
-  version: "0.2.1"
+  version: "0.3.0"
   internal: true
+  credit: "Adapted from https://github.com/cursor/plugins/blob/main/pstack/skills/technical-writing/SKILL.md"
 ---
 
 # Repo docs
@@ -14,6 +15,8 @@ User-facing repo docs serve a **stranger**: someone who arrived cold, is decidin
 The guidance has two layers. The content rules apply to every user-facing doc in every repo. The format defaults apply only where the repo, its ecosystem, or its docs site has no convention of its own; when one exists, follow it.
 
 Most rules below are judgments, each with the test that decides it. Apply the test to the case in front of you: the same detail can belong in a reference table and not in a heading, or in a closing section and not in a setup step. Scale the steps to the change as well: a one-line fix needs the facts it touches and their echoes, while a new doc or a public-release pass needs every step in full.
+
+RFCs use the document-mode guidance for their sections. PR descriptions and commit messages use the sentence and verification rules, with their repository's format rather than a documentation mode. Product UI strings use the product's copy guidelines.
 
 ## Steps
 
@@ -27,15 +30,21 @@ Done when you can name the audience, the conventions that bind the doc, every ec
 
 Put each piece of material in the document that owns it, using the map below. Give each fact one canonical home and link to it from everywhere else; copy a fact only where a link cannot reach (a storefront, an app's help text).
 
+Read [references/technical-writing.md](references/technical-writing.md) to choose the document's mode before drafting: tutorial, how-to, reference, or explanation. A README is a front door with distinct sections; give each section a clear purpose and link to focused guides. An RFC can also separate its rationale, proposal, and reference into sections with explicit purposes.
+
+Done when each piece has a home and each document or deliberately separate section has a mode that serves its reader's task.
+
 ### 3. Draft or revise
 
-Apply the content rules, then the repo's conventions, then the format defaults for whatever the conventions leave open. For a README, read [references/readme.md](references/readme.md).
+Apply the content rules and the sentence rules in [references/technical-writing.md](references/technical-writing.md), then the repo's conventions, then the format defaults for whatever the conventions leave open. For a README, read [references/readme.md](references/readme.md). Preserve natural prose when a mechanical rule would make the sentence harder to read.
 
 When revising, change only what is awkward, wrong, stale, or misplaced. Keep phrasing that already works. When feedback reveals a pattern, check the whole affected list or section for it and revise every instance that fails the same test. When the owner asks for a file-wide fix, apply it to the whole file.
 
 ### 4. Verify every claim
 
 Trace each factual sentence you wrote or kept to the code, config, or a command you ran. Fix or cut any claim you cannot trace. Update every echo that states a fact you changed.
+
+Run documented commands and examples where practical and compare the result with the stated output. Check counts and directory trees against the revision being documented, and include the command that regenerates them. Generate reference from code where the repository supports it.
 
 Done when every claim in the changed sections is traced and every echo agrees.
 
@@ -87,8 +96,6 @@ When a reader needs a platform fact that may change, date it ("As of 2026-08, â€
 
 **One clear action per step.** When one choice is right, say it. Match each step to the screen the reader actually sees. Write steps an agent can follow mechanically.
 
-**One term per thing.** Choose one name for each concept and use it across every doc. Replace insider shorthand with what the reader will notice.
-
 **Stranger-safe.** Docs in a public repo, or one likely to become public, carry no personal domains, account or deployment IDs, private references, or real personal data in examples. Use placeholders (`example.com`) and fictional sample data. A private repo read by a known team may name the people, hosts, and infrastructure its readers need. A personal collection that says openly it is personal may speak in the first person throughout.
 
 **Content stands alone; meta stays in meta sections.** Content describes the project and how to use it: what it does, setup, usage, configuration, privacy, limits. Keep product copy reader-focused and impersonal: describe user ownership and control directly rather than through the maintainer's identity or first-person assurances. Meta is material about the project as a project: who maintains it and how to support them, credits, how it was built (including AI usage), contribution stance, maintenance status, license. Write content so it would stay correct and complete if a different person maintained the project, or if the section were read in isolation (linked directly, quoted on a storefront, loaded by an agent). Gather meta into sections that exist for it, usually at the end of a README or in `CONTRIBUTING.md`, where a first-person voice, the maintainer's name, and support links fit. One exception: a maintenance or maturity status that changes whether someone should adopt the project goes where the reader sees it first.
@@ -102,11 +109,13 @@ Write each heading for a reader scanning the page, who should be able to predict
 - A section that holds reference, a procedure, or a category of material gets a simple, direct label ("Configuration", "Supported file types", "Privacy and network access").
 - A section that makes one point or explains one idea gets a succinct summary of that content ("Everything runs locally").
 
+Use a verb phrase for a task heading ("Create an instance") and a noun phrase for a concept heading. Give each page one H1 and keep heading levels consecutive.
+
 Readers already know the common signposts ("Getting started", "Installation", "Usage", "FAQ", "Troubleshooting", "License"), so use those as readers expect them, whatever their grammar. Use sentence case. Fold a section that would hold one item into a neighbour, or into an FAQ; a signpost section such as License may stay one line.
 
 ## Prose
 
-Write plain, conversational sentences in forward order: subject, verb, point. Aim for simple English that still reads like a person talking; when sentences turn clipped, rejoin them. Let paragraphs wrap without hard line breaks. Use parentheses or a new sentence where an em dash might go. For a plain-text file that ships outside the repo (a README.txt in a download), follow the format of its siblings.
+Use the sentence rules in [references/technical-writing.md](references/technical-writing.md) for reader address, instruction length, rhythm, and ambiguity. Let paragraphs wrap without hard line breaks. For a plain-text file that ships outside the repo (a README.txt in a download), follow the format of its siblings.
 
 ## Examples
 
