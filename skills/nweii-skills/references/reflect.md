@@ -1,6 +1,6 @@
 # Reflection mode
 
-Review the current session for durable changes to the skills that own its workflows. Prefer an existing skill over another entry point. A valid outcome is no proposed edits.
+Review the current session for durable changes to the skills that own its workflows. This applies to any work supported by a skill, including writing, research, vault work, personal workflows, and engineering. Prefer an existing skill over another entry point. A valid outcome is no proposed edits.
 
 ## 1. Establish the session evidence
 
@@ -24,11 +24,11 @@ Completion: each lens returned evidence-backed findings or an explicit no-findin
 
 Have a separate synthesizer use the synthesis contract in [reflect-reviewers.md](reflect-reviewers.md), with all reviewer findings and the session evidence. If a separate agent is unavailable, synthesize inline and disclose it.
 
-Read the canonical target skill and the specific reference or script each proposed change would affect. Classify every finding:
+Read the canonical target skill and the specific reference, template, configuration, or script each proposed change would affect. Classify every finding:
 
 - **Proposed edits:** a durable gap or weak instruction with an exact target and concrete replacement text or patch. A visible skill that failed to trigger may need its description tuned rather than more body text.
 - **Rejected:** transient facts, speculation, duplication, unrelated targets, or guidance that already says the right thing clearly. Name the reason. Execution failure alone does not justify adding the same rule again.
-- **Backlog:** a correction better enforced by a lint rule, script, metadata flag, or runtime check; a tooling limitation; or a dependency the current scope cannot settle. State the mechanism and owning artifact.
+- **Backlog:** a correction better enforced by a reusable template, required field, automation, metadata flag, or validation check; a tooling limitation; or a dependency the current scope cannot settle. State the mechanism and owning artifact.
 
 Apply the durability, decision-changing, existing-skill-first, and structural-enforcement checks from the synthesis contract to every row. Findings echoed by multiple reviewers carry more confidence; a single reviewer's finding must stand on strong evidence. The parent checks the synthesized proposals against the actual target files before presenting them.
 
