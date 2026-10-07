@@ -5,7 +5,7 @@ argument-hint: "[term or phrase]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.0.2"
+  version: "1.0.3"
   internal: true
 ---
 
@@ -16,7 +16,7 @@ Save a term or phrase as a Term note in `02-Evergreen/Terms/`. Two modes:
 1. **Encountered** — a term lifted from a book, article, conversation, or other external source. Body anchors on a source citation + quote.
 2. **Coined** — a term that emerged during conversation (often a compact replacement for a wordy phrase, or a fresh concept the user wants to lock in). Body is a brief gloss with a usage example or context.
 
-This skill is **not** for general note-taking. It writes one specific shape of note — short, atomic, and aligned with the existing vault Term convention. For broader capture, use `save-napkin-note`.
+This skill is **not** for general note-taking. It writes one specific shape of note — short, atomic, and aligned with the existing vault Term convention. For broader capture, use `vault-inbox`.
 
 ## Defer to AGENTS.md / CLAUDE.md
 
