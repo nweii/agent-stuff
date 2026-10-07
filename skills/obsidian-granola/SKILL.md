@@ -7,7 +7,7 @@ model: haiku
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.1"
+  version: "1.3.2"
   internal: true
 ---
 
@@ -51,7 +51,7 @@ Meeting notes are no longer filed into a single `Talks` folder by default. They 
 Determine the destination before saving:
 
 - Identify the project/context the meeting belongs to (a freelance gig, a job-search thread, a TALtech project, etc.).
-- Map it to the relevant folder under `03-Records/Working/<Area>/`. For example, freelance/client gigs go in `03-Records/Working/Gigs/`; the folder is flat (no per-project subfolders) — meeting notes and transcripts sit directly in it. Browse the candidate folder (`vault_read` in list mode, or the CLI) to confirm it exists and to match sibling naming.
+- Map it to the relevant folder under `06-Working/<Area>/`. For example, freelance/client gigs go in `06-Working/Gigs/`; the folder is flat (no per-project subfolders) — meeting notes and transcripts sit directly in it. Browse the candidate folder (`vault_read` in list mode, or the CLI) to confirm it exists and to match sibling naming.
 - If no project-specific folder fits, ask the user where it should go rather than defaulting to `Talks` (offer the most likely candidate). `Talks` is only a fallback for genuinely context-free meetings, and only if the user confirms.
 
 Both the meeting note and its transcript note save to this same destination folder.

@@ -5,7 +5,7 @@ argument-hint: "[optional note-title-or-path when source is a file]"
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.3.1"
   internal: true
 ---
 
@@ -90,7 +90,7 @@ AGENTS.md lists each area’s **purpose**. Use this workflow lens when choosing 
 - **Meeting or conversation record** → `03-Records/Talks/`.
 - **Saved web or external material** → `03-Records/Clippings/` (or provenance categories AGENTS allows).
 - **Short reference fragment** → `03-Records/Snippets/`.
-- **Active project work** → `03-Records/Working/` (project subfolders, `STATUS.md` cross-cuts — see AGENTS).
+- **Active project work** → `06-Working/` (project subfolders, `STATUS.md` cross-cuts — see AGENTS).
 - **Entity profile** (person, place, company, media) → `04-Entities/` and the subfolder pattern your vault uses.
 - **Weak signal** → best-fit under `03-Records/` per AGENTS descriptions, not vault root.
 

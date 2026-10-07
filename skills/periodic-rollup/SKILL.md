@@ -4,7 +4,7 @@ description: "Use when synthesizing child periodic-note descriptions into a pare
 argument-hint: "[[Project or topic]] [timespan] | [periodic note title]"
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
   internal: true
 ---
 

@@ -126,7 +126,7 @@ The History serves as a **chronological index**—the wikilink provides drill-do
 ### 5. Create the note
 
 ```bash
-obsidian-cli create "03-Records/Working/Retro - Project timespan.md" \
+obsidian-cli create "06-Working/Retro - Project timespan.md" \
   --content "..." \
   --open
 ```

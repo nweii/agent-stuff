@@ -5,7 +5,7 @@ compatibility: "The skill inherits the full analytical approach from the `archiv
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.6.0"
+  version: "1.6.1"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -126,9 +126,9 @@ For `Log` notes, change the `tags` entry to `logs` and update `categories` to `"
 ### 2. Determine the save folder
 
 - Personal life, emotions, identity, relationships, dreams, health → `03-Records/Journaling`
-- Work, projects, productivity (including personal productivity), technical sessions, client work → `03-Records/Working`
+- Work, projects, productivity (including personal productivity), technical sessions, client work → `06-Working`
 
-Within `03-Records/Working`, check for existing subfolders that match the conversation topic (search the vault, list the directory on disk, or use whatever tooling the host provides). Use a matching subfolder when it clearly fits; otherwise save to the root of `03-Records/Working`. Don't assume which subfolders exist — they change over time.
+Within `06-Working`, check for existing subfolders that match the conversation topic (search the vault, list the directory on disk, or use whatever tooling the host provides). Use a matching subfolder when it clearly fits; otherwise save to the root of `06-Working`. Don't assume which subfolders exist — they change over time.
 
 If a specific save location was provided, use it directly.
 
