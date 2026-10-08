@@ -197,7 +197,6 @@ Personal workflows tied to my own setup (vault paths, tools, naming conventions)
 - [people-notes](skills/people-notes/) — Use for person-centered work in Nathan's Brain vault: prepare context from a profile and linked records, create a canonical person note, or reconcile an existing one.
 - [periodic-rollup](skills/periodic-rollup/) — Use when synthesizing child periodic-note descriptions into a parent week, quarter, or year, or compiling project/topic history. Prefer a vault-specific rollup workflow when the environment provides one.
 - [save-term](skills/save-term/) — Use when saving an encountered term or a concept coined in conversation as a Brain Term note, with its source quote or a brief gloss.
-- [vault-recipes](skills/vault-recipes/) — Search, read, filter, combine, adapt, and save recipes in the Brain vault collection. Use whenever cooking and the collection are relevant — 'what should I make', 'recipes with miso', 'save this one' all imply it.
 
 ### Agents
 
