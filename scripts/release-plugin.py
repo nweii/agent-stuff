@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Checks per-plugin release versions across all manifests and both marketplace entries.
-# Updates release metadata on request and creates a plain Git tag only from committed, matching artifacts.
+# Updates release metadata on request, creates a plain Git tag only from committed, matching artifacts,
+# and writes an upload archive of the tagged plugin folder to dist/ for hosts that take archives.
 
 import argparse
 import importlib.util
@@ -41,12 +42,22 @@ def check_release(name, root=ROOT):
     return f"{name}/v{version}"
 
 
+def build_archive(name, tag, root=ROOT):
+    """Zip the plugin folder exactly as tagged, with its files at the archive root."""
+    version = tag.rsplit("/v", 1)[1]
+    archive = root / "dist" / f"{name}-{version}.zip"
+    archive.parent.mkdir(exist_ok=True)
+    subprocess.run(["git", "archive", "--format=zip", "-o", str(archive), f"{tag}:plugins/{name}"], cwd=root, check=True)
+    return archive
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("plugin")
     action = parser.add_mutually_exclusive_group()
     action.add_argument("--version", help="Prepare a release version and regenerate metadata; commit before tagging")
     action.add_argument("--tag", action="store_true", help="Check committed metadata and create a local lightweight Git tag")
+    action.add_argument("--archive", action="store_true", help="Write dist/<plugin>-<version>.zip from the existing release tag")
     action.add_argument("--check", action="store_true", help="Check without changing metadata or Git refs (default)")
     args = parser.parse_args()
     try:
@@ -69,7 +80,11 @@ def main():
                 raise ValueError("Commit or set aside working-tree changes before tagging; a tag must identify the checked files")
             # No host-specific tag helper: one lightweight tag for one plugin release.
             subprocess.run(["git", "tag", tag], cwd=ROOT, check=True)
-        print(f"{'Tagged' if args.tag else 'Checked'} {tag}; no push performed.")
+        if args.tag or args.archive:
+            archive = build_archive(args.plugin, tag)
+            print(f"{'Tagged' if args.tag else 'Archived'} {tag}; wrote {archive.relative_to(ROOT)}; no push performed.")
+        else:
+            print(f"Checked {tag}; no push performed.")
     except (ValueError, KeyError, OSError, subprocess.CalledProcessError) as error:
         print(str(error), file=sys.stderr)
         return 1

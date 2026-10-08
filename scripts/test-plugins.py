@@ -121,7 +121,7 @@ class PluginTests(unittest.TestCase):
         scripts.mkdir()
         for filename in ("generate-plugins.py", "release-plugin.py"):
             (scripts / filename).write_bytes((ROOT / "scripts" / filename).read_bytes())
-        (self.root / ".gitignore").write_text("__pycache__/\n")
+        (self.root / ".gitignore").write_text("__pycache__/\ndist/\n")
         def git(*argv):
             return subprocess.check_output(["git", *argv], cwd=self.root, stderr=subprocess.STDOUT, text=True)
         git("init", "-b", "main")
@@ -131,6 +131,10 @@ class PluginTests(unittest.TestCase):
         git("commit", "-m", "Fixture")
         subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, check=True)
         self.assertEqual(git("cat-file", "-t", "example/v0.1.0").strip(), "commit")
+        archive = self.root / "dist/example-0.1.0.zip"
+        listed = subprocess.check_output(["unzip", "-Z1", str(archive)], text=True).split()
+        self.assertIn("plugin.json", listed)
+        self.assertIn("skills/sample/SKILL.md", listed)
         self.member.write_text(self.member.read_text() + "Dirty.\n")
         refused = subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, capture_output=True, text=True)
         self.assertNotEqual(refused.returncode, 0)
