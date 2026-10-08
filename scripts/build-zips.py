@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-# ABOUTME: Builds per-skill .zip files into zips/ for drag-into-Claude.ai from standalone and plugin skills.
+# ABOUTME: Builds per-skill .zip files into zips/ for drag-into-Claude.ai from standalone and plugin skills,
+# ABOUTME: plus one upload archive per plugin in zips/plugins/ (latest version only).
 # ABOUTME: Deterministic (fixed timestamps, sorted entries) so unchanged skills produce byte-identical zips and no git churn.
 
+import json
 import os
 import re
 import subprocess
@@ -17,6 +19,7 @@ ZIP_INCLUDE_INTERNAL = False
 REPO_ROOT = Path(__file__).parent.parent
 SKILLS_DIR = REPO_ROOT / "skills"
 ZIPS_DIR = REPO_ROOT / "zips"
+PLUGIN_ZIPS_DIR = ZIPS_DIR / "plugins"
 
 # Fixed timestamp for every entry → reproducible archives. (Earliest value zip allows.)
 FIXED_DATE_TIME = (1980, 1, 1, 0, 0, 0)
@@ -48,15 +51,16 @@ def tracked_files(skill_dir: Path) -> List[Path]:
     return [f for f in files if f.name not in JUNK_NAMES and f.is_file()]
 
 
-def build_zip(skill_dir: Path) -> bytes:
-    """Build one skill's zip as bytes: entries nested under the skill-name folder, deterministic."""
-    name = skill_dir.name
+def build_zip(skill_dir: Path, prefix: str = None) -> bytes:
+    """Build a folder's zip as bytes, deterministic. Entries nest under the folder name unless prefix is ""."""
+    name = skill_dir.name if prefix is None else prefix
     import io
 
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for f in sorted(tracked_files(skill_dir), key=lambda p: p.relative_to(skill_dir).as_posix()):
-            arcname = f"{name}/{f.relative_to(skill_dir).as_posix()}"
+            relative = f.relative_to(skill_dir).as_posix()
+            arcname = f"{name}/{relative}" if name else relative
             info = zipfile.ZipInfo(arcname, date_time=FIXED_DATE_TIME)
             info.external_attr = 0o644 << 16
             info.compress_type = zipfile.ZIP_DEFLATED
@@ -75,6 +79,18 @@ def skills_to_zip() -> List[Path]:
     return sorted(dirs, key=lambda p: p.name)
 
 
+def plugins_to_zip() -> List[tuple]:
+    """(plugin folder, archive name) for each plugin, versioned from its staged plugin-source.json."""
+    found = []
+    for source in sorted((REPO_ROOT / "plugins").glob("*/plugin-source.json")):
+        try:
+            data = json.loads(read_index_file(REPO_ROOT, source))
+        except subprocess.CalledProcessError:
+            continue  # not staged or tracked yet
+        found.append((source.parent, f"{data['name']}-{data['version']}.zip"))
+    return found
+
+
 def rebuild() -> List[str]:
     """Regenerate tracked archives and trash stale ones. Returns the names written."""
     ZIPS_DIR.mkdir(exist_ok=True)
@@ -85,7 +101,16 @@ def rebuild() -> List[str]:
     for old in ZIPS_DIR.glob("*.zip"):
         if old.stem not in written:
             subprocess.run(["trash", str(old)], check=True)
-    return written
+    # Plugin upload archives: the plugin folder's files at the archive root, one current version per plugin.
+    plugin_archives = []
+    for plugin_dir, archive_name in plugins_to_zip():
+        PLUGIN_ZIPS_DIR.mkdir(exist_ok=True)
+        (PLUGIN_ZIPS_DIR / archive_name).write_bytes(build_zip(plugin_dir, prefix=""))
+        plugin_archives.append(archive_name)
+    for old in PLUGIN_ZIPS_DIR.glob("*.zip") if PLUGIN_ZIPS_DIR.is_dir() else []:
+        if old.name not in plugin_archives:
+            subprocess.run(["trash", str(old)], check=True)
+    return written + plugin_archives
 
 
 def selfcheck() -> None:
