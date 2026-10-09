@@ -1,18 +1,18 @@
 ---
 name: archive-to-brain
 description: "Save an archival summary of an AI conversation to Nathan's Obsidian vault, using the Thinking note template and vault folder conventions to capture intellectual journeys, key insights, and technical logs. Use when archiving a chat session to the vault."
-compatibility: "The skill inherits the full analytical approach from the `archive-conversation` skill and adds vault-specific save logic."
+compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.6.1"
+  version: "1.6.2"
   source: nweii/archive-conversation
   internal: true
 ---
 
 # Archive conversation to Brain vault
 
-Create an archival summary of an AI conversation and save it to Nathan's Obsidian vault (Brain).
+Create an archival summary of an AI conversation and save it to Nathan's Obsidian vault (Brain). Read Brain's `AGENTS.md` before accessing notes.
 
 ## Deep analysis requirements
 

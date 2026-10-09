@@ -4,7 +4,7 @@ description: "Use when creating, editing, migrating, installing, or publishing s
 argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.2.2"
+  version: "2.3.0"
   internal: true
   credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect: https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md. MIT notice: LICENSE.pstack."
 ---
@@ -27,8 +27,15 @@ Read [references/installation.md](references/installation.md) for repository dis
 
 Canonical skills live in two paired repositories:
 
-- `~/Developer/LLMs/agent-stuff/skills/<name>/` for public and internal-but-public skills.
-- `~/Developer/LLMs/agent-stuff-private/skills/<name>/` for private skills.
+- `~/Developer/LLMs/agent-stuff/` for public and internal-but-public skills.
+- `~/Developer/LLMs/agent-stuff-private/` for private skills.
+
+In each, a standalone skill lives in `skills/<name>/` and a plugin member in `plugins/<id>/skills/<name>/`; the folder is the plugin membership. Each repository's `AGENTS.md` covers plugin packaging and releases.
+
+A skill name in both repositories marks one of two deliberate relationships. The private repository's `scripts/public-variants.txt` says which:
+
+- **Mirror** (the default): the private copy is canonical, and the public copy is published for reference. Edit the private copy, then copy the change to the public one in the same session; they match except for the private copy's `metadata.credit` line. The private repository's pre-commit hook warns when a mirrored pair differs.
+- **Variant** (listed): the public copy is generalized for others, and the private copy is personalized and the one in use. Carry shared procedure changes across by hand, and keep personal details private.
 
 Both repositories generate their catalog and per-skill zip archives through a pre-commit hook. Edit skill source only; do not hand-edit `README.md` catalog entries or `zips/`.
 

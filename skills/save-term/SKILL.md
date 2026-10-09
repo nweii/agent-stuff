@@ -1,6 +1,7 @@
 ---
 name: save-term
 description: "Use when saving an encountered term or a concept coined in conversation as a Brain Term note, with its source quote or a brief gloss."
+compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 argument-hint: "[term or phrase]"
 disable-model-invocation: true
 metadata:

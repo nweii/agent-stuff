@@ -2,15 +2,16 @@
 name: create-topic-note
 description: "Create a topic note grouping related notes under a common theme, with automatic backlinking to source notes. Triggers: 'group these under a topic', 'create topic note for [[A]], [[B]], [[C]]'."
 argument-hint: "<topic title> [[[note1]]] [[[note2]]] ..."
+compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
   internal: true
 ---
 
 # Create topic note
 
-Create a new topic note that groups related notes under a common theme. Synthesizes provided notes into a lightweight hub.
+Create a topic note in Nathan's Brain vault that groups related notes under a common theme. Read the vault's `AGENTS.md` before accessing notes. Synthesize the provided notes into a lightweight hub.
 
 ## Arguments
 
