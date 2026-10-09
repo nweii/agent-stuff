@@ -32,10 +32,10 @@ Canonical skills live in two paired repositories:
 
 In each, a standalone skill lives in `skills/<name>/` and a plugin member in `plugins/<id>/skills/<name>/`; the folder is the plugin membership. Each repository's `AGENTS.md` covers plugin packaging and releases.
 
-A skill name in both repositories marks one of two deliberate relationships. The private repository's `scripts/public-variants.txt` says which:
+The repositories differ in purpose, and that decides how copies relate. `agent-stuff-private` holds what Nathan runs, so its copy of a skill is the one in use. `agent-stuff` holds what others can install or learn from, including internal skills published for reference. A skill name may appear in both, in any combination of standalone or plugin placement; placement is packaging and doesn't change the relationship. Each name is unique within a repository. A pair is one of two kinds, and the private repository's `scripts/public-variants.txt` says which:
 
-- **Mirror** (the default): the private copy is canonical, and the public copy is published for reference. Edit the private copy, then copy the change to the public one in the same session; they match except for the private copy's `metadata.credit` line. The private repository's pre-commit hook warns when a mirrored pair differs.
-- **Variant** (listed): the public copy is generalized for others, and the private copy is personalized and the one in use. Carry shared procedure changes across by hand, and keep personal details private.
+- **Mirror** (the default): the copies are identical apart from the private copy's `metadata.credit` line. Edit the private copy, then copy the change to the public one in the same session. The private repository's pre-commit hook warns when a mirrored pair differs.
+- **Variant** (listed): the public copy is generalized for others, and the private copy is personalized. Carry shared procedure changes across by hand, and keep personal details private.
 
 Both repositories generate their catalog and per-skill zip archives through a pre-commit hook. Edit skill source only; do not hand-edit `README.md` catalog entries or `zips/`.
 
