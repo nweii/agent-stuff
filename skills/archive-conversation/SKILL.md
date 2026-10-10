@@ -94,24 +94,25 @@ When an exchange shows thinking changing, quote both sides:
 
 ## File Output Requirements
 
-### Naming Convention
+Match the user's system first. Before writing, look at how their existing notes are named, filed, and tagged (similar archives, nearby folders, frontmatter in recent notes) and follow those conventions. Use the defaults below only when there is no system to match.
 
-- **Format**: `{{Type}} - {{topic}} YYYY-MM.md`
-- Use `Thinking` for insight-heavy journeys or `Log` for action-leaning work sessions
+### Naming
+
+Default format: `{{Type}} - {{topic}} YYYY-MM.md`, with `Thinking` for insight-heavy conversations and `Log` for work sessions.
+
 - Example: `Thinking - Portfolio strategy 2025-08.md`
 - Example: `Log - Refactoring auth middleware 2025-01.md`
 
-### Save Location Logic
+### Save location
 
-1. **If save-location argument provided**: Use that path directly
-2. **Context-aware detection**: Analyze the existing folder structure to find the most relevant folder for the note being archived (e.g., matching "Working" or "Journaling" folders to the conversation type).
-3. **If no context**: Ask the user to confirm where to save
-4. **Fallback**: If vault access unavailable (mobile/restricted), output as markdown code block for manual saving
+1. **Save-location argument:** use that path directly.
+2. **Existing structure:** save next to the user's similar notes, or in the folder that best fits the conversation's subject.
+3. **Unclear:** ask the user where to save.
+4. **No file access:** output the note as a Markdown code block with the intended path above it.
 
 ### Metadata
 
-- Add appropriate tags (e.g., `#thinking`, `#log`, `#journal`, `#learning`, `#ai-chat`) based on the user's system
-- Use third person or neutral documentation style, not first person (except when quoting)
+Use the frontmatter fields and tags the user's other notes use. With no system to match, add the date and a few tags for the conversation's topic.
 
 ## Remember
 
@@ -121,3 +122,4 @@ When an exchange shows thinking changing, quote both sides:
 - Keep language natural and straightforward - no marketing-speak or forced drama
 - Include the messy, human elements - confusion, recognition, technical frustrations, breakthroughs
 - When using specific examples repeatedly, vary phrasing or generalize after first mention
+- Use third person or neutral documentation style, except in the user's quoted words
