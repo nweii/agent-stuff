@@ -94,7 +94,7 @@ When an exchange shows thinking changing, quote both sides:
 
 ## File Output Requirements
 
-Match the user's system first. Before writing, look at how their existing notes are named, filed, and tagged (similar archives, nearby folders, frontmatter in recent notes) and follow those conventions. Use the defaults below only when there is no system to match.
+Match the user's system first. Before writing, read two or three of their most similar notes (earlier archives, or recent notes in the likely folder) and follow how those are named, filed, and tagged. Use the defaults below only when there is no system to match.
 
 ### Naming
 
@@ -112,7 +112,7 @@ Default format: `{{Type}} - {{topic}} YYYY-MM.md`, with `Thinking` for insight-h
 
 ### Metadata
 
-Use the frontmatter fields and tags the user's other notes use. With no system to match, add the date and a few tags for the conversation's topic.
+Fill only the frontmatter fields those similar notes share and this conversation can answer accurately, and reuse tags that already exist. With no system to match, add the date and a few tags for the conversation's topic.
 
 ## Remember
 
