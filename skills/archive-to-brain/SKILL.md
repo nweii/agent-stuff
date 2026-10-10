@@ -5,7 +5,7 @@ compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.7.1"
+  version: "1.8.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -13,6 +13,18 @@ metadata:
 # Archive conversation to Brain vault
 
 Create an archival summary of an AI conversation and save it to Nathan's Obsidian vault (Brain). Read Brain's `AGENTS.md` before accessing notes.
+
+## What the note is for
+
+The note is a record for a reader who wasn't there: Nathan months later, or an agent picking up the thread, with no access to the conversation. A good note lets that reader recover, from the note alone:
+
+- what was decided, and whether Nathan or the AI originated it
+- why: the reasoning, trade-offs, and constraints behind each decision
+- how the thinking moved: what was believed at the start and what changed it
+- what was produced (notes, files, code) and where it lives
+- what stayed open or was deferred
+
+The note is done when everything on that list that the conversation contains is recoverable without the chat. Structure, headings, excerpts, and length all serve that reader.
 
 ## Deep analysis requirements
 
@@ -230,7 +242,5 @@ obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08
 - Perform deep analysis to identify all important threads, transitions, and task sequences
 - Use headings that describe what actually happened or what was achieved in that section
 - Keep language natural and straightforward — no marketing-speak or forced drama
-- Capture why this journey or work session matters, and what was actually produced or decided
 - Include the messy, human elements — confusion, recognition, technical frustrations, breakthroughs
-- Preserve what would be valuable to revisit months or years later
 - Use third person or neutral documentation style, not first person, except in Nathan's quoted words

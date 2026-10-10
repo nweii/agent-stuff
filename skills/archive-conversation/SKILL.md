@@ -11,6 +11,18 @@ metadata:
 
 Create an archival summary of an AI conversation that captures its intellectual journey, key insights, or technical work session logs. Document either how thinking evolved throughout the discussion or the specific actions and technical decisions made during a work session.
 
+## What the Note Is For
+
+The note is a record for a reader who wasn't there: the user months later, or an agent picking up the thread, with no access to the conversation. A good note lets that reader recover, from the note alone:
+
+- what was decided, and whether the user or the AI originated it
+- why: the reasoning, trade-offs, and constraints behind each decision
+- how the thinking moved: what was believed at the start and what changed it
+- what was produced (notes, files, code) and where it lives
+- what stayed open or was deferred
+
+The note is done when everything on that list that the conversation contains is recoverable without the chat. Structure, headings, excerpts, and length all serve that reader.
+
 ## Deep Analysis Requirements
 
 Conduct a thorough analysis of the entire conversation:
@@ -115,7 +127,5 @@ When an exchange shows thinking changing, quote both sides:
 - Perform deep analysis to identify all important threads, transitions, and task sequences
 - Use headings that describe what actually happened or what was achieved in that section
 - Keep language natural and straightforward - no marketing-speak or forced drama
-- Capture why this journey or work session matters, and what was actually produced or decided
 - Include the messy, human elements - confusion, recognition, technical frustrations, breakthroughs
-- Preserve what would be valuable to revisit months or years later
 - When using specific examples repeatedly, vary phrasing or generalize after first mention
