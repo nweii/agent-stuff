@@ -94,7 +94,7 @@ When an exchange shows thinking changing, quote both sides:
 
 ## File Output Requirements
 
-Match the user's system first. Before writing, read two or three of their most similar notes (earlier archives, or recent notes in the likely folder) and follow how those are named, filed, and tagged. Use the defaults below only when there is no system to match.
+Match the user's system first. Use what you already know of their conventions from their instructions, memory, or this conversation. Otherwise, before writing, read two or three of their most similar notes (earlier archives, or recent notes in the likely folder) and follow how those are named, filed, and tagged. Use the defaults below only when there is no system to match.
 
 ### Naming
 
