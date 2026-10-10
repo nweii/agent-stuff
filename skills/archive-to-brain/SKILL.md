@@ -5,7 +5,7 @@ compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.8.2"
+  version: "1.9.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -26,59 +26,28 @@ The note is a record for a reader coming back without the conversation at hand. 
 
 The note is done when everything on that list the conversation contains is recoverable from the note alone.
 
-## Deep analysis requirements
+## Analyze the whole conversation
 
-Conduct a thorough analysis of the entire conversation:
+Read the entire conversation before writing. Name its nature (work session, creative exploration, learning, strategy) and what made it worth saving. Look for:
 
-1. Read through completely first, identifying all conceptual threads, task sequences, and transitions
-2. Note patterns in questioning, resistance points, breakthrough moments, or technical hurdles
-3. Identify the conversation's nature (technical work session, creative exploration, strategic planning, philosophical inquiry, etc.)
-4. Understand what made this particular exchange worth preserving (insight-driven vs. action-documentation)
-5. Determine what structure would best capture its unique value (narrative vs. log-formatted)
+- the real question beneath the first one
+- where assumptions changed or decisions were made
+- frameworks or patterns that emerged along the way
+- dead ends that taught something
+- connections between ideas or system parts
+- the human texture: confusion, recognition, frustration, breakthroughs
 
-**Look deeply for:**
+## Shape the note
 
-- The real question beneath the initial question
-- How the problem space was redefined or the technical path was forged
-- Moments where assumptions were challenged or implementation details were decided
-- Conceptual frameworks or technical patterns that emerged organically
-- The emotional/intellectual journey or the step-by-step progress of a work session
-- Valuable tangents or "failed" approaches that taught something or informed the final code
-- Connections made between seemingly unrelated ideas or system components
-- What remained intentionally unresolved or deferred to later tasks
+Let the conversation's flow set the structure. Common shapes:
 
-## Creating descriptive structure
+- **Problem-solving:** what broke → instructive failed approaches → the working solution → next steps
+- **Creative exploration:** the initial vision → how ideas branched → key decisions and why → directions worth revisiting
+- **Learning:** what wasn't understood → how understanding built → breakthroughs → remaining questions
+- **Work session:** the objective → actions taken and files changed → hurdles and fixes → current state and remaining tasks
+- **Strategy:** the decision → options and trade-offs → criteria that emerged → next considerations
 
-Instead of using generic headings like "Initial Question" or "Key Findings," create headings that describe the actual content of each section. The heading should give readers immediate context about what happened in that part of the conversation.
-
-**Examples of descriptive headings:**
-
-- "Starting from hourly vs. project pricing questions"
-- "Why the recursive function kept hitting memory limits"
-- "Exploring whether this needs to be real-time"
-- "The confusion about state management"
-- "Deciding between complexity and maintainability"
-
-Use sentence-case for headings, not title case. Avoid marketing-speak, dramatic phrasing, or trying to be clever.
-
-## Flexible documentation approaches
-
-Let the conversation's natural flow determine your structure:
-
-**For problem-solving sessions:**
-Open with what broke/what problem triggered the conversation → Document failed approaches if instructive → Describe the working solution → Note implementation details or next steps
-
-**For creative explorations:**
-Start with the initial vision or desire → Show how ideas evolved or branched → Capture key decisions and why they were made → Preserve unexplored directions worth revisiting
-
-**For learning journeys:**
-Begin with what the user didn't understand → Track how understanding built piece by piece → Highlight breakthrough moments → List remaining questions
-
-**For work sessions & implementation logs:**
-Define the session's objective → Document specific actions taken and files modified → Capture technical hurdles and how they were resolved → Summarize the current state of the work and remaining tasks
-
-**For strategic thinking:**
-Frame the decision that needed making → Explore options considered and their trade-offs → Document the framework or criteria that emerged → Capture action items or next considerations
+Give each section a sentence-case heading that says what happened in it, such as "Starting from hourly vs. project pricing questions" or "Why the recursive function kept hitting memory limits." Write in plain, third-person documentation style; first person appears only in Nathan's quoted words.
 
 ## Preserve Nathan's own words
 
@@ -95,144 +64,76 @@ When an exchange shows thinking changing, quote both sides:
 > Nathan: "[moment of recognition, doubt, or decision]"
 > AI: "[response that shifted understanding or articulated a key insight]"
 
-## Naming convention
+## Naming
 
-- **Format**: `{{Type}} - {{topic}} YYYY-MM.md`
-- Use `Thinking` for insight-heavy, reflective, or exploratory conversations
-- Use `Log` for action-leaning work sessions, implementation logs, or technical sessions
-- Example: `Thinking - Portfolio strategy 2025-08.md`
-- Example: `Log - Refactoring auth middleware 2025-01.md`
+Format: `{{Type}} - {{topic}} YYYY-MM.md`. Use `Thinking` for insight-heavy, reflective, or exploratory conversations and `Log` for work sessions. Examples: `Thinking - Portfolio strategy 2025-08.md`, `Log - Refactoring auth middleware 2025-01.md`.
 
-## Vault save logic
+## Save to the vault
 
 ### 1. Compose the frontmatter
-
-Use today's date for `created` and `modified`. Set `last` to the day the conversation happened — usually today, and the only date a single-session archive needs.
 
 ```yaml
 ---
 aliases:
-  - [1-2 intuitive alternative titles in sentence case, e.g. "Thinking through X" or "Notes from Y session"]
+  - [1-2 alternative titles in sentence case]
 categories: "[[Thinking]]"
 type:
-icon: [camelCase Lucide icon name prefixed with "Li" that fits the topic, e.g. LiBrainCircuit, LiMessageCircle, LiCode2]
+icon: [Lucide icon name prefixed with "Li", e.g. LiBrainCircuit]
 publish: false
-description: [1–2 sentence summary of what this conversation covered and why it was worth saving]
-# Optional: start — first day of the thread; add only for a multi-day note (see paragraph after this block)
+description: [1–2 sentences on what the conversation covered and why it was worth saving]
+# Optional: start (multi-day threads only, see below)
 last: YYYY-MM-DD
 tags:
   - thinking
-  - [2-3 additional tags reflecting the specific topic, domain, or people involved]
+  - [2-3 tags for the topic, domain, or people]
 related:
-  - ["[[Note name]]"] # only include confirmed vault notes that came up in conversation; wikilinks require quotes in YAML arrays
-# Optional: prev / next wikilinks for continuity with adjacent Thinking or Log notes — see paragraph after this block
+  - "[[Note name]]" # confirmed vault notes only
+# Optional: prev / next (continuity, see below)
 created: YYYY-MM-DD
 modified: YYYY-MM-DDTHH:mm
 ---
 ```
 
-**Category and note count.** Before saving, check what the session produced against the vault's categories (each category's hub note in `98-Spaces/` defines it). One note is the default. When the session also produced a durable artifact of another kind, such as a spec, a project's working record, or a system map, save that as its own note in its category and link the notes through `related`. Personal life writing belongs in a `[[Journal]]` note, which the `personal-processing` skill maintains.
+Set `created` and `modified` to today and `last` to the day the conversation happened. Draw aliases, description, icon, and tags from the conversation so they aid recall beyond the filename.
 
-For `Log` notes, change the `tags` entry to `logs` and update `categories` to `"[[Logs]]"` if appropriate. A note carries one of Thinking, Logs, or Journal, never two. Generate aliases, description, icon, and tags from the actual conversation content — they should aid recall beyond the filename. Only populate `related` with notes you have confirmed exist in the vault; leave the array empty if none were referenced. **Do not** put a note in `related` if it is already tied via `prev` or `next` — same link twice is redundant; use `related` for broader or non-adjacent ties.
+- **Category:** a note carries one of `[[Thinking]]`, `[[Logs]]` (with the `logs` tag), or `[[Journal]]`. One note is the default. When the session also produced a durable artifact of another kind (a spec, a project's working record, a system map), save that as its own note in its category, as defined by its hub in `98-Spaces/`, and link the two through `related`. Personal life writing belongs in a `[[Journal]]` note, which the `personal-processing` skill maintains.
+- **Extend or start new:** follow the editorial rules in `98-Spaces/Thinking.md`, which also govern Logs. The default is a new note per session; extend an existing note only when the session continues its scope and the note is still current.
+- **Dates:** a single-session archive has only `last`. Add `start` when the thread spans more than one day; then `start` is the first day and `last` the most recent. When extending a note that had only `last`, move that date to `start` and set `last` to today.
+- **Continuity:** when another Thinking or Log note is the immediate predecessor or successor (the conversation surfaces it, or Nathan names one), set `prev` / `next` per the vault's `AGENTS.md` and patch the other note so the chain stays bidirectional. Usually the new archive's `prev` is the prior session's note, whose `next` then points here. When work forks, branches may share a `prev`; the origin's `next` names the main continuation. A note linked through `prev` or `next` stays out of `related`.
+- **Related:** only notes confirmed to exist in the vault; leave the array empty otherwise.
 
-**Extend or start a new note?** Follow the editorial rules in the vault's Thinking category hub (`98-Spaces/Thinking.md`), which also apply to Logs. In short: default to a new note per session, and extend an existing note only when the session continues its scope and the note is still current.
+### 2. Choose the folder
 
-**Single date vs. multi-day thread (`last` / `start`):** A new archive usually captures one session: set `last` to the day it happened (usually today) and omit `start`, so `last` reads as a single date. Add `start` only when this note's thread spans more than one calendar day — a conversation resumed across days, or an existing archive you reopen and extend later. Then `start` is the first day and `last` the most recent, and the pair signals the span. When extending a note that had only `last`, promote its original `last` to `start` and set `last` to today. Never set `start` equal to `last`.
-
-**Continuity (`prev` / `next`):** When the conversation surfaces another Thinking or Log note as the immediate predecessor or successor, or the user names one, treat that as a continuity link — not only `related`. Set `prev` and/or `next` on the new note per the vault’s AGENTS.md, and **update the other note(s) the same way** so the chain stays bidirectional (e.g. if this archive follows note A, set this note’s `prev` to A and set A’s `next` to this note). Use whatever the environment supports: Obsidian CLI `property:set`, editing YAML frontmatter in place (after create), notesmd-cli if it exposes properties, vault MCP, etc. If the new note sits between two existing notes, fix all three. When work forks, `prev` may be shared: each branch sets `prev` to the same origin, and the origin's `next` names only the main continuation. Omit `prev` / `next` when no clear adjacent note exists. **Typical case for a new archive:** this note is usually the **`next`** after the prior session’s Thinking/Log; set `prev` on the new file and patch the previous note’s `next`.
-
-### 2. Determine the save folder
+Use a provided save location directly. Otherwise:
 
 - Personal life, emotions, identity, relationships, dreams, health → `03-Records/Journaling`
-- Work, projects, productivity (including personal productivity), technical sessions, client work → `06-Working`
+- Work, projects, productivity, technical sessions, client work → `06-Working`, in a matching subfolder when one clearly fits (list the folder to check; subfolders change over time), or its root
 
-Within `06-Working`, check for existing subfolders that match the conversation topic (search the vault, list the directory on disk, or use whatever tooling the host provides). Use a matching subfolder when it clearly fits; otherwise save to the root of `06-Working`. Don't assume which subfolders exist — they change over time.
+### 3. Write the note
 
-If a specific save location was provided, use it directly.
+Use the first write path the machine supports:
 
-### 3. Save to vault
+1. **Obsidian CLI** (Obsidian running): `obsidian vault=Brain create name="{{filename}}" path="{{folder}}/{{filename}}.md" content="{{note}}"`, and `obsidian vault=Brain property:set file="{{note}}" name=prev value='[[Prior note]]'` for continuity links. Pipe multiline content via stdin or escape newlines as `\n`.
+2. **notesmd-cli** (headless host with a synced vault): its create/update commands per `--help`; edit frontmatter directly for `prev` / `next`.
+3. **Direct file write** when the vault root is known and writable.
+4. **Vault MCP** when it is the only vault access.
+5. **Manual handoff:** the full note in a Markdown code block with the intended path above it.
 
-Pick a **write path that matches the machine**: desktop with Obsidian open, headless server with a synced vault folder, or chat-only with no filesystem. No single tool is always present.
+### 4. Log to the daily note
 
-**Preferred order when multiple options exist** (skip steps that are unavailable):
-
-1. **Obsidian CLI** — Best when the Obsidian app can run (indexing, `property:set`, wikilink-style `file=`). Use `vault=<name>` if there are multiple vaults. Example create:
-
-   ```bash
-   obsidian vault=Brain create name="{{filename}}" path="{{folder}}/{{filename}}.md" content="{{full content with frontmatter}}"
-   ```
-
-   Example continuity (bidirectional `prev` / `next`):
-
-   ```bash
-   obsidian vault=Brain property:set file="{{filename}}" name=prev value='[[Prior note title]]'
-   obsidian vault=Brain property:set file="Prior note title" name=next value='[[{{filename}}]]'
-   ```
-
-2. **notesmd-cli** — Typical on **headless** hosts where the vault is synced but Obsidian's CLI is not available. Use its create/update commands per that tool’s `--help`; set `prev` / `next` by editing frontmatter if the CLI does not expose properties.
-
-3. **Direct read/write** — If the absolute vault root is known and writable, write `{{folder}}/{{filename}}.md` with the full file contents (including frontmatter), then patch the prior note’s frontmatter for `next` if needed.
-
-4. **Vault MCP** — Use when the agent only has MCP filesystem access to the vault and no local CLI. Prefer create/move/update there over leaving the archive only in chat.
-
-5. **Manual handoff** — Output the full note in a markdown code block with the intended path above it so the user can paste or save it.
-
-Pipe multiline content via stdin or use `\n` escaping in CLI `content=` values when required.
-
-### 4. Log to the corresponding daily note
-
-After saving the archive, append a bullet to the `## Log` section of the daily note that best corresponds to when the conversation actually took place — usually today, but not always. Use your understanding of the conversation's content and timing as the primary guide; the archive's `start` / `last` frontmatter is a useful supporting signal if the date is ambiguous.
-
-**Format** — a daily-log bullet pointing to the saved archive, led by its area note when one applies (matches the vault convention in AGENTS.md → Write-Back Discipline):
+Append one bullet to the `## Log` section of the daily note for the day the conversation happened (usually today), at `01-Days/YYYY-MM-DD-ShortDayName.md` (e.g. `01-Days/2025-08-14-Thu.md`). Skip this step if that note doesn't exist.
 
 ```
 - [[Area/domain]] / [[Note filename without extension]]: plain one- or two-sentence summary
 ```
 
-Use Nathan's area note if he named one; otherwise search the vault for an existing `[[Domains]]` or `[[Projects]]` note that matches. Only use a link that resolves to a real note — never invent an area label — and omit the prefix if none exists.
-
-The bullet only jogs memory; it points to the archive, which holds the detail. One or two plain sentences on the gist, in the voice Nathan would jot it — easy to parse, no stacked clauses or sub-parentheticals. Mention a couple of things that mattered if it helps recall; leave the rest to the note. Draw it from the archive's `description` frontmatter or its subject.
-
-**Resolving the target daily note** — derive the path from the chosen date:
-
-- Daily notes follow `01-Days/YYYY-MM-DD-ShortDayName.md` (e.g. `01-Days/2025-08-14-Thu.md`)
-- Derive the short day name from the date (`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`)
-
-**How to update it** (use whichever is available):
-
-- **Obsidian CLI**: Read the target note by path or title, locate `## Log`, and write the updated file with the bullet appended.
-- **Direct file edit**: Read `01-Days/YYYY-MM-DD-ShortDayName.md`, find `## Log`, and append the bullet on a new line after the last existing bullet in that section.
-- **Vault MCP**: Use update/edit tools to insert the bullet into `## Log`.
-
-If the target daily note does not exist, skip this step rather than creating it.
+Lead with the area note Nathan named, or an existing `[[Domains]]` or `[[Projects]]` note that matches; omit the prefix when no real note fits. The bullet jogs memory and points to the archive: one or two plain sentences on the gist, in the voice Nathan would jot it, drawn from the archive's `description`.
 
 ### 5. Surface an Obsidian link
 
-After the file is saved, surface the Obsidian URI in the chat reply so Nathan can open the note from wherever the skill ran. Skip this step if the save didn't complete and the note was handed off for Nathan to save manually — there's no file to link to yet.
-
-Output **both** a clickable markdown hyperlink **and** the bare URI on its own line beneath it. The markdown link renders as a tappable hyperlink in clients that support it (e.g. Claude mobile); the bare URI is a fallback selectable string for clients that don't reliably render `obsidian://` links as clickable (Claude desktop, terminal).
-
-**Format:**
-
-```
-[{{Note title without .md}}](obsidian://open?vault=Brain&file={{URI-encoded filename without extension}})
-obsidian://open?vault=Brain&file={{URI-encoded filename without extension}}
-```
-
-Use the filename (without `.md`) as the link text unless a shorter display label is clearer. URI-encode only the `file=` value (spaces → `%20`, slashes → `%2F`, etc.). The bare filename is sufficient — no folder path, no `.md` extension. Obsidian resolves by shortest unique match.
-
-Example: filename `Thinking - Some topic 2025-08.md` →
+After a completed save, give both a markdown link and the bare URI on the next line, since some clients render `obsidian://` links as plain text. URI-encode only the `file=` value; the bare filename without folder or `.md` is enough.
 
 ```
 [Thinking - Some topic 2025-08](obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08)
 obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08
 ```
-
-## Remember
-
-- You're documenting intellectual exploration OR technical execution/work sessions
-- Perform deep analysis to identify all important threads, transitions, and task sequences
-- Use headings that describe what actually happened or what was achieved in that section
-- Keep language natural and straightforward — no marketing-speak or forced drama
-- Include the messy, human elements — confusion, recognition, technical frustrations, breakthroughs
-- Use third person or neutral documentation style, not first person, except in Nathan's quoted words
