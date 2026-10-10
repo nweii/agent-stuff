@@ -5,7 +5,7 @@ compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.6.2"
+  version: "1.7.0"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -68,14 +68,30 @@ Define the session's objective → Document specific actions taken and files mod
 **For strategic thinking:**
 Frame the decision that needed making → Explore options considered and their trade-offs → Document the framework or criteria that emerged → Capture action items or next considerations
 
-## Excerpt guidelines
+## Preserve Nathan's own words
 
-Include conversation excerpts that show thinking in action:
+Quote Nathan verbatim instead of paraphrasing whenever he states:
 
-> Nathan: "[moment of recognition or confusion]"
-> AI: "[response that shifted understanding or articulated key insight]"
+- a decision or the reasoning behind it
+- an opinion, preference, or judgment of taste
+- what excites, worries, or matters to him about the subject, and why
+- an idea or direction he wants to pursue
+- a correction to the AI or a pushback
 
-Choose excerpts that reveal intellectual movement — the moments where thinking actually changed, not just where information was exchanged. Be generous in your excerpt lengths.
+A paraphrase loses who decided something. Months later, a reader or another agent can't tell Nathan's settled view from an AI suggestion he only went along with, and the summary's wording quietly replaces his. His exact words keep that authority and his voice. They also serve as raw material later for case studies, posts, and decisions that build on this one.
+
+How to quote:
+
+- Put the quote at the start of the section it informs, then add the analysis or synthesis after it. The quote holds what Nathan thinks; the prose explains it.
+- Keep his wording, register, and casing. Fix obvious typos and dictation errors (misheard words, doubled letters) without rewording.
+- Quote whole thoughts rather than fragments, even when they run several sentences. Trim only filler that adds nothing.
+- Attribute ideas that came from the AI to the AI, so later readers can tell suggestions apart from Nathan's decisions.
+- Be selective about *which* moments to quote, not about how much of each one. Routine instructions ("save that", "yes do it") don't need quoting.
+
+When an exchange shows thinking changing, quote both sides:
+
+> Nathan: "[moment of recognition, doubt, or decision]"
+> AI: "[response that shifted understanding or articulated a key insight]"
 
 ## Naming convention
 
@@ -219,4 +235,5 @@ obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08
 - Capture why this journey or work session matters, and what was actually produced or decided
 - Include the messy, human elements — confusion, recognition, technical frustrations, breakthroughs
 - Preserve what would be valuable to revisit months or years later
-- Use third person or neutral documentation style, not first person (except when quoting)
+- Use third person or neutral documentation style, not first person, except in Nathan's quoted words
+- Quote Nathan's decisions, reasoning, opinions, and feelings verbatim rather than paraphrasing them
