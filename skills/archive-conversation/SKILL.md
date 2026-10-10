@@ -4,7 +4,7 @@ description: "Create analytical archival summaries of AI conversations, capturin
 argument-hint: "[save-location]"
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # AI Conversation Archival Summary
@@ -65,14 +65,28 @@ Define the session's objective → Document specific actions taken and files mod
 **For Strategic Thinking:**
 Frame the decision that needed making → Explore options considered and their trade-offs → Document the framework or criteria that emerged → Capture action items or next considerations
 
-## Excerpt Guidelines
+## Preserve the User's Own Words
 
-Include conversation excerpts that show thinking in action:
+Quote the user **verbatim** wherever they state:
 
-> [User's first name, if known]: "[moment of recognition or confusion]"
-> AI: "[response that shifted understanding or articulated key insight]"
+- a decision or the reasoning behind it
+- an opinion, preference, or judgment of taste
+- what excites, worries, or matters to them about the subject, and why
+- an idea or direction they want to pursue
+- a correction or pushback
 
-Choose excerpts that reveal intellectual movement - the moments where thinking actually changed, not just where information was exchanged. Be generous in your excerpt lengths.
+A paraphrase erases who decided. Months later, a reader or another agent can't tell the user's settled view from an AI suggestion they went along with, and the summary's wording replaces theirs. Verbatim quotes keep that authority and voice, and later serve case studies, posts, and decisions that build on this one.
+
+- Open the section a quote informs with the quote; the analysis follows it.
+- Keep their wording, register, and casing; correct only typos and dictation errors.
+- Quote whole thoughts, even when they run several sentences.
+- Attribute AI-originated ideas to the AI.
+- Spend selectivity on which moments carry judgment, not on how much of each.
+
+When an exchange shows thinking changing, quote both sides:
+
+> [User's first name, if known]: "[moment of recognition, doubt, or decision]"
+> AI: "[response that shifted understanding or articulated a key insight]"
 
 ## File Output Requirements
 

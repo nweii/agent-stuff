@@ -5,7 +5,7 @@ compatibility: "Brain vault access through Obsidian CLI or the Vault MCP."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.7.0"
+  version: "1.7.1"
   source: nweii/archive-conversation
   internal: true
 ---
@@ -70,23 +70,21 @@ Frame the decision that needed making → Explore options considered and their t
 
 ## Preserve Nathan's own words
 
-Quote Nathan verbatim instead of paraphrasing whenever he states:
+Quote Nathan **verbatim** wherever he states:
 
 - a decision or the reasoning behind it
 - an opinion, preference, or judgment of taste
-- what excites, worries, or matters to him about the subject, and why
-- an idea or direction he wants to pursue
-- a correction to the AI or a pushback
+- what excites, worries, or matters to them about the subject, and why
+- an idea or direction they want to pursue
+- a correction or pushback
 
-A paraphrase loses who decided something. Months later, a reader or another agent can't tell Nathan's settled view from an AI suggestion he only went along with, and the summary's wording quietly replaces his. His exact words keep that authority and his voice. They also serve as raw material later for case studies, posts, and decisions that build on this one.
+A paraphrase erases who decided. Months later, a reader or another agent can't tell Nathan's settled view from an AI suggestion they went along with, and the summary's wording replaces theirs. Verbatim quotes keep that authority and voice, and later serve case studies, posts, and decisions that build on this one.
 
-How to quote:
-
-- Put the quote at the start of the section it informs, then add the analysis or synthesis after it. The quote holds what Nathan thinks; the prose explains it.
-- Keep his wording, register, and casing. Fix obvious typos and dictation errors (misheard words, doubled letters) without rewording.
-- Quote whole thoughts rather than fragments, even when they run several sentences. Trim only filler that adds nothing.
-- Attribute ideas that came from the AI to the AI, so later readers can tell suggestions apart from Nathan's decisions.
-- Be selective about *which* moments to quote, not about how much of each one. Routine instructions ("save that", "yes do it") don't need quoting.
+- Open the section a quote informs with the quote; the analysis follows it.
+- Keep their wording, register, and casing; correct only typos and dictation errors.
+- Quote whole thoughts, even when they run several sentences.
+- Attribute AI-originated ideas to the AI.
+- Spend selectivity on which moments carry judgment, not on how much of each.
 
 When an exchange shows thinking changing, quote both sides:
 
@@ -236,4 +234,3 @@ obsidian://open?vault=Brain&file=Thinking%20-%20Some%20topic%202025-08
 - Include the messy, human elements — confusion, recognition, technical frustrations, breakthroughs
 - Preserve what would be valuable to revisit months or years later
 - Use third person or neutral documentation style, not first person, except in Nathan's quoted words
-- Quote Nathan's decisions, reasoning, opinions, and feelings verbatim rather than paraphrasing them
