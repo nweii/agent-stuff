@@ -13,16 +13,15 @@ Create an archival summary of an AI conversation that captures its intellectual 
 
 ## What the Note Is For
 
-The note is a record for a reader coming back without the conversation at hand: the user months later, or an agent picking up the thread. A good note lets that reader recover, from the note alone:
+The note is a record for a reader coming back without the conversation at hand. A good note lets that reader recover:
 
-- what was decided
-- why: the reasoning, trade-offs, and constraints behind each decision
-- how the thinking moved: what was believed at the start, how ideas developed in the back-and-forth, and what changed
-- the user's own thinking in their own words: what they noticed, wanted, worried about, and decided
-- what was produced (notes, files, code) and where it lives
-- what stayed open or was deferred
+- what was decided, and why
+- how the thinking moved through the back-and-forth
+- the user's own thinking, in their words
+- what was produced and where it lives
+- what stayed open
 
-The note is done when everything on that list that the conversation contains is recoverable without the chat. Structure, headings, excerpts, and length all serve that reader.
+The note is done when everything on that list the conversation contains is recoverable from the note alone.
 
 ## Deep Analysis Requirements
 
@@ -80,21 +79,13 @@ Frame the decision that needed making → Explore options considered and their t
 
 ## Preserve the User's Own Words
 
-Quote the user **verbatim** wherever they state:
+Quote the user **verbatim** wherever they state a decision, reasoning, opinion, worry, excitement, or an idea they want to pursue. Their words record their thinking at the time, close to a journal entry; a paraphrase flattens their voice and the back-and-forth in which ideas took shape.
 
-- a decision or the reasoning behind it
-- an opinion, preference, or judgment of taste
-- what excites, worries, or matters to them about the subject, and why
-- an idea or direction they want to pursue
-- a correction or pushback
-
-the user's words are a record of their thinking at the time, close to a journal entry. A paraphrase smooths them into the summary's voice and flattens the back-and-forth in which ideas took shape. Verbatim quotes keep their thinking recoverable as they expressed it, and later serve case studies, posts, and decisions that build on this one.
-
-- Open the section a quote informs with the quote; the analysis follows it.
-- Keep their wording, register, and casing; correct only typos and dictation errors.
-- Quote whole thoughts, even when they run several sentences.
-- Keep the AI's contributions in the AI's voice, so they read as part of the exchange rather than as the user's words.
-- Spend selectivity on which moments carry judgment, not on how much of each.
+- Open the section a quote informs with the quote; analysis follows.
+- Keep their wording and casing; correct only typos and dictation errors.
+- Quote whole thoughts.
+- Keep the AI's contributions in the AI's voice.
+- Be selective about which moments, not about how much of each.
 
 When an exchange shows thinking changing, quote both sides:
 
