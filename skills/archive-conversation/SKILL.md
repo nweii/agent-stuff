@@ -13,11 +13,12 @@ Create an archival summary of an AI conversation that captures its intellectual 
 
 ## What the Note Is For
 
-The note is a record for a reader who wasn't there: the user months later, or an agent picking up the thread, with no access to the conversation. A good note lets that reader recover, from the note alone:
+The note is a record for a reader coming back without the conversation at hand: the user months later, or an agent picking up the thread. A good note lets that reader recover, from the note alone:
 
-- what was decided, and whether the user or the AI originated it
+- what was decided
 - why: the reasoning, trade-offs, and constraints behind each decision
-- how the thinking moved: what was believed at the start and what changed it
+- how the thinking moved: what was believed at the start, how ideas developed in the back-and-forth, and what changed
+- the user's own thinking in their own words: what they noticed, wanted, worried about, and decided
 - what was produced (notes, files, code) and where it lives
 - what stayed open or was deferred
 
@@ -87,12 +88,12 @@ Quote the user **verbatim** wherever they state:
 - an idea or direction they want to pursue
 - a correction or pushback
 
-A paraphrase erases who decided. Months later, a reader or another agent can't tell the user's settled view from an AI suggestion they went along with, and the summary's wording replaces theirs. Verbatim quotes keep that authority and voice, and later serve case studies, posts, and decisions that build on this one.
+the user's words are a record of their thinking at the time, close to a journal entry. A paraphrase smooths them into the summary's voice and flattens the back-and-forth in which ideas took shape. Verbatim quotes keep their thinking recoverable as they expressed it, and later serve case studies, posts, and decisions that build on this one.
 
 - Open the section a quote informs with the quote; the analysis follows it.
 - Keep their wording, register, and casing; correct only typos and dictation errors.
 - Quote whole thoughts, even when they run several sentences.
-- Attribute AI-originated ideas to the AI.
+- Keep the AI's contributions in the AI's voice, so they read as part of the exchange rather than as the user's words.
 - Spend selectivity on which moments carry judgment, not on how much of each.
 
 When an exchange shows thinking changing, quote both sides:
