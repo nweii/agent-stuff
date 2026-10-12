@@ -1,6 +1,6 @@
 # Agent-stuff
 
-This public repository contains reusable agent skills and a small set of subagent examples.
+This public repository is a curated distribution of reusable agent skills and plugins.
 
 ## Required context
 
@@ -13,8 +13,9 @@ This public repository contains reusable agent skills and a small set of subagen
 - Everything tracked here is public. Keep general skills vendor-neutral and user-neutral.
 - A skill marked `metadata.internal: true` may describe Nathan's non-sensitive setup, but it must remain understandable and adaptable to a public reader.
 - Keep private names, confidential material, credentials, and private-repository details out of this repository.
+- For Nathan's paired-repository workflow, author in the complete private library, then export approved public copies here after privacy review. Preserve public skill names and install paths; `nweii-skills` describes export validation and deliberate variants.
 - Installed copies under `~/.agents/skills/` are downstream of repository source.
-- `agents/` contains examples that users copy manually; skill installers do not install them.
+- `archive/agents/` preserves retired subagent definitions; keep them outside the active catalog.
 
 ## Generated files
 
@@ -24,7 +25,7 @@ This public repository contains reusable agent skills and a small set of subagen
 
 ## Plugin packaging
 
-Standalone source is `skills/<name>/`; bundled source is `plugins/<id>/skills/<name>/` on the default branch. The folder defines membership, with exactly one canonical copy. Self-contained payloads follow fixed skill discovery in [Agent Plugins 1.0.0](https://agent-plugins.org/specification#6-component-discovery) and [Claude's path rules](https://code.claude.com/docs/en/plugins-reference#path-rules) (checked with Claude Code 2.1.288).
+Standalone source is `skills/<name>/`; bundled source is `plugins/<id>/skills/<name>/` on the default branch. The folder defines membership, with exactly one copy per skill name in this distribution. Self-contained payloads follow fixed skill discovery in [Agent Plugins 1.0.0](https://agent-plugins.org/specification#6-component-discovery) and [Claude's path rules](https://code.claude.com/docs/en/plugins-reference#path-rules) (checked with Claude Code 2.1.288).
 
 Edit `plugin-source.json` for metadata; the generator writes three thin manifests and both catalogs, never skill copies. Each member must keep the name/description's audience promise: public tools work with another user's conventions; personal plugins are personal throughout. Flag mismatches.
 

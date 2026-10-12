@@ -4,7 +4,7 @@ description: "Use when creating, editing, migrating, installing, or publishing s
 argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.3.0"
+  version: "2.4.0"
   internal: true
   credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect: https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md. MIT notice: LICENSE.pstack."
 ---
@@ -25,17 +25,25 @@ Read [references/installation.md](references/installation.md) for repository dis
 
 ## Source ownership
 
-Canonical skills live in two paired repositories:
+The paired repositories have distinct roles:
 
-- `~/Developer/LLMs/agent-stuff/` for public and internal-but-public skills.
-- `~/Developer/LLMs/agent-stuff-private/` for private skills.
+- `~/Developer/LLMs/agent-stuff-private/` holds the complete canonical library of Nathan's own skills and retained adaptations.
+- `~/Developer/LLMs/agent-stuff/` holds a curated, approved set of public exports. Its existing skill and plugin paths remain valid for public users.
 
-In each, a standalone skill lives in `skills/<name>/` and a plugin member in `plugins/<id>/skills/<name>/`; the folder is the plugin membership. Each repository's `AGENTS.md` covers plugin packaging and releases.
+Author and edit private source first, including skills suitable for general audiences. Repository visibility controls access; `metadata.internal: true` marks a personal audience, not private storage. A general skill in the private library keeps its general metadata.
 
-The repositories differ in purpose, and that decides how copies relate. `agent-stuff-private` holds what Nathan runs, so its copy of a skill is the one in use. `agent-stuff` holds what others can install or learn from, including internal skills published for reference. A skill name may appear in both, in any combination of standalone or plugin placement; placement is packaging and doesn't change the relationship. Each name is unique within a repository. A pair is one of two kinds, and the private repository's `scripts/public-variants.txt` says which:
+In each repository, a standalone skill lives in `skills/<name>/` and a plugin member in `plugins/<id>/skills/<name>/`. Each name is unique within a repository. Folder placement defines plugin membership, which is a separate decision from source ownership or public export approval. Read the repository's `AGENTS.md` before changing packaging or releases.
 
-- **Mirror** (the default): the copies are identical apart from the private copy's `metadata.credit` line. Edit the private copy, then copy the change to the public one in the same session. The private repository's pre-commit hook warns when a mirrored pair differs.
-- **Variant** (listed): the public copy is generalized for others, and the private copy is personalized. Carry shared procedure changes across by hand, and keep personal details private.
+The canonical repository's `scripts/public-exports.json` maps each approved export name to its fixed path in the public repository. Preserve those paths when reorganizing private source. Exporting a skill requires Nathan's explicit approval and a privacy review of the complete folder, including references, scripts, examples, assets, and attribution. Approval to edit private source alone does not authorize an export.
+
+Approved pairs follow one of two contracts:
+
+- **Mirror** (default): the complete folders agree, with only `metadata.credit` allowed to differ. Maintain the approved public copy from safe private-source changes within the authorized export scope. If a private change introduces material unsuitable for that export, hold the public change and resolve the boundary rather than copying it incidentally.
+- **Variant** (listed in `scripts/public-variants.txt`): the public procedure is generalized and the private copy personalized. Carry shared procedure changes across by hand while preserving the public audience. `things-app` is a deliberate variant.
+
+`scripts/check-mirrors.py` enforces that public skills have private canonical counterparts, export membership and paths match the approved map, and mirrored folders agree. A new export, removed export, or public path change needs explicit approval before updating the map.
+
+For third-party skills, use the upstream source or supported upstream plugin by default. Retain or bundle a copy only for a documented exception, with its source revision, license, attribution, and adaptation boundary. A retained copy does not transfer upstream authorship to Nathan.
 
 Both repositories generate their catalog and per-skill zip archives through a pre-commit hook. Edit skill source only; do not hand-edit `README.md` catalog entries or `zips/`.
 
@@ -64,7 +72,8 @@ A commit, push, installation, and exercised downstream workflow are distinct sta
 
 Before finishing skill work, verify:
 
-- every edit is in the canonical repository and within the selected privacy tier;
+- every edit starts in the private canonical library and respects its audience and export boundary;
+- approved public exports retain their mapped paths and pass the mirror or deliberate-variant checks;
 - frontmatter and relative references validate;
 - new or changed scripts have an observable check;
 - generated catalogs or archives were changed only through their repository workflow;

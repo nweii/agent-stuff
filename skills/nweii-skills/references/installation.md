@@ -4,7 +4,9 @@ Use this reference before discovering or using a repository skill on demand, or 
 
 ## Source choice
 
-Install public skills from `nweii/agent-stuff`, private skills from `nweii/agent-stuff-private`, and third-party skills from their GitHub slug unless they ship a supported plugin. Prefer the plugin when it provides the requested skill.
+Install or refresh Nathan's own skills from `nweii/agent-stuff-private`, including general skills exported publicly. Existing installations from `nweii/agent-stuff` remain valid; change their recorded source only during an authorized refresh. Public users continue installing curated exports from `nweii/agent-stuff` at their existing paths.
+
+Install third-party skills from their upstream repository or supported upstream plugin. Vendoring or private rebundling is an exception with documented source revision, license, attribution, and local adaptations. Prefer a plugin when its membership and dependencies fit the requested use; a source refresh does not authorize changing plugin membership.
 
 For private repositories, confirm `gh auth status` first. Do not use a local clone path or SSH URL as the recorded source. Treat tokens as credentials.
 
@@ -26,8 +28,9 @@ INSTALL_INTERNAL_SKILLS=1 bunx skills add nweii/agent-stuff-private --list --ful
 Load one named skill for the current task:
 
 ```bash
-bunx skills use nweii/agent-stuff --skill <name>
 bunx skills use nweii/agent-stuff-private --skill <name>
+# Public export route for public users or an existing public-source workflow:
+bunx skills use nweii/agent-stuff --skill <name>
 ```
 
 Pass the frontmatter name; an explicit selector includes internal skills. Add `--full-depth` for nested vendor packages. Remote commands fetch the published repository state. For authorized local work on an unpublished skill, read its canonical local `SKILL.md` and supporting files directly; retain the GitHub repository as its recorded source.
@@ -45,8 +48,9 @@ Check `readlink ~/.claude/skills` before diagnosing per-skill directories. If th
 Install with explicit skill and agent targets:
 
 ```bash
-bunx skills add nweii/agent-stuff --skill <name> -a claude-code zed -g -y
 bunx skills add nweii/agent-stuff-private --skill <name> -a claude-code zed -g -y
+# Public users and intentionally retained public-source installations:
+bunx skills add nweii/agent-stuff --skill <name> -a claude-code zed -g -y
 bunx skills add <owner/repo> --skill <name> -a claude-code zed -g -y
 ```
 
@@ -54,7 +58,9 @@ Pass the frontmatter `name:` to `--skill`; a differing folder name can silently 
 
 ## Updating and repair
 
-Use `bunx skills update <name> -g` only for public, non-internal skills and compatible third-party skills. Private-repository and `internal: true` skills can fail tree discovery; refresh those by rerunning the matching `bunx skills add` command.
+Refresh Nathan's own skills by rerunning the explicit `bunx skills add nweii/agent-stuff-private` command above after reconciling installed drift. Check that the recorded source becomes the private repository. Private-repository and `internal: true` skills can fail tree discovery, so use this route even for general-audience skills in the private library.
+
+Use `bunx skills update <name> -g` for compatible third-party skills or intentionally retained public, non-internal installations. A refresh is complete when the installed contents and recorded source agree; preserving public export paths keeps existing public users' update routes intact.
 
 When `~/.claude/skills` is not a parent symlink and a per-skill entry is a copied directory, reinstall with the two-agent command. Reinstallation replaces downstream drift, so reconcile useful changes into canonical source first.
 
