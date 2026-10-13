@@ -1,17 +1,16 @@
 ---
 name: set-note-description
 description: "Use when writing a note's description property for recall or retrieval. Summarizes a note's own content; parent-period synthesis belongs to periodic-rollup or the environment's specific rollup workflow."
-context: fork
-model: sonnet
 argument-hint: "Note title(s)"
+compatibility: "Readable and writable Markdown notes through filesystem or vault tools."
 metadata:
   author: nweii
-  version: "1.3.0"
+  version: "1.3.1"
 ---
 
 # Summarize frontmatter
 
-Generate a `description` property for **$ARGUMENTS** and write it to the note's YAML frontmatter.
+Generate a `description` property for the requested notes and write it to each note’s YAML frontmatter.
 
 Read the target vault's instructions first. For a periodic note, prefer the vault's specific rollup workflow when it covers the requested scale. For a parent period synthesized from child notes, use `periodic-rollup` if available. Use this skill for a note's own content, or as a fallback when no more specific workflow is available.
 

@@ -1,10 +1,10 @@
 ---
 name: nweii-skills
-description: "Use when creating, editing, migrating, installing, or publishing skills, loading repository skills on demand, or reflecting on a session to improve skills in Nathan's environment."
+description: "Use when creating, editing, auditing, migrating, installing, or publishing skills, loading repository skills on demand, or reflecting on a session to improve skills in Nathan's environment."
 argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.4.0"
+  version: "2.5.0"
   internal: true
   credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect: https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md. MIT notice: LICENSE.pstack."
 ---
@@ -16,6 +16,10 @@ Treat repository skill folders as source and installed skills as downstream copi
 ## Reflect on a session
 
 When Nathan supplies `reflect` as an argument or explicitly asks to review a session for skill improvements, follow [references/reflect.md](references/reflect.md). This mode reviews session evidence through judgment, tooling, and divergent lenses, then returns proposed edits, rejected findings, and a local backlog. Run it only on request. Present concrete edits for approval unless Nathan already authorized applying them; an ordinary skill task does not start reflection.
+
+## Audit a skill collection
+
+When Nathan asks to assess overlap, redundancy, or consolidation, follow [references/audit.md](references/audit.md). Inventory the requested installed collection or source library, compare contested procedures, and return evidenced dispositions and scoped commands. Audit proposals remain unapplied until authorized.
 
 ## Use a skill on demand
 

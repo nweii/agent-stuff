@@ -1,9 +1,10 @@
 ---
 name: obsidian-app-css
 description: "Use when writing, debugging, auditing, or reorganizing CSS snippets or app themes for Obsidian desktop/mobile, including DOM selectors, CSS variables, platform classes, plugin/theme compatibility, specificity, or cascade conflicts. Excludes hosted Publish, publish.css, and publish.js."
+compatibility: "Obsidian app themes or snippets on desktop or mobile, and access to the relevant CSS files."
 metadata:
   author: nweii
-  version: "0.1.0"
+  version: "0.1.1"
   source: nweii/agent-stuff
   credit: "Informed by Obsidian's developer documentation and David V. Kimball's obsidian-dev-skills."
 ---

@@ -3,7 +3,7 @@ name: software-test-quality
 description: "Review software test suites and choose test levels. Use when auditing unit, integration, component, or end-to-end tests; assessing assertions, fixtures, mocks, coverage, or flakiness; or deciding which test level best protects a behavior or risk."
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.1.0"
   credit: "Uses Kent Beck's Test Desiderata (testdesiderata.com) via Lex-Inc/roughdraft and benomahony/testdesiderata."
 ---
 
@@ -13,8 +13,9 @@ Choose the branch that matches the task:
 
 - Existing tests or suite → Review test quality
 - Proposed behavior or risk → Choose the test level
+- Recent changes with missing regression protection → Read [coverage-gaps.md](coverage-gaps.md)
 
-Use the `tdd` skill instead when building a feature or fixing a bug test-first.
+When building a feature or fixing a bug test-first, use an available `tdd` skill or the repository’s equivalent test-first procedure. This skill needs access to the code, test conventions, and runnable checks for implementation work; supplied tests are enough for a review.
 
 ## Review test quality
 

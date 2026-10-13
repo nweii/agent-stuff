@@ -174,7 +174,7 @@ def generate_plugin_readme_section(plugin_id: str) -> str:
         content = read_index_file(REPO_ROOT, skill_file).decode()
         name = skill_file.parent.name
         desc = extract_frontmatter_field(content, "description") or "(no description)"
-        needs = extract_frontmatter_field(content, "compatibility") or "Nothing extra"
+        needs = extract_frontmatter_field(content, "compatibility") or "See skill instructions"
         rows.append((name, f"skills/{name}/", desc, needs))
     rows.sort()
     lines = [

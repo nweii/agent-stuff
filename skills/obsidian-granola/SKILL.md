@@ -1,17 +1,25 @@
 ---
 name: obsidian-granola
-description: "Sync meetings from Granola to Obsidian — pulls notes and transcripts and imports them as formatted meeting/transcript notes. Use when the user says \"sync my last granola meeting\", \"note for my last meeting\", or asks to pull in a Granola transcript."
-compatibility: Designed for a system that has Granola MCP and an Obsidian vault configured.
-context: fork
-model: haiku
+description: "Import Granola meetings into Obsidian, or process an imported meeting through a saved transcription audit and reviewed enrichment. Resume after a transcript is pasted or corrections are confirmed."
+compatibility: "Requires readable and writable Obsidian notes. Fetching needs a Granola connection; processing an existing transcript does not. Local audio transcription is optional."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.3.2"
+  version: "1.4.0"
   internal: true
 ---
 
-This skill helps the user extract meeting data from Granola (via the Granola MCP) and turn it into properly formatted Obsidian notes in their vault.
+# Granola meeting notes
+
+Import meeting data into linked meeting and transcript notes. Read the vault's instructions before note work and use its available CLI or connector; tool names vary by environment.
+
+## Choose the workflow
+
+- **Import:** requests to sync or fetch a meeting follow the steps below. Finish after the notes are saved, linked, and read back; auditing and enrichment are separate unless requested.
+- **Process:** requests to process a meeting, audit and enrich it, or resume after pasting a transcript follow [Process a meeting](references/processing.md). Reuse existing notes before importing anything.
+- **Recording:** when the input is an audio/video file, use `transcribe-audio` only if local transcription is requested and the runtime supports it. Feed the resulting transcript into processing; the other branches need no local transcription runtime.
+
+An ambiguous meeting needs identifying before any writes. Carry supplied titles, destinations, and earlier approvals forward.
 
 ## 1. Capture Intent & Context
 
@@ -24,11 +32,9 @@ First, determine which meeting the user wants to sync.
 
 ## 2. Fetch Granola Data
 
-Use the Granola MCP tools:
+Use the connected Granola tools to list or search meetings, read the selected meeting's summary/action items/private notes, and fetch its verbatim transcript. Discover the tools actually exposed rather than requiring one provider's identifiers.
 
-1. `mcp_granola_list_meetings` to find the meeting ID if you don't already have it.
-2. `mcp_granola_get_meetings` to get the AI-generated summary, action items, and private notes.
-3. `mcp_granola_get_meeting_transcript` to get the verbatim raw transcript (NOTE: This tool may require a paid Granola tier, and may not be exposed at all in some environments. If the call fails or the tool is unavailable, continue the workflow and still create the transcript note as a staging note so the user can paste the transcript in manually.)
+If transcript access fails or is unavailable, continue importing the meeting and save an empty transcript staging note for manual paste. Check the returned data and saved note; plan restrictions are a possible reason, not a fact to assume.
 
 ## 3. Generate the Title (If creating a new note)
 
@@ -39,18 +45,18 @@ _Examples:_
 
 - `Meeting with Matt 2, 2025-10`
 - `Intro call with Acme 2026-01`
-- `Interview - Acme Corp design rol with Grace 2024-05`
+- `Interview - Acme Corp design role with Grace 2024-05`
 - `Kickoff with Carol for assistance work 2026-02`
 
-**Crucial Step:** Present the generated title to the user for approval before creating the files. The user may want to tweak it or provide their own.
+Present a generated title for approval before creating files, unless the user already supplied or approved it.
 
 ## Destination folder
 
-Meeting notes are no longer filed into a single `Talks` folder by default. They live **alongside the working notes for whatever project or context the meeting belongs to**, with the transcript note colocated in the same folder as its meeting note.
+Meeting notes live **alongside the working notes for whatever project or context the meeting belongs to**, with the transcript note colocated in the same folder as its meeting note.
 
 Determine the destination before saving:
 
-- Identify the project/context the meeting belongs to (a freelance gig, a job-search thread, a TALtech project, etc.).
+- Identify the project/context the meeting belongs to (a freelance gig, a job-search thread, an internal work project, etc.).
 - Map it to the relevant folder under `06-Working/<Area>/`. For example, freelance/client gigs go in `06-Working/Gigs/`; the folder is flat (no per-project subfolders) — meeting notes and transcripts sit directly in it. Browse the candidate folder (`vault_read` in list mode, or the CLI) to confirm it exists and to match sibling naming.
 - If no project-specific folder fits, ask the user where it should go rather than defaulting to `Talks` (offer the most likely candidate). `Talks` is only a fallback for genuinely context-free meetings, and only if the user confirms.
 
@@ -87,7 +93,7 @@ If the user provided an existing note:
 
 - Read their existing note.
 - Retain their frontmatter and title.
-- Ensure the `related` property in their frontmatter includes a link to the transcript (`"[[Transcript - [Meeting Title]]]"`).
+- Ensure the `related` property in their frontmatter includes a link to the transcript (`"[[Transcript - <Meeting Title>]]"`).
 - Intelligently append the Granola notes and AI summary into their document where it makes sense (e.g., under a `## Notes` header).
 
 If creating a new note:
@@ -98,7 +104,7 @@ If creating a new note:
    - Use the retrieved properties as the base for the new note's frontmatter.
    - Inject the dynamic values from the meeting:
      - Follow the same rules for `date`, `people`, `aliases`, and `description` as defined above.
-     - `related`: `"[[Transcript - [Meeting Title]]]"`. Add the project's hub/parent note too if there's an obvious one (e.g. `"[[BPL work]]"`).
+     - `related`: `"[[Transcript - <Meeting Title>]]"`. Add the project's hub/parent note too if there's an obvious one (e.g. `"[[Project work]]"`).
      - _If the template contains dynamic scripts or variables (e.g. `<% tp.file.creation_date(...) %>`), evaluate them into actual dates._
 
 2. **Content:**
@@ -122,7 +128,7 @@ Construct each link as:
 obsidian://open?vault=Brain&file=<URL-encoded note name>
 ```
 
-URL-encode the note name (spaces → `%20`, etc.). The note basename is sufficient — Obsidian resolves it like a wikilink. Present them as markdown links labeled with the note titles, e.g.:
+URL-encode the note path from the vault root without `.md` (spaces → `%20`, etc.). Show the title, a Markdown link, and the bare URI so it remains usable when a client cannot render the link. For example:
 
 ```
 **Main note:** [<title>](obsidian://open?vault=Brain&file=<encoded>)
@@ -139,7 +145,7 @@ After saving the notes, append a bullet to the daily note for the meeting's date
 - [[Meeting Title]]: [one sentence: who the meeting was with and what it covered]
 ```
 
-Example: `- [[PSERS death benefit and accounts with Paul at Lincoln 2026-09]]: call with Paul Dellamonica at Lincoln Investment about the PSERS death benefit and near-term cash access`
+Example: `- [[Design review with Acme 2026-09]]: reviewed the onboarding flow and agreed which prototype to test`
 
 Resolve the daily note for the meeting's `date` using the vault's standard daily note conventions. Read the note, find the `## Log - <Weekday>` section, and append the bullet after the last existing bullet there.
 
@@ -147,6 +153,8 @@ Note on creating a missing daily: a bare `vault_daily_note`/create call produces
 
 If multiple meetings were synced on different dates, log to each respective daily note.
 
-## 8. Review
+## 8. Verify and return
 
-Confirm with the user that the notes have been created, linked together, and filed in the right folder.
+Read both saved notes back. Confirm the transcript or staging placeholder is in place, both related links resolve, the destination matches the approved context, and any daily-log entry appears once. On a repeated import, reuse existing notes and update only missing material rather than duplicating summaries, transcripts, or daily bullets.
+
+Report the meeting and transcript links, whether transcript fetching succeeded, and any incomplete step. For import-only work, stop here. For requested processing, continue through the processing reference.
