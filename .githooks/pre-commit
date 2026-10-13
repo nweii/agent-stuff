@@ -20,7 +20,6 @@ for MANIFEST in plugins/*/plugin.json plugins/*/.claude-plugin/plugin.json plugi
     [ -f "$MANIFEST" ] && git add -- "$MANIFEST"
 done
 python3 scripts/update-catalog.py
-python3 scripts/build-zips.py
 
 if ! git diff --quiet README.md 2>/dev/null; then
     git add README.md
@@ -33,6 +32,9 @@ for PLUGIN_README in plugins/*/README.md; do
         echo "Staged $PLUGIN_README with plugin section update" >&2
     fi
 done
+
+# Archive after regenerated documentation has entered the index.
+python3 scripts/build-zips.py
 
 # Stage the rebuilt zip mirror (additions, content changes, and deletions of stale zips).
 if ! git diff --quiet zips/ 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard zips/)" ]; then

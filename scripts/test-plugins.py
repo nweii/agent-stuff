@@ -44,6 +44,36 @@ class PluginTests(unittest.TestCase):
     def write_source(self):
         (self.folder / "plugin-source.json").write_text(json.dumps(self.data))
 
+    def test_pre_commit_packages_regenerated_readme(self):
+        import zipfile
+        scripts = self.root / "scripts"
+        scripts.mkdir()
+        for filename in ("generate-plugins.py", "release-plugin.py", "update-catalog.py",
+                         "build-zips.py", "skill_sources.py"):
+            (scripts / filename).write_bytes((ROOT / "scripts" / filename).read_bytes())
+        if (ROOT / "scripts/check-mirrors.py").exists():
+            (scripts / "check-mirrors.py").write_bytes((ROOT / "scripts/check-mirrors.py").read_bytes())
+            (scripts / "public-exports.json").write_text("{}\n")
+            (scripts / "public-variants.txt").write_text("")
+        hooks = self.root / ".githooks"
+        hooks.mkdir()
+        (hooks / "pre-commit").write_bytes((ROOT / ".githooks/pre-commit").read_bytes())
+        (self.root / ".gitignore").write_text("__pycache__/\n")
+        (self.root / "README.md").write_text(
+            "# Fixture\n\n<!-- CATALOG:START -->\n<!-- PLUGINS:START -->\n"
+            "<!-- PLUGINS:END -->\n<!-- CATALOG:END -->\n")
+        readme = self.folder / "README.md"
+        readme.write_text("# Example\n\n<!-- PLUGIN:START -->\nOld metadata.\n<!-- PLUGIN:END -->\n")
+        self.member.write_text('---\nname: sample\ndescription: "Updated description."\n---\nBody.\n')
+        subprocess.run(["git", "init", "-b", "main"], cwd=self.root, check=True, capture_output=True)
+        subprocess.run(["git", "add", "."], cwd=self.root, check=True)
+        subprocess.run(["bash", str(hooks / "pre-commit")], cwd=self.root,
+                       check=True, capture_output=True, text=True)
+        staged = subprocess.check_output(["git", "show", ":plugins/example/README.md"], cwd=self.root)
+        self.assertIn(b"Updated description.", staged)
+        with zipfile.ZipFile(self.root / "zips/plugins/example-0.1.0.zip") as archive:
+            self.assertEqual(archive.read("README.md"), staged)
+
     def test_missing_interface_asset_is_refused(self):
         self.data["interface"]["logo"] = "./assets/missing.png"
         self.write_source()
