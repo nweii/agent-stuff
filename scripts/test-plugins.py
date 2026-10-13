@@ -74,6 +74,36 @@ class PluginTests(unittest.TestCase):
         with zipfile.ZipFile(self.root / "zips/plugins/example-0.1.0.zip") as archive:
             self.assertEqual(archive.read("README.md"), staged)
 
+    def test_catalog_membership_uses_staged_local_paths(self):
+        catalog = module("catalog_membership", "update-catalog.py")
+        self.data["interface"]["displayName"] = "Example.tools"
+        self.write_source()
+        outside = self.root / "skills/outside/SKILL.md"
+        outside.parent.mkdir(parents=True)
+        outside.write_text('---\nname: outside\ndescription: "Standalone description."\nmetadata:\n  internal: true\n---\n')
+        subprocess.run(["git", "init", "-b", "main"], cwd=self.root, check=True, capture_output=True)
+        subprocess.run(["git", "add", "."], cwd=self.root, check=True)
+        self.data["interface"]["displayName"] = "Unstaged name"
+        self.write_source()
+        self.member.write_text(self.member.read_text().replace("Use when testing.", "Unstaged description."))
+        untracked = self.folder / "skills/stray/SKILL.md"
+        untracked.parent.mkdir()
+        untracked.write_text('---\nname: stray\ndescription: "Untracked."\n---\n')
+        catalog.REPO_ROOT = self.root
+        rendered = catalog.generate_catalog()
+        self.assertIn('<a id="plugin-example"></a>[Example.tools](plugins/example/)', rendered)
+        self.assertIn('- [sample](plugins/example/skills/sample/) — Use when testing. '
+                      '*Included in [Example.tools](#plugin-example).*', rendered)
+        outside_line = next(line for line in rendered.splitlines() if line.startswith('- [outside]'))
+        self.assertNotIn('Included in', outside_line)
+        self.assertEqual(rendered.count('Included in'), 1)
+        self.assertNotIn('Unstaged', rendered)
+        self.assertNotIn('stray', rendered)
+        subprocess.run(["git", "add", "plugins/example/plugin-source.json"], cwd=self.root, check=True)
+        renamed = catalog.generate_catalog()
+        self.assertIn('*Included in [Unstaged name](#plugin-example).*', renamed)
+        self.assertIn('<a id="plugin-example"></a>', renamed)
+
     def test_missing_interface_asset_is_refused(self):
         self.data["interface"]["logo"] = "./assets/missing.png"
         self.write_source()

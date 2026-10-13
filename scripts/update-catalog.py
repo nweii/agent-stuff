@@ -83,9 +83,25 @@ def get_agents() -> List[Tuple[str, str, str]]:
     return agents
 
 
+def plugin_anchor(path: str) -> str:
+    """Stable README target from the plugin folder ID, independent of display name."""
+    return f"plugin-{Path(path).parts[1]}"
+
+
+def skill_entry(name: str, path: str, description: str, plugins: dict) -> str:
+    """Append the staged plugin's display name only for canonical bundled skills."""
+    parts = Path(path).parts
+    suffix = ""
+    if len(parts) == 4 and parts[0] == "plugins" and parts[2] == "skills":
+        plugin_path = Path(*parts[:2]).as_posix() + "/"
+        suffix = f" *Included in [{plugins[plugin_path]}](#{plugin_anchor(plugin_path)}).*"
+    return f"- [{name}]({path}) — {description}{suffix}"
+
+
 def generate_catalog() -> str:
     """Generate the full catalog markdown: plugins, skills, internal skills, and agents."""
     skills = get_skills()
+    plugins = {path: display for display, path, _ in get_plugins()}
     general = [s for s in skills if not s[3]]
     internal = [s for s in skills if s[3]]
 
@@ -103,7 +119,7 @@ def generate_catalog() -> str:
     ]
 
     for name, path, desc, _ in general:
-        lines.append(f"- [{name}]({path}) — {desc}")
+        lines.append(skill_entry(name, path, desc, plugins))
     lines.append("")
 
     if internal:
@@ -116,7 +132,7 @@ def generate_catalog() -> str:
         )
         lines.append("")
         for name, path, desc, _ in internal:
-            lines.append(f"- [{name}]({path}) — {desc}")
+            lines.append(skill_entry(name, path, desc, plugins))
         lines.append("")
 
     agents = get_agents()
@@ -155,7 +171,7 @@ def generate_plugin_list() -> str:
     """Generate the plugin list markdown for the README's Plugins section."""
     lines = [PLUGINS_START_MARKER, ""]
     for display, path, desc in get_plugins():
-        lines.append(f"- [{display}]({path}) — {desc}")
+        lines.append(f'- <a id="{plugin_anchor(path)}"></a>[{display}]({path}) — {desc}')
     lines.extend(["", PLUGINS_END_MARKER])
     return "\n".join(lines)
 
