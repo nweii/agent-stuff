@@ -1,10 +1,10 @@
 ---
 name: clip-skills
-description: "Save `bunx skills` terminal output (a manifest from `skills add/use <repo> -l`) as a Repos note in the Brain vault under 03-Records/Snippets/Repos/. Use when the user pastes a skills listing and wants it captured. Triggers: '/clip-skills', 'save these skills', 'make a note for this skill repo'."
+description: "Save supplied bunx skills output as a repository or individual-skill note in Brain, Nathan’s personal Obsidian vault. Use when capturing a CLI skills listing."
 compatibility: "Readable and writable Brain notes; a supplied skills listing is sufficient without running the CLI."
 metadata:
   author: nweii
-  version: "1.0.1"
+  version: "1.0.2"
   internal: true
   credit: "Canonical in the private nthnOS plugin; mirrored to nweii/agent-stuff skills/clip-skills for reference."
 ---

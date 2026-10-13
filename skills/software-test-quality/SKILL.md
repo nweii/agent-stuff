@@ -1,9 +1,9 @@
 ---
 name: software-test-quality
-description: "Review software test suites and choose test levels. Use when auditing unit, integration, component, or end-to-end tests; assessing assertions, fixtures, mocks, coverage, or flakiness; or deciding which test level best protects a behavior or risk."
+description: "Audit software tests for assertion, fixture, mock, or flakiness problems; choose the test level for a risk; or add meaningful regression coverage for recent changes."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.1.1"
   credit: "Uses Kent Beck's Test Desiderata (testdesiderata.com) via Lex-Inc/roughdraft and benomahony/testdesiderata."
 ---
 

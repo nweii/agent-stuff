@@ -1,9 +1,9 @@
 ---
 name: quantify-impact
-description: "Surface measurable metrics and outcomes from a description of work via structured conversation. Use when the user says 'help me quantify this', 'what numbers can I attach to X', or is drafting a resume bullet, case study, or impact statement that needs concrete scale."
+description: "Draw out defensible metrics from descriptions of work through questions and explicit estimates. Use when a resume bullet, case study, or pitch needs concrete scale or outcome evidence."
 metadata:
   author: nweii
-  version: "1.2.0"
+  version: "1.2.1"
   credit: fractal-bootcamp/ELITE_CV_TRANSFORMATION.md
 ---
 

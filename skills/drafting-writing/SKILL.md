@@ -1,9 +1,9 @@
 ---
 name: drafting-writing
-description: "Writing-partner processes that draw out the user's own writing through questioning: guided drafting sessions, fragment mining, shaping raw material into a piece, and phrase tightening. Use for help discovering, developing, and structuring writing (notes, essays, messages, etc)."
+description: "Help the user develop their own writing through questions, fragment mining, shaping drafts, or tightening phrases. Use for writing partner sessions that preserve the user’s authorship."
 metadata:
   author: nweii
-  version: "2.1.0"
+  version: "2.1.1"
   credit: "Some modes adapted from Matt Pocock's writing-fragments, writing-shape, writing-beats, and edit-article skills (mattpocock/skills, MIT)."
 ---
 

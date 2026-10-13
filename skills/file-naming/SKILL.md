@@ -1,9 +1,9 @@
 ---
 name: file-naming
-description: "Analyze file content and propose intelligent renames using context-aware naming conventions. Date-prefixed for transactional/periodic documents, content-first for creative works. Use for organizing files, cleaning up downloads, or standardizing filenames."
+description: "Propose meaningful filenames from file contents and context. Use for renaming documents or creative files, or standardizing a folder’s filenames."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # Rename Files

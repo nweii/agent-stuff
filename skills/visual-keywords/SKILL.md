@@ -1,9 +1,9 @@
 ---
 name: visual-keywords
-description: "Generate keyword strings for images, screenshots, or visual references — optimized for fuzzy search, not alt text or prose. Use when the user says 'keywords for this image', 'tag this for search', 'visual keywords', or wants searchable labels on an Eagle asset."
+description: "Generate search keywords for images, screenshots, visual references, or typeface specimens. Use for fuzzy retrieval or searchable Eagle metadata; output keywords rather than prose descriptions."
 metadata:
   author: nweii
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # Visual Keywords

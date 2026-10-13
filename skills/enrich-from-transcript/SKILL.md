@@ -1,10 +1,10 @@
 ---
 name: enrich-from-transcript
-description: "Enrich an existing meeting/interview note from its transcript, or scaffold one when only a transcript exists. Captures granular narrative, exact phrases, mechanics, casual context, and implicit signals. Run on thin auto-summary notes or transcripts that warrant close reading."
+description: "Add substantive detail from a transcript to an existing meeting or interview note, or scaffold a note when only the transcript exists. Preserve evidence and exact phrases."
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Enrich from transcript

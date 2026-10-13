@@ -1,9 +1,9 @@
 ---
 name: things-app
-description: "Read, capture, schedule, and update tasks and projects in Things 3. Prefer the `things` CLI whenever there's command-line access to Things; otherwise use a connected Things MCP for headless or remote environments (full read + write, any device), the `things:///` URL scheme (any device with Things, write-only), or email-to-Things for unattended capture. Use to add todos, build a project, show Today/Inbox, find tagged tasks, or schedule from desktop, phone, or a serverless routine."
+description: "Use Things 3 to read, capture, schedule, or update tasks and projects, including Today/Inbox views and searches. Supports local or remote access."
 metadata:
   author: nweii
-  version: "1.2.1"
+  version: "1.2.2"
   source: ossianhempel/things3-cli
   credit: "CLI skill adapted from Peter Steinberger (@steipete); wraps ossianhempel/things3-cli and the Things 3 URL scheme by Cultured Code."
 ---
