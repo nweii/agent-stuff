@@ -41,22 +41,40 @@ Browse the available bundles under [Catalog → Plugins](#plugins).
 
 ### Claude
 
-On a paid plan, open **Customize → Plugins → Add → Add marketplace** and enter `nweii/agent-stuff`. The plugins appear under **Discover**; add the ones you want. They're saved to your account and also load in Claude Code when you sign in. See [Claude's plugin guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
+On a paid plan, open **Customize → Plugins → Add → Add marketplace** and enter `nweii/agent-stuff`. The plugins will then appear under **Discover**; add the ones you want. They're saved to your account and also load in Claude Code when you sign in. See [Claude's plugin guide](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
 ### ChatGPT and Codex
 
-In the ChatGPT desktop app, open **Plugins** from the sidebar, then **Add → Add a marketplace**, and enter `nweii/agent-stuff`. Install the plugins you want from the list.
+As of Oct 2026, personal ChatGPT accounts need manual ZIP uploads to install this repository's plugins at the account level. GitHub marketplace installation is only available for local Codex use and does not sync to web and mobile at this time.
 
-In the Codex CLI:
+<details>
+<summary><strong>Personal ChatGPT account</strong></summary>
+
+1. Download the plugin ZIP from [`zips/plugins/`](zips/plugins/).
+2. In ChatGPT, open **Plugins → Personal → Upload plugin archive** and select the ZIP.
+
+The uploaded plugin is available to your account, including on web and mobile. This install won't update automatically; new versions require uploading a fresh ZIP under "Upload new version."
+
+</details>
+
+<details>
+<summary><strong>Local desktop and Codex access</strong></summary>
+
+In the ChatGPT desktop app, open **Plugins → Add → Add a marketplace** and enter `nweii/agent-stuff`. Install the plugins you want for local use.
+
+In the Codex CLI, add the marketplace, then install a plugin:
 
 ```bash
 codex plugin marketplace add nweii/agent-stuff
+codex plugin add obsidian-tools@agent-stuff
 ```
+
+</details>
 
 <details>
 <summary><strong>ChatGPT workspace admins: import from GitHub</strong></summary>
 
-To keep a workspace's copies in sync with this repo:
+Workspace admins have a separate GitHub import and sync route. This is distinct from the personal-account ZIP uploads and local marketplace installs above. To keep a workspace's copies in sync with this repo:
 
 1. Open **Admin → Plugins → Add → Import marketplace**.
 2. Set **Source** to `https://github.com/nweii/agent-stuff`. Leave **Path** and **Branch, tag, or commit** empty.
@@ -66,6 +84,16 @@ To keep a workspace's copies in sync with this repo:
 ChatGPT checks for updates daily. See [OpenAI's marketplace import guide](https://learn.chatgpt.com/docs/enterprise/plugin-management) for permissions and sync controls.
 
 </details>
+
+## Use individual skills without installing
+
+With Bun and terminal access available, tell your agent to run:
+
+```bash
+bunx skills use nweii/agent-stuff
+```
+
+This lists the skills here (excluding internal skills). Your agent can choose one and read it with `--skill SKILL_NAME`, without installing it.
 
 ## Install individual skills
 
@@ -123,7 +151,7 @@ Replace `SKILL_NAME` with the name listed in the catalog. Two CLI behaviors matt
 - `bunx skills add nweii/agent-stuff` skips internal skills. Naming one with `--skill` opts it in.
 - After I move a skill to another folder in this repo, `bunx skills update` can falsely report internal skills as deleted, even ones I haven't moved. Use `INSTALL_INTERNAL_SKILLS=1 bunx skills update` (add `-g` for global installs), or decline removal so it doesn't delete a skill that's still here. If the command can't ask for confirmation, it leaves those skills alone.
 
-For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff -s SKILL_NAME` prints it as a ready-to-paste prompt without installing anything.
+For a one-off run, follow [Use individual skills without installing](#use-individual-skills-without-installing). Naming an internal skill explicitly works with this route too.
 
 </details>
 
@@ -132,16 +160,12 @@ For a one-off run, or just to read one first, `bunx skills use nweii/agent-stuff
 
 For the ones carrying my folder structure and template names throughout, have your agent read mine and write you your own version instead of installing and then editing:
 
-```
-Read skills/[skill-name]/SKILL.md from the github.com/nweii/agent-stuff repo —
-use a local checkout if there's one on this machine, otherwise fetch it. It's
-one of that repo's internal skills, written for someone else's setup, so some
-of the folder paths, tools, and naming conventions in it won't match mine.
-List what you'd need to substitute, ask me about anything you can't infer from
-my setup, then write the tailored version into my skills directory under
-a name of my choosing, with a `metadata.credit` line in its frontmatter noting
-what it was adapted from. Leave everything that isn't setup-specific alone.
-Don't install the original.
+```text
+If I haven't named a skill, run `INSTALL_INTERNAL_SKILLS=1 bunx skills use nweii/agent-stuff` to list the choices, including internal skills. Load the chosen skill with `bunx skills use nweii/agent-stuff --skill SKILL_NAME`, replacing SKILL_NAME with its name. Read the returned instructions and relevant supporting files from the downloaded directory as source material. If the CLI is unavailable, fetch the skill and its supporting files from GitHub.
+
+This is an internal skill written for someone else's setup, so some folder paths, tools, and naming conventions won't match mine. List what needs substituting and ask me about anything you can't infer from my setup.
+
+Write the complete tailored skill folder into my skills directory under a name of my choosing. Include a `metadata.credit` line noting what it was adapted from, and preserve supporting files so references and scripts still work. Leave everything that isn't setup-specific alone. Don't install the original.
 ```
 
 Giving your copy its own name keeps a later `add` or `update` from overwriting it.
