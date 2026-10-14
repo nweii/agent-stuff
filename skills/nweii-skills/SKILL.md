@@ -1,10 +1,10 @@
 ---
 name: nweii-skills
-description: "Use when creating, editing, auditing, migrating, installing, or publishing skills, loading repository skills on demand, or reflecting on a session to improve skills in Nathan's environment."
+description: "Use when authoring, auditing, migrating, installing, or publishing skills and plugins in Nathan’s library; loading repository skills on demand; or reflecting on a session to improve them."
 argument-hint: "[reflect | skill task]"
 metadata:
   author: nweii
-  version: "2.5.0"
+  version: "2.6.0"
   internal: true
   credit: "Reflection mode adapted from Lauren Tan (poteto)'s pstack reflect: https://github.com/cursor/plugins/blob/e5a8186d7b43be8d6ac4452440fbead5f1a51c70/pstack/skills/reflect/SKILL.md. MIT notice: LICENSE.pstack."
 ---
@@ -60,6 +60,7 @@ When a skill ships a template or configuration for another application, update t
 Read only the reference needed for the current branch:
 
 - Read [references/authoring.md](references/authoring.md) before creating or substantially editing a skill. It defines frontmatter, writing, versions, attribution, and validation.
+- Read [references/plugin-authoring.md](references/plugin-authoring.md) when creating or repackaging a plugin, checking cross-client compatibility, or preparing a plugin release for Agent Plugins, Claude Code, and Codex.
 - Read [references/privacy-and-migration.md](references/privacy-and-migration.md) before choosing or changing a privacy tier, moving a local skill into a repository, or transferring content between repositories.
 - Read [references/installation.md](references/installation.md) before discovering or using a repository skill on demand, or installing, updating, repairing, removing, or diagnosing a skill installation.
 
