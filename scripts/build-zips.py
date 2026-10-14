@@ -48,7 +48,7 @@ def tracked_files(skill_dir: Path) -> List[Path]:
         check=True,
     ).stdout
     files = [REPO_ROOT / p for p in out.split("\0") if p]
-    return [f for f in files if f.name not in JUNK_NAMES and f.is_file()]
+    return [f for f in files if f.name not in JUNK_NAMES]
 
 
 def build_zip(skill_dir: Path, prefix: str = None) -> bytes:
@@ -113,6 +113,59 @@ def rebuild() -> List[str]:
     return written + plugin_archives
 
 
+
+def check_archives(plugin=None):
+    """Check final archive membership and bytes against staged payloads, without rewriting files."""
+    targets = {}
+    if plugin is None:
+        for folder in skills_to_zip():
+            targets[ZIPS_DIR / f"{folder.name}.zip"] = (folder, folder.name)
+    for folder, name in plugins_to_zip():
+        if plugin is None or folder.name == plugin:
+            targets[PLUGIN_ZIPS_DIR / name] = (folder, "")
+    if plugin is not None and not targets:
+        raise ValueError(f"No staged plugin payload for {plugin}")
+    if plugin is None:
+        actual = set(ZIPS_DIR.glob("*.zip")) | set(PLUGIN_ZIPS_DIR.glob("*.zip"))
+        if actual != set(targets):
+            missing = sorted(str(p.relative_to(REPO_ROOT)) for p in set(targets) - actual)
+            stale = sorted(str(p.relative_to(REPO_ROOT)) for p in actual - set(targets))
+            raise ValueError(f"Archive inventory differs: missing={missing}, stale={stale}")
+    for path, (folder, prefix) in targets.items():
+        expected = {}
+        for file in tracked_files(folder):
+            relative = file.relative_to(folder).as_posix()
+            expected[f"{prefix}/{relative}" if prefix else relative] = read_index_file(REPO_ROOT, file)
+        if not prefix:
+            required = {"plugin.json", ".claude-plugin/plugin.json"}
+            if not required <= expected.keys():
+                raise ValueError(f"Missing staged plugin manifest: {folder.name}")
+            if any(name.startswith(".codex-plugin/") for name in expected):
+                raise ValueError(f"Codex settings must use root plugin.json: {folder.name}")
+            manifest = json.loads(expected["plugin.json"])
+            extension = manifest.get("extensions", {}).get("com.openai", {})
+            interface = extension.get("interface", {})
+            claude = json.loads(expected[".claude-plugin/plugin.json"])
+            declared = [interface.get("logo"), interface.get("composerIcon"), extension.get("apps"),
+                        claude.get("icon"), claude.get("mcpServers")]
+            for relative in declared:
+                if relative is None:
+                    continue
+                if not isinstance(relative, str) or not relative.startswith("./") or relative[2:] not in expected:
+                    raise ValueError(f"Declared file is absent from staged plugin payload: {folder.name}:{relative}")
+        try:
+            with zipfile.ZipFile(path) as archive:
+                names = archive.namelist()
+                if len(names) != len(set(names)) or set(names) != set(expected):
+                    raise ValueError(f"Archive membership differs from staged payload: {path.name}")
+                for name, content in expected.items():
+                    if archive.read(name) != content:
+                        raise ValueError(f"Archive content differs from staged payload: {path.name}:{name}")
+        except (OSError, zipfile.BadZipFile) as error:
+            raise ValueError(f"Cannot read archive {path.name}: {error}") from error
+    return len(targets)
+
+
 def selfcheck() -> None:
     """Determinism guarantee: building the same skill twice yields byte-identical output."""
     targets = skills_to_zip()
@@ -127,7 +180,13 @@ def selfcheck() -> None:
 
 
 if __name__ == "__main__":
-    if "--selfcheck" in sys.argv:
+    if "--check" in sys.argv:
+        try:
+            print(f"Checked {check_archives()} archive(s) against staged payloads.")
+        except ValueError as error:
+            print(str(error), file=sys.stderr)
+            sys.exit(1)
+    elif "--selfcheck" in sys.argv:
         selfcheck()
     else:
         names = rebuild()

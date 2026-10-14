@@ -16,7 +16,7 @@ for SOURCE in plugins/*/plugin-source.json; do
     python3 scripts/release-plugin.py "$PLUGIN" --check
 done
 git add -- .claude-plugin/marketplace.json .agents/plugins/marketplace.json
-for MANIFEST in plugins/*/plugin.json plugins/*/.claude-plugin/plugin.json plugins/*/.codex-plugin/plugin.json; do
+for MANIFEST in plugins/*/plugin.json plugins/*/.claude-plugin/plugin.json; do
     [ -f "$MANIFEST" ] && git add -- "$MANIFEST"
 done
 python3 scripts/update-catalog.py
@@ -35,6 +35,7 @@ done
 
 # Archive after regenerated documentation has entered the index.
 python3 scripts/build-zips.py
+python3 scripts/build-zips.py --check
 
 # Stage the rebuilt zip mirror (additions, content changes, and deletions of stale zips).
 if ! git diff --quiet zips/ 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard zips/)" ]; then

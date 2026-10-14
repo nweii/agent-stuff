@@ -69,14 +69,13 @@ def generated_documents(root=REPO_ROOT):
         for key in ASSET_FIELDS:
             if key in interface and not (root / folder / interface[key]).is_file():
                 raise ValueError(f"Missing {key} asset {interface[key]}: {folder / 'plugin-source.json'}")
-        # OpenAI reads this extension in place of .codex-plugin/plugin.json; the overlay stays for older clients.
+        # OpenAI settings belong in the portable manifest extension alongside shared identity.
         documents[folder / "plugin.json"] = {"$schema": AGENT_SCHEMA, **common,
                                              "extensions": {"com.openai": {"interface": interface}}}
         claude = {**common, "displayName": interface["displayName"]}
         if "logo" in interface:
             claude["icon"] = interface["logo"]
         documents[folder / ".claude-plugin/plugin.json"] = claude
-        documents[folder / ".codex-plugin/plugin.json"] = {**common, "skills": "./skills/", "interface": interface}
         codex_source = {"source": "git-subdir", "url": data["repository"],
                         "path": f"plugins/{name}", "ref": f"{name}/v{data['version']}"}
         claude_entries.append({"name": name, "version": data["version"],

@@ -27,9 +27,9 @@ This public repository is a curated distribution of reusable agent skills and pl
 
 Standalone source is `skills/<name>/`; bundled source is `plugins/<id>/skills/<name>/` on the default branch. The folder defines membership, with exactly one copy per skill name in this distribution. Self-contained payloads follow fixed skill discovery in [Agent Plugins 1.0.0](https://agent-plugins.org/specification#6-component-discovery) and [Claude's path rules](https://code.claude.com/docs/en/plugins-reference#path-rules) (checked with Claude Code 2.1.288).
 
-Edit `plugin-source.json` for metadata; the generator writes three thin manifests and both catalogs, never skill copies. Each member must keep the name/description's audience promise: public tools work with another user's conventions; personal plugins are personal throughout. Flag mismatches.
+Edit `plugin-source.json` for metadata; the generator writes portable and Claude manifests and both catalogs, never skill copies. Each member must keep the name/description's audience promise: public tools work with another user's conventions; personal plugins are personal throughout. Flag mismatches.
 
-Presentation lives in each plugin's `plugin-source.json` `interface` block: `displayName`, `shortDescription`, `longDescription`, `developerName`, `category`, `websiteURL` (the repository), and `logo`/`composerIcon` pointing at an image under the plugin's `assets/`. The generator refuses a missing image. It writes this block to the root `plugin.json` under `extensions.com.openai`, which [OpenAI reads in place of `.codex-plugin/plugin.json`](https://developers.openai.com/plugins/build/plugins#plugin-structure), and keeps the overlay as an identical copy for older clients. Claude's manifest gets `displayName` and `icon`; Claude Code ignores `icon`, which Anthropic's plugin directory reads for submitted plugins ([directory listing fields](https://code.claude.com/docs/en/plugins-reference#directory-listing-fields), checked 2.1.288). A presentation change is a plugin change: cut a release so tag-pinned Codex installs receive it.
+Presentation lives in each plugin's `plugin-source.json` `interface` block: `displayName`, `shortDescription`, `longDescription`, `developerName`, `category`, `websiteURL` (the repository), and `logo`/`composerIcon` pointing at an image under the plugin's `assets/`. The generator refuses a missing image. It writes this block to root `plugin.json` under `extensions.com.openai`, following [OpenAI’s portable packaging format](https://developers.openai.com/plugins/build/plugins#plugin-structure). Claude's manifest gets `displayName` and `icon`; Claude Code ignores `icon`, which Anthropic's plugin directory reads for submitted plugins ([directory listing fields](https://code.claude.com/docs/en/plugins-reference#directory-listing-fields), checked 2.1.288). A presentation change is a plugin change: cut a release so tag-pinned Codex installs receive it.
 
 ChatGPT's plugin page shows only the catalog entry (name, category, source) before install, because a `git-subdir` source isn't fetched until install; OpenAI catalog entries have no description or icon fields. The display name, descriptions, icon, and website appear after install.
 
@@ -37,18 +37,7 @@ Claude's catalog uses `./plugins/<id>` so [skills CLI 1.7.0 discovers bundled sk
 
 Migrate within the same repo, preserve the frontmatter name, and leave one copy plus a README-only pointer at the old path. [Relocation](https://github.com/vercel-labs/skills/blob/v1.7.0/src/skill-relocation.ts) requires skills CLI >=1.5.24 (fixture checked 1.7.0). Its [update discovery](https://github.com/vercel-labs/skills/blob/v1.7.0/src/update.ts) falsely calls moved and unmoved internal skills deleted; use `INSTALL_INTERNAL_SKILLS=1` or decline removal.
 
-Version each plugin only when cutting a release. `release-plugin.py --version` prepares metadata; after committing, `--tag` checks three manifests and both vendor sources/versions before plain `git tag <id>/v<version>`. The pre-commit hook also writes `zips/plugins/<id>-<version>.zip`: the plugin folder's staged files at the archive root, latest version only, so a release commit carries its own archive. That archive is the delivery route for ChatGPT's account-level plugins (**Plugins → Personal → Upload plugin archive**), which reach web and mobile but don't follow the repository, so each release needs a fresh upload. Migrate one plugin per push. Run from the repository root:
-
-```bash
-python3 scripts/generate-plugins.py
-python3 scripts/test-plugins.py
-uv run scripts/validate-plugins.py
-claude plugin validate --strict plugins/<id>
-claude plugin validate --strict .claude-plugin/marketplace.json
-python3 scripts/release-plugin.py <id> --check
-```
-
-Agent Plugins validation uses the [published 1.0.0 schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Codex validation uses project-owned contract schemas derived from the [packaging reference](https://developers.openai.com/plugins/build/plugins), not published OpenAI schemas. Passing validation doesn't prove installation, runtime behavior, or update delivery.
+Follow [Package and release plugins](docs/plugin-packaging.md) when generating catalogs, validating packages, or cutting a release. It owns the staged-source build, automated archive checks, client validation, and distribution workflow.
 
 Each plugin's `README.md` is for people installing it: a hand-written intro above `<!-- PLUGIN:START -->`, then install commands and a skills table that `update-catalog.py` generates from each member's frontmatter. The table's requirements column reads the Agent Skills `compatibility` field; set it on any member that needs an app, extension, or tool.
 

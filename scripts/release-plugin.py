@@ -23,8 +23,7 @@ def check_release(name, root=ROOT):
     data = sources[name]
     version = data["version"]
     expected = generator.generated_documents(root)
-    for relative in (Path(f"plugins/{name}/plugin.json"), Path(f"plugins/{name}/.claude-plugin/plugin.json"),
-                     Path(f"plugins/{name}/.codex-plugin/plugin.json")):
+    for relative in (Path(f"plugins/{name}/plugin.json"), Path(f"plugins/{name}/.claude-plugin/plugin.json")):
         actual = json.loads((root / relative).read_text())
         if actual != expected[relative]:
             raise ValueError(f"Manifest disagrees with source version {version} or metadata: {relative}")
@@ -67,6 +66,10 @@ def main():
             dirty = subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=normal"], cwd=ROOT, text=True)
             if dirty:
                 raise ValueError("Commit or set aside working-tree changes before tagging; a tag must identify the checked files")
+            archive_spec = importlib.util.spec_from_file_location("build_zips", ROOT / "scripts/build-zips.py")
+            archives = importlib.util.module_from_spec(archive_spec)
+            archive_spec.loader.exec_module(archives)
+            archives.check_archives(plugin=args.plugin)
             # No host-specific tag helper: one lightweight tag for one plugin release.
             subprocess.run(["git", "tag", tag], cwd=ROOT, check=True)
         print(f"{'Tagged' if args.tag else 'Checked'} {tag}; no push performed.")

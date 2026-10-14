@@ -110,6 +110,90 @@ class PluginTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Missing logo asset"):
             generator.generate(self.root)
 
+    def archive_fixture(self):
+        archives = module("archive_checks", "build-zips.py")
+        archives.REPO_ROOT = self.root
+        archives.ZIPS_DIR = self.root / "zips"
+        archives.PLUGIN_ZIPS_DIR = self.root / "zips/plugins"
+        subprocess.run(["git", "init", "-b", "main"], cwd=self.root, check=True, capture_output=True)
+        subprocess.run(["git", "add", "."], cwd=self.root, check=True)
+        archives.rebuild()
+        return archives
+
+    def test_archive_check_rejects_missing_hidden_files_stale_bytes_and_duplicates(self):
+        import warnings, zipfile
+        archives = self.archive_fixture()
+        self.assertGreater(archives.check_archives(), 0)
+        path = archives.PLUGIN_ZIPS_DIR / "example-0.1.0.zip"
+        for defect in ("hidden manifest", "contents", "wrapper", "duplicate", "extra"):
+            with self.subTest(defect=defect):
+                archives.rebuild()
+                with zipfile.ZipFile(path) as archive:
+                    members = {name: archive.read(name) for name in archive.namelist()}
+                if defect == "hidden manifest":
+                    members.pop(".claude-plugin/plugin.json")
+                elif defect == "contents":
+                    members["skills/sample/SKILL.md"] = b"Stale body."
+                elif defect == "wrapper":
+                    members = {"example/" + name: content for name, content in members.items()}
+                elif defect == "extra":
+                    members["../unexpected.txt"] = b"Outside package."
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", UserWarning)
+                    with zipfile.ZipFile(path, "w") as archive:
+                        for name, content in members.items():
+                            archive.writestr(name, content)
+                        if defect == "duplicate":
+                            archive.writestr("plugin.json", members["plugin.json"])
+                with self.assertRaisesRegex(ValueError, "Archive (membership|content) differs"):
+                    archives.check_archives()
+
+    def test_archive_check_rejects_declared_but_unstaged_asset(self):
+        archives = self.archive_fixture()
+        self.data["interface"]["logo"] = "./assets/new-icon.png"
+        (self.folder / "assets").mkdir(exist_ok=True)
+        (self.folder / "assets/new-icon.png").write_bytes(b"png")
+        self.write_source()
+        generator.generate(self.root)
+        subprocess.run(["git", "add", "plugins/example/plugin-source.json", "plugins/example/plugin.json",
+                        "plugins/example/.claude-plugin/plugin.json"], cwd=self.root, check=True)
+        archives.rebuild()
+        with self.assertRaisesRegex(ValueError, "Declared file is absent"):
+            archives.check_archives()
+        subprocess.run(["git", "add", "plugins/example/assets/new-icon.png"], cwd=self.root, check=True)
+        archives.rebuild()
+        self.assertGreater(archives.check_archives(), 0)
+
+    def test_archive_check_uses_index_even_when_working_file_is_missing(self):
+        archives = self.archive_fixture()
+        staged = self.member.read_bytes()
+        self.member.rename(self.member.with_suffix(".saved"))
+        archives.rebuild()
+        self.assertGreater(archives.check_archives(), 0)
+        import zipfile
+        with zipfile.ZipFile(archives.PLUGIN_ZIPS_DIR / "example-0.1.0.zip") as archive:
+            self.assertEqual(archive.read("skills/sample/SKILL.md"), staged)
+
+    def test_archive_check_rejects_missing_stale_archives_and_staged_fallback(self):
+        archives = self.archive_fixture()
+        path = archives.PLUGIN_ZIPS_DIR / "example-0.1.0.zip"
+        path.rename(path.with_suffix(".saved"))
+        with self.assertRaisesRegex(ValueError, "Archive inventory differs"):
+            archives.check_archives()
+        path.with_suffix(".saved").rename(path)
+        extra = archives.PLUGIN_ZIPS_DIR / "example-9.9.9.zip"
+        extra.write_bytes(path.read_bytes())
+        with self.assertRaisesRegex(ValueError, "Archive inventory differs"):
+            archives.check_archives()
+        extra.rename(extra.with_suffix(".saved"))
+        fallback = self.folder / ".codex-plugin/plugin.json"
+        fallback.parent.mkdir()
+        fallback.write_text("{}")
+        subprocess.run(["git", "add", str(fallback.relative_to(self.root))], cwd=self.root, check=True)
+        archives.rebuild()
+        with self.assertRaisesRegex(ValueError, "Codex settings must use root"):
+            archives.check_archives()
+
     def test_generation_preserves_payload_and_is_deterministic(self):
         before = self.member.read_bytes()
         docs = {path: (self.root / path).read_bytes() for path in generator.generated_documents(self.root)}
@@ -179,7 +263,7 @@ class PluginTests(unittest.TestCase):
     def test_release_script_tags_only_committed_matching_metadata(self):
         scripts = self.root / "scripts"
         scripts.mkdir()
-        for filename in ("generate-plugins.py", "release-plugin.py"):
+        for filename in ("generate-plugins.py", "release-plugin.py", "build-zips.py", "skill_sources.py"):
             (scripts / filename).write_bytes((ROOT / "scripts" / filename).read_bytes())
         (self.root / ".gitignore").write_text("__pycache__/\n")
         def git(*argv):
@@ -188,7 +272,26 @@ class PluginTests(unittest.TestCase):
         git("config", "user.name", "Fixture")
         git("config", "user.email", "fixture@example.invalid")
         git("add", ".")
+        subprocess.run(["python3", str(scripts / "build-zips.py")], cwd=self.root, check=True, capture_output=True)
+        git("add", "zips")
         git("commit", "-m", "Fixture")
+        import zipfile
+        path = self.root / "zips/plugins/example-0.1.0.zip"
+        valid = path.read_bytes()
+        with zipfile.ZipFile(path) as archive:
+            members = {name: archive.read(name) for name in archive.namelist()}
+        members["skills/sample/SKILL.md"] = b"Wrong committed archive body."
+        with zipfile.ZipFile(path, "w") as archive:
+            for name, content in members.items():
+                archive.writestr(name, content)
+        git("add", "zips")
+        git("commit", "-m", "Invalid archive fixture")
+        refused = subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, capture_output=True, text=True)
+        self.assertNotEqual(refused.returncode, 0)
+        self.assertIn("Archive content differs", refused.stderr)
+        path.write_bytes(valid)
+        git("add", "zips")
+        git("commit", "-m", "Restore matching archive")
         subprocess.run(["python3", str(scripts / "release-plugin.py"), "example", "--tag"], cwd=self.root, check=True)
         self.assertEqual(git("cat-file", "-t", "example/v0.1.0").strip(), "commit")
         self.member.write_text(self.member.read_text() + "Dirty.\n")

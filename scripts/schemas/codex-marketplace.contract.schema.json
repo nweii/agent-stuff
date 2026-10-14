@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Agent Stuff Codex marketplace contract (project-owned subset)",
-  "description": "Derived from official packaging docs and codex-rs/core-plugins/src/marketplace.rs at de3721a7be07054c8c2a41102b5a501f34155361. Version is the flattened fallback manifest version. This is not an official published Codex schema.",
+  "description": "Derived from official packaging docs and codex-rs/core-plugins/src/marketplace.rs at de3721a7be07054c8c2a41102b5a501f34155361. Version is the portable plugin manifest version. This is not an official published Codex schema.",
   "type": "object",
   "required": ["name", "interface", "plugins"],
   "properties": {
