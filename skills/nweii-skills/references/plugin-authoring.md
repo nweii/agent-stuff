@@ -22,7 +22,7 @@ my-plugin/
 └── .mcp.json                    # Optional Claude MCP configuration
 ```
 
-Use the [Agent Plugins specification](https://agent-plugins.org/specification) for root metadata and component discovery. Claude’s adapter reads the shared root `skills/` directory; use its [manifest reference](https://code.claude.com/docs/en/plugins-reference) for native components.
+Use the [Agent Plugins specification](https://agent-plugins.org/specification) for root metadata and component discovery. For Claude Code, read [Anthropic’s creation guide](https://code.claude.com/docs/en/plugins/create.md) for scaffolding and local testing, and its [manifest reference](https://code.claude.com/docs/en/plugins-reference) for component fields. Claude’s adapter reads the shared root `skills/` directory.
 
 For Codex, place OpenAI settings in root `plugin.json` under `extensions.com.openai`. That object replaces the entire `.codex-plugin/plugin.json` fallback for client settings; the two are not merged. Keep portable identity at the root. See [OpenAI’s packaging guide](https://developers.openai.com/plugins/build/plugins).
 
