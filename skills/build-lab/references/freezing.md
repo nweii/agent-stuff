@@ -84,7 +84,7 @@ Freeze a copy into a new folder (`<slug>-<yyyy-mm>`) with the source pointing at
 
 ### Visit
 
-Check out the source commit into a separate worktree outside every build glob (inside the git directory works: `.git/lab-visits/<slug>`), install with the lockfile frozen, and run the dev server on another port at the lab's original path. Remove the worktree when done. Warn when the installed runtime differs from `ranOn`.
+Check out the source commit into a separate worktree outside every build glob (inside the git directory works: `.git/lab-visits/<slug>/<commit>`). Key it by commit as well as slug, so a lab thawed and re-frozen elsewhere never reuses a checkout of its old commit, install with the lockfile frozen, and run the dev server on another port at the lab's original path. Remove the worktree when done. Warn when the installed runtime differs from `ranOn`.
 
 ### Thaw
 
