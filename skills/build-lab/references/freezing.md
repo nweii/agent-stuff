@@ -56,7 +56,7 @@ The source commit pins every layer at once: the lab's code, the production modul
 
 - Pin to the main-branch commit the working copy is based on (`git merge-base HEAD origin/<main>`). The captures show the lab at that commit, so record and captures agree.
 - Require the commit to be on the main branch. A squash merge orphans branch commits, and a branch can be deleted.
-- Require everything the lab runs on to equal its state at that commit, with no untracked files: the lab folder, every local module its imports reach (resolved the way the host resolves paths), and the declared version of every package it imports. The captures show the working tree, so a changed production module the lab imports would otherwise put captures of new code beside a pin of old code, and a visit could not reproduce them.
+- Require everything the lab runs on to equal its state at that commit, with no untracked files: the lab folder, the layouts the framework wraps it in (they carry global styles), every local module those reach (resolved the way the host resolves paths), and the declared version of every package they import. The captures show the working tree, so a changed production module the lab imports would otherwise put captures of new code beside a pin of old code, and a visit could not reproduce them.
 - Don't use tags. Many hosted agent environments can't push them, and the main-branch rule already keeps the commit reachable.
 - Shallow clones (CI, cloud sessions) may lack an old commit. Fetch it by hash before a visit or thaw.
 
