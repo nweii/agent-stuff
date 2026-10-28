@@ -46,7 +46,7 @@ A lab imports live production code, so a decided lab keeps getting dragged along
 - `visit <slug>` (then `--done`): run a frozen lab at its commit, controls included.
 - `thaw <slug>`: make it live again on today's code, then repair drift.
 
-A freeze needs an outcome, no code outside the lab importing it, and everything the lab runs on identical to its main-branch commit: the folder, the layouts that wrap it, every local module those reach, and the declared versions of packages they import. It refuses otherwise and names what differs. Take captures with your browser tool before freezing: the lab at its decided values, controls visible, sidebar cropped out. To read a frozen lab's old values against today's parameters, read its files at the pinned commit and map them; that needs neither a visit nor a thaw.
+A freeze needs an outcome that states the decided values, no code outside the lab importing it, and everything the lab runs on identical to its main-branch commit: the folder (apart from `[meta.ts]`), the layouts that wrap it, every local module those reach, and the declared versions of packages they import. It refuses otherwise and names what differs. Take captures with your browser tool before freezing: the lab at its decided values, controls visible, sidebar cropped out. To read a frozen lab's old values against today's parameters, read its files at the pinned commit and map them; that needs neither a visit nor a thaw.
 
 Run `status` after finishing work on a lab. When it suggests a freeze or snapshot, mention it to the user with its reason. Freeze or snapshot only when asked.
 ```

@@ -12,7 +12,7 @@ Use these words with the user and in the host's agents file.
 - **Frozen lab**: a lab folder holding only its record and captures. Its URL shows the record, which leads with how to visit it, since a visit is where its controls still work.
 - **Record**: the frozen lab's one data file (`frozen.json`): outcome, dates, captures, and source.
 - **Capture**: a screenshot or short clip of the lab running at its decided values, stored beside the record.
-- **Outcome**: the one-line decision a lab reached. A lab is frozen because it decided something, so a record always has one.
+- **Outcome**: the one-line decision a lab reached. A lab is frozen because it decided something, so a record always has one. When the decision is a set of values, the outcome states them, so the record still gives the numbers after the code is gone.
 - **Source**: where the lab's code still lives. For a git host, a commit on the main branch plus the folder path.
 - **Snapshot**: a frozen copy of a live lab under a new name (`footer-2026-10`). The lab itself stays live.
 - **Visit**: running a frozen lab at its source commit, controls included, without changing the tree.
@@ -56,7 +56,7 @@ The source commit pins every layer at once: the lab's code, the production modul
 
 - Pin to the main-branch commit the working copy is based on (`git merge-base HEAD origin/<main>`). The captures show the lab at that commit, so record and captures agree.
 - Require the commit to be on the main branch. A squash merge orphans branch commits, and a branch can be deleted.
-- Require everything the lab runs on to equal its state at that commit, with no untracked files: the lab folder, the layouts the framework wraps it in (they carry global styles), every local module those reach (resolved the way the host resolves paths), and the declared version of every package they import. The captures show the working tree, so a changed production module the lab imports would otherwise put captures of new code beside a pin of old code, and a visit could not reproduce them.
+- Require everything the lab runs on to equal its state at that commit, with no untracked files: the lab folder (apart from its metadata, which the record replaces), the layouts the framework wraps it in (they carry global styles), every local module those reach (resolved the way the host resolves paths), and the declared version of every package they import. The captures show the working tree, so a changed production module the lab imports would otherwise put captures of new code beside a pin of old code, and a visit could not reproduce them.
 - Don't use tags. Many hosted agent environments can't push them, and the main-branch rule already keeps the commit reachable.
 - Shallow clones (CI, cloud sessions) may lack an old commit. Fetch it by hash before a visit or thaw.
 
