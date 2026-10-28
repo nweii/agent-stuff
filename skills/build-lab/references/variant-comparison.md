@@ -1,6 +1,6 @@
 # Variant comparison
 
-Read this when one lab contains multiple structural or interaction directions that benefit from rapid, full-size comparison. Skip it when the differences are only control values.
+Read this when one lab contains multiple structural or interaction directions that benefit from rapid, full-size comparison. Skip it when the differences are only control values. This covers the lab's picker. When a variant-exploration skill runs the round itself (how many directions, what each must meet, how to judge between them), follow that skill and use the picker as its canvas; see [hosting.md](hosting.md).
 
 ## Choose the comparison layer
 

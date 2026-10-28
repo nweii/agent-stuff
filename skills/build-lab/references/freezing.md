@@ -9,7 +9,7 @@ A lab imports live production code. Once it has decided something, every later p
 Use these words with the user and in the host's agents file.
 
 - **Live lab**: a lab folder with a page. It runs on today's code and can still be tuned.
-- **Frozen lab**: a lab folder holding only its record and captures. Its URL shows the record.
+- **Frozen lab**: a lab folder holding only its record and captures. Its URL shows the record, which leads with how to visit it, since a visit is where its controls still work.
 - **Record**: the frozen lab's one data file (`frozen.json`): outcome, dates, captures, and source.
 - **Capture**: a screenshot or short clip of the lab running at its decided values, stored beside the record.
 - **Outcome**: the one-line decision a lab reached. A lab is frozen because it decided something, so a record always has one.
