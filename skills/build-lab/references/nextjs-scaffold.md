@@ -13,13 +13,22 @@ app/lab/
 ├── entries.ts        # fs loader: lab dirs + optional meta modules → LabEntry[]
 ├── LabNav.tsx        # client nav: active-state highlight (usePathname), optional sorting
 ├── InsetTrigger.tsx  # client: floating open-sidebar button, shown when collapsed
-└── <slug>/
-    ├── page.tsx      # thin route wrapper
-    ├── lab.tsx       # "use client" experiment + controls
-    └── meta.ts       # optional; default-exports LabMeta
+├── [slug]/           # frozen labs: one record page for every frozen folder
+│   ├── page.tsx
+│   └── captures/[file]/route.ts   # serves captures from the lab folder
+├── <slug>/           # a live lab
+│   ├── page.tsx      # thin route wrapper
+│   ├── lab.tsx       # "use client" experiment + controls
+│   └── meta.ts       # optional; default-exports LabMeta
+└── <frozen-slug>/
+    ├── frozen.json   # the record
+    └── capture-<hash8>.webp
 
-lib/lab-registry.ts       # pure nav-model builder — the tested seam
+lib/lab-registry.ts       # pure nav-model builder + record parser — the tested seam
 lib/lab-registry.test.ts
+lib/lab-freeze.ts         # pure lifecycle planners and suggestions (see freezing.md)
+lib/lab-imports.ts        # import scanning; imports the TypeScript compiler, so keep it out of app code
+scripts/lab.ts            # `bun run lab`: gathers git and filesystem facts, applies plans
 ```
 
 ## The registry (pure, tested)
@@ -71,6 +80,8 @@ Keep exactly **one** sort implementation. The registry preserves input order; wh
 
 Test exactly this module's external behavior: slug fallback, input-order preservation, metadata passthrough, no `undefined` keys. Also give the loader a small contract test against the real lab folder (every entry's folder has a page, every `modified` parses). Nothing else in the shell needs tests.
 
+Add `frozenOn?: string` to `LabEntry` and `LabNavItem`, a `FrozenRecord` type matching the record in [freezing.md](freezing.md), and a `parseFrozenRecord(raw, where)` that validates it with errors naming the file and field. Test the parser's acceptance and each named error.
+
 ## The loader
 
 ```ts
@@ -93,6 +104,8 @@ export async function loadLabEntries(): Promise<LabEntry[]> {
 }
 ```
 
+The listing above is the loader for a host without freezing. With freezing, read each folder's state from its files instead: a live folder loads `meta.ts`; a frozen one reads and parses `frozen.json` and takes its title, description, date, and outcome as metadata, plus `frozenOn`; a folder with both throws, naming the command that finishes the operation. Skip `[x]`, `(x)`, and `_x` folders, since `[slug]` belongs to the shell. The loader's contract test then checks that every entry has a page or a valid record whose captures exist, never both.
+
 - The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty.
 - Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort. Guard the empty-folder case: `Math.max()` of no files is `-Infinity`, which throws when stamped into a Date.
 - The mtime sort is meaningful locally only — deploy checkouts flatten mtimes.
@@ -105,6 +118,13 @@ export const metadata: Metadata = { title: "Lab", robots: { index: false, follow
 ```
 
 Adapt metadata and discovery to the chosen exposure. A direct-access lab normally stays out of the sitemap and main navigation. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), not a per-request check — request-time APIs in the layout would force every lab route dynamic.
+
+## Frozen lab routes
+
+- `app/lab/[slug]/page.tsx` exports `dynamicParams = false` and `generateStaticParams` over frozen slugs. A frozen folder has no page, so it doesn't shadow the dynamic segment (verified on Next 16); live folders keep their own routes.
+- Serve captures from a route handler at `app/lab/[slug]/captures/[file]/route.ts` with `dynamicParams = false` and static params from each record's captures. It prerenders, so captures ship as static files beside the page, and the lab folder stays self-contained instead of splitting files into `public/`. Content-addressed names make a one-year immutable `Cache-Control` safe.
+- Render captures with a plain `<img>` or `<video>`: they aren't in the image optimizer's sources.
+- In the sidebar, list frozen labs in their own quieter group below the live ones, and sort them by `frozenOn` when sorting by recency.
 
 ## Gotchas
 
