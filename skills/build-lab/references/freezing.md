@@ -56,7 +56,7 @@ The source commit pins every layer at once: the lab's code, the production modul
 
 - Pin to the main-branch commit the working copy is based on (`git merge-base HEAD origin/<main>`). The captures show the lab at that commit, so record and captures agree.
 - Require the commit to be on the main branch. A squash merge orphans branch commits, and a branch can be deleted.
-- Require the lab folder to equal its contents at that commit, with no untracked files. Otherwise the record points at something other than what the user saw.
+- Require everything the lab runs on to equal its state at that commit, with no untracked files: the lab folder, every local module its imports reach (resolved the way the host resolves paths), and the declared version of every package it imports. The captures show the working tree, so a changed production module the lab imports would otherwise put captures of new code beside a pin of old code, and a visit could not reproduce them.
 - Don't use tags. Many hosted agent environments can't push them, and the main-branch rule already keeps the commit reachable.
 - Shallow clones (CI, cloud sessions) may lack an old commit. Fetch it by hash before a visit or thaw.
 
@@ -70,7 +70,7 @@ Build these as one script in the host (`bun run lab <command>`): pure planners t
 
 ### Freeze
 
-1. Refuse unless the lab is live, has an outcome, matches its pin commit, and no code outside it imports from it, and every capture exists in a format the record accepts. Each refusal says what to do.
+1. Refuse unless the lab is live, has an outcome, runs on code that matches its pin commit, no code outside it imports from it, and every capture exists in a format the record accepts. Each refusal says what to do.
 2. Copy captures into the folder under content-addressed names (`capture-<hash8>.<ext>`), so their URLs can be cached forever.
 3. Write the record.
 4. Remove packages only this lab imported. Find imports with a parser, never a text search: a package name appears in comments, selectors, and test fixtures that import nothing. TypeScript's `ts.preProcessFile(source, true, true)` reads static, type-only, dynamic, `require`, and re-export imports and ignores strings and comments; read CSS `@import` separately. Keep any package a package-manifest script runs as a command.
