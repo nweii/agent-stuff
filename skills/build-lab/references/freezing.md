@@ -70,11 +70,11 @@ Build these as one script in the host (`bun run lab <command>`): pure planners t
 
 ### Freeze
 
-1. Refuse unless the lab is live, has an outcome, matches its pin commit, and no code outside it imports from it. Each refusal says what to do.
+1. Refuse unless the lab is live, has an outcome, matches its pin commit, and no code outside it imports from it, and every capture exists in a format the record accepts. Each refusal says what to do.
 2. Copy captures into the folder under content-addressed names (`capture-<hash8>.<ext>`), so their URLs can be cached forever.
 3. Write the record.
-4. Delete everything else in the folder.
-5. Remove packages only this lab imported. Find imports with a parser, never a text search: a package name appears in comments, selectors, and test fixtures that import nothing. TypeScript's `ts.preProcessFile(source, true, true)` reads static, type-only, dynamic, `require`, and re-export imports and ignores strings and comments; read CSS `@import` separately. Keep any package a package-manifest script runs as a command.
+4. Remove packages only this lab imported. Find imports with a parser, never a text search: a package name appears in comments, selectors, and test fixtures that import nothing. TypeScript's `ts.preProcessFile(source, true, true)` reads static, type-only, dynamic, `require`, and re-export imports and ignores strings and comments; read CSS `@import` separately. Keep any package a package-manifest script runs as a command.
+5. Delete everything else in the folder. This comes last because a rerun finds the sole-use packages by reading the lab's code.
 
 Take captures with your own browser tool before freezing: the lab at its decided values, controls visible, the shell's sidebar cropped out. Prefer WebP. Record the `?v=` value when the lab has variants.
 
@@ -106,4 +106,4 @@ Labs without an outcome get no suggestion; they haven't decided anything. Agents
 
 ## Doing it by hand
 
-Without the script, follow the same steps: confirm the outcome and pin, take captures, write the record, delete the code, remove sole-use packages, and commit. To thaw, `git checkout <commit> -- <path>`, re-add packages, delete the record and captures, then repair.
+Without the script, follow the same steps: confirm the outcome and pin, take captures, write the record, remove sole-use packages, delete the code, and commit. To thaw, `git checkout <commit> -- <path>`, re-add packages, delete the record and captures, then repair.
