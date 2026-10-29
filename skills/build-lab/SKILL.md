@@ -4,7 +4,7 @@ description: "Set up a durable /lab section in a website (a sidebar shell over d
 disable-model-invocation: true
 metadata:
   author: nweii
-  version: "0.3.0"
+  version: "0.3.1"
   credit: "Lab-building patterns draw on DialKit by Josh Puckett, Emil Kowalski's prototype workflow, and shadcn/ui's sidebar building blocks."
 ---
 
