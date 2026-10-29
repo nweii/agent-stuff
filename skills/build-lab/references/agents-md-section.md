@@ -7,7 +7,7 @@ Replace bracketed placeholders; drop lines that don't apply.
 ```markdown
 ### Labs (`/lab`)
 
-`[app/lab/<slug>/]` holds this site's experiment surfaces: tuning panels wired to production components and design explorations. Retain labs by default so they remain available for retuning and as design history. Record settled decisions in outcome notes; remove labs when the user or this host's lifecycle calls for cleanup.
+`[app/lab/<slug>/]` holds this site's experiment surfaces: tuning panels wired to production components and design explorations. Retain labs by default so they remain available for retuning and as design history. Record settled decisions in outcome notes and freeze decided labs; remove labs only when the user or this host's lifecycle calls for cleanup.
 
 [State the chosen exposure: public direct-access, protected by the host's existing mechanism, or another deliberate posture.] Apply protection once at `[the lab section boundary]`. The section is `[noindex and omitted from the sitemap and main navigation / intentionally discoverable]`; `noindex` is metadata, not access control.
 
@@ -21,11 +21,32 @@ Conventions:
 - **Defaults flow from production.** A tuning lab imports defaults from the module it tunes; accepted values travel back through `[the control panel's export mechanism]`, applied by an agent.
 - **Harmonize with the destination.** For changes to an existing page, section, or component, use its surrounding content, layout, hierarchy, and interface patterns as the starting point. Depart when that is part of the experiment.
 - **The control panel is part of the lab interface.** Use `[the project's control-panel library or native control surface]`. Order controls in the sequence someone tunes the result, group them by concept, keep high-leverage choices visible, and collapse secondary calibration. Use clear labels, useful ranges, and intentional defaults. Its appearance follows the lab by default; a separate appearance is deliberate.
-- **Labs stay independent of shell components.** The shell (`[app/lab/layout.tsx]`, `[LabNav.tsx]`, `[entries.ts]`) depends on labs' metadata, never the reverse.
+- **Labs host other work through an adapter.** When a lab holds another skill's or tool's artifact (a state machine, a model, a variant round), that skill owns the artifact and its rules. The lab records four mappings in the artifact's terms: what the page renders, what the controls change, how the outcome reads, and what a capture keeps. [Kinds of work this project allows in the lab, and what each must state.]
+- **Labs stay independent of shell components.** The shell (`[app/lab/layout.tsx]`, `[LabNav.tsx]`, `[entries.ts]`, `[app/lab/[slug]/]`) depends on labs' metadata, never the reverse. Production code never imports from a lab.
 
 The registry (`[lib/lab-registry.ts]`) is a pure, tested module — keep its test suite green after changes. Parameter snapshots belong in the control panel's presets. Structural or interaction variants use a named `?v=` value, render one direction full-size at a time, and switch instantly; add a visible picker only when rapid comparison helps. Retain unadopted variants by default unless the user or this host's lifecycle calls for cleanup.
 
 Authoring a new lab: create the folder and file split, import production defaults when the lab tunes production, and wire the controls. Prefer a floating panel when the control library supports it and preserving the canvas matters; use an inline panel when persistent side-by-side comparison serves the experiment. Smoke-test unusual wiring such as actions, text fields, manual render loops, and paused states. Animated labs keep play/pause within easy reach, bind Space outside editable controls, and mirror the action in the control panel when its public API supports actions.
 
 When a lab settles a decision, apply the accepted values to the production source, then record the decision as the outcome note in `[meta.ts]`. The lab should then display production's accepted defaults.
+
+#### Live and frozen labs
+
+A lab imports live production code, so a decided lab keeps getting dragged along by production changes. Freezing ends that. A lab's state comes from its files:
+
+- **Live**: the folder has `[page.tsx]`. It runs on today's code.
+- **Frozen**: the folder has only `frozen.json` (the record) and `capture-*` files (screenshots or clips of it running). The record holds the outcome and pins the main-branch commit the lab ran at; that commit keeps the lab's code, the production modules it imported, and its packages. `[app/lab/[slug]/]` renders the record at the lab's old URL.
+- A folder with both is a freeze or thaw that stopped partway. The build fails and names the command that finishes it.
+
+`[bun run lab]` (`[scripts/lab.ts]`) moves labs between states. It never commits; review its diff and commit it.
+
+- `status`: labs by state, plus freeze and snapshot suggestions.
+- `freeze <slug> --capture <file>`: write the record, keep captures, drop packages only it imported, delete the code.
+- `snapshot <slug> --as <slug>-<yyyy-mm>`: freeze a copy under a new name; the lab stays live.
+- `visit <slug>` (then `--done`): run a frozen lab at its commit, controls included.
+- `thaw <slug>`: make it live again on today's code, then repair drift.
+
+A freeze needs an outcome that states the decided values, no code outside the lab importing it, and everything the lab runs on identical to its main-branch commit: the folder (apart from `[meta.ts]`), the layouts that wrap it, every local module those reach, the files those modules read at runtime, and the declared versions of packages they import. It refuses otherwise and names what differs. Take captures with your browser tool before freezing: the lab at its decided values, controls visible, sidebar cropped out. To read a frozen lab's old values against today's parameters, read its files at the pinned commit and map them; that needs neither a visit nor a thaw.
+
+Run `status` after finishing work on a lab. When it suggests a freeze or snapshot, mention it to the user with its reason. Freeze or snapshot only when asked.
 ```
