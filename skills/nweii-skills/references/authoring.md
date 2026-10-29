@@ -6,7 +6,7 @@ Use this reference before creating or substantially editing a skill.
 
 Start skills in the private canonical library using its `templates/SKILL_TEMPLATE.md`. Keep the procedure operational: lead with actions, keep decisions and gotchas beside the step they affect, and move branch-specific detail into a reference with a conditional pointer.
 
-Read the `writing-for-agents` skill for context pointers, information hierarchy, completion criteria, leading words, and pruning. Add project conventions and non-obvious failure modes; omit generic knowledge and facts available cheaply from the environment or live `--help`.
+Follow `writing-for-agents` for structure and pruning. Remove instructions that repeat what the agent already knows or can find in the referenced skill. Keep project-specific choices, known pitfalls, permission limits, and conditions for completion. Read the draft a second time for unnecessary clauses, awkward sentence structure, and shorthand that makes the reader decode the meaning. Preserve precise terms, make clear who does what, and cut explanations that merely repeat the instruction.
 
 Scripts must be non-interactive, safe under retry, and explicit about errors. Put structured data on stdout and diagnostics on stderr. Provide `--dry-run` for destructive operations where practical. Add a script only when deterministic reuse earns its maintenance cost.
 
