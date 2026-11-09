@@ -68,7 +68,7 @@ The transcript note uses the `Transcript template.md` format and _must_ follow t
 
 1. **Frontmatter:**
 
-   - If you need the transcript template, `obsidian read file="Transcript template"` (or read `99-Admin/Templates/Transcript template.md` with whatever vault tool is available) to get the latest properties.
+   - If you need the transcript template, `obsidian read file="Transcript template"` (or read `99-Meta/Templates/Transcript template.md` with whatever vault tool is available) to get the latest properties.
    - Use the retrieved properties as the base for the new note's frontmatter.
    - Inject the dynamic values from the meeting:
      - `date`: `YYYY-MM-DD` of the meeting.
@@ -100,7 +100,7 @@ If creating a new note:
 
 1. **Frontmatter:**
 
-   - If you need the meeting template, read `99-Admin/Templates/Meeting template.md` (via CLI or vault tool) for the latest properties.
+   - If you need the meeting template, read `99-Meta/Templates/Meeting template.md` (via CLI or vault tool) for the latest properties.
    - Use the retrieved properties as the base for the new note's frontmatter.
    - Inject the dynamic values from the meeting:
      - Follow the same rules for `date`, `people`, `aliases`, and `description` as defined above.
@@ -149,7 +149,7 @@ Example: `- [[Design review with Acme 2026-09]]: reviewed the onboarding flow an
 
 Resolve the daily note for the meeting's `date` using the vault's standard daily note conventions. Read the note, find the `## Log - <Weekday>` section, and append the bullet after the last existing bullet there.
 
-Note on creating a missing daily: a bare `vault_daily_note`/create call produces a stub WITHOUT the user's Templater structure (Log section, Base embeds, prev/next). If the daily for the meeting's date doesn't exist, either skip the log silently, or — if you create it — rebuild it from `99-Admin/Templates/Daily Note.md` with the Templater values resolved (prev/next dailies, the ISO week / quarter / year links, the `## Log - <Weekday>` header) so it isn't a broken stub. Never edit a past daily other than this — they're frozen as of their day.
+Note on creating a missing daily: a bare `vault_daily_note`/create call produces a stub WITHOUT the user's Templater structure (Log section, Base embeds, prev/next). If the daily for the meeting's date doesn't exist, either skip the log silently, or — if you create it — rebuild it from `99-Meta/Templates/Daily Note.md` with the Templater values resolved (prev/next dailies, the ISO week / quarter / year links, the `## Log - <Weekday>` header) so it isn't a broken stub. Never edit a past daily other than this — they're frozen as of their day.
 
 If multiple meetings were synced on different dates, log to each respective daily note.
 
