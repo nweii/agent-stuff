@@ -57,7 +57,7 @@ This branch is complete when the current task can proceed from the prepared cont
 
 ## 4B. Create a person note
 
-Read `99-Admin/Templates/Person template.md` and render its Templater values. Save the canonical note to `04-Entities/[Canonical title].md`.
+Read `99-Meta/Templates/Person template.md` and render its Templater values. Save the canonical note to `04-Entities/[Canonical title].md`.
 
 Fill only supported fields. Use the metadata rules below, add at most a short ownerless paragraph of durable relationship context, and preserve `![[Related.base#Person]]` at the end. Leave unsupported fields or body content empty.
 
