@@ -20,15 +20,9 @@ Expect some flags to be wrong. Apply only corrections the user has seen or autho
 
 You can't tell what's mangled until you know the topic and shape. Skim end-to-end first.
 
-### 2. Pull in domain context the user has documented
+### 2. Ground vocabulary in the user's context
 
-Before guessing at vocabulary, check what's actually in the user's world:
-
-- Project notes, AGENTS.md / CLAUDE.md, glossaries
-- Related notes the transcript references
-- Recent commits, working logs, specs
-
-If a transcribed proper noun doesn't match anything in their documented vocabulary, **don't substitute a similar-sounding name from your own knowledge** — flag it and ask.
+Check memory and the user's notes before guessing at a term. If a transcribed proper noun matches nothing there, flag it and ask; a similar-sounding name from your own knowledge may be invented.
 
 ### 3. Triage into three confidence tiers
 
@@ -93,7 +87,6 @@ The audit is recorded when the notes section sits after the transcript and every
 
 ## Anti-patterns
 
-- **Don't guess at proper nouns from your own knowledge.** A name that sounds plausible to you may be invented. Flag, ask.
 - **Don't rewrite garbled sentences with confident prose.** Even when you think you know what was said, write the gist as a hypothesis in a callout, not as edited dialogue.
 - **Don't keep pushing a guess after the user corrects you.** The correction itself is information about how they think — incorporate it into how you flag the rest.
 - **Don't claim you've recovered something you haven't.** If a clause is gone, mark it `[transcription unintelligible]` rather than fabricating.
