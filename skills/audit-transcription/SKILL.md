@@ -53,7 +53,7 @@ In the walkthrough, send one item per message. Each message stands alone and car
 - **Where it falls:** who is speaking and what the conversation is about at that point, in a sentence.
 - **The passage:** the original span, quoted with the line before and after it.
 - **Your reading:** for a medium item, your interpretation and the evidence for it. For a low item, say that nothing in the transcript or the user's notes recovers it.
-- **The question:** answerable in a word or two. Offer the choices: confirm your reading, give the right one, leave it as transcribed, or delete it.
+- **The question:** answerable in a word or two: confirm, correct, leave as transcribed, or delete.
 
 Apply each answer before sending the next item. "Skip" leaves an item pending. "Stop" ends the walkthrough; the remaining items stay pending.
 
@@ -73,23 +73,23 @@ The walkthrough is done when every item has an answer or the user has stopped it
 
 - **Deletions:** only where the user asked for one.
 
-Pending items stay as transcribed. Never strip the raw transcript. The audit makes a noisy record readable; it doesn't replace it.
+Pending items stay as transcribed. Never strip the raw transcript.
 
 ### 7. Record the audit after the transcript
 
-Add a `## Transcription notes` section **after** the transcript, so the transcript is the first thing a reader meets. It holds:
+Add a `## Transcription notes` section after the transcript. It holds:
 
 - A note that the transcript is auto-generated
-- The recurring-vocab glossary, so future readers and agents don't re-derive it
+- The recurring-vocab glossary
 - Each applied correction, with its original span
-- Each pending item, with its original span, proposed reading, and the evidence, so a later session can resume the walkthrough without re-auditing
+- Each pending item, with its original span, proposed reading, and evidence
 - A pointer to the callout format used for confirmed readings
 
 When nothing is pending, fold the section's body into a collapsed callout (`> [!note]- Transcription audit record`). If the note already has a notes section above the transcript, move it below.
 
 Update the frontmatter `description` to mention auto-transcription, the notes section, and whether items remain pending.
 
-The audit is recorded when the notes section sits after the transcript and every item reads as applied, confirmed, rejected, deleted, or pending.
+The audit is recorded when the notes section sits after the transcript and every item has an explicit status.
 
 ## Anti-patterns
 
