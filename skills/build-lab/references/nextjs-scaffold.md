@@ -9,10 +9,11 @@ If the shell uses shadcn's Sidebar, read [shadcn-sidebar.md](shadcn-sidebar.md) 
 ```
 app/lab/
 ├── layout.tsx        # shell: sidebar + noindex; server component
-├── page.tsx          # /lab index (a quiet landing — the sidebar carries the list)
+├── page.tsx          # /lab index (a plain landing page; the sidebar lists the labs)
 ├── entries.ts        # fs loader: lab dirs + optional meta modules → LabEntry[]
 ├── LabNav.tsx        # client nav: active-state highlight (usePathname), optional sorting
 ├── InsetTrigger.tsx  # client: floating open-sidebar button, shown when collapsed
+├── _canvas/          # canvas layouts and the cases board, imported by labs only (see canvases.md)
 ├── [slug]/           # frozen labs: one record page for every frozen folder
 │   ├── page.tsx
 │   └── captures/[file]/route.ts   # serves captures from the lab folder
@@ -24,7 +25,7 @@ app/lab/
     ├── frozen.json   # the record
     └── capture-<hash8>.webp
 
-lib/lab-registry.ts       # pure nav-model builder + record parser — the tested seam
+lib/lab-registry.ts       # pure nav-model builder + record parser; the tested seam
 lib/lab-registry.test.ts
 lib/lab-freeze.ts         # pure lifecycle planners and suggestions (see freezing.md)
 lib/lab-imports.ts        # import scanning; imports the TypeScript compiler, so keep it out of app code
@@ -33,7 +34,7 @@ scripts/lab.ts            # `bun run lab`: gathers git and filesystem facts, app
 
 ## The registry (pure, tested)
 
-This module is framework-neutral — use it verbatim:
+This module is framework-neutral. Use it verbatim:
 
 ```ts
 export type LabMeta = {
@@ -106,9 +107,9 @@ export async function loadLabEntries(): Promise<LabEntry[]> {
 
 The listing above is the loader for a host without freezing. With freezing, read each folder's state from its files instead: a live folder loads `meta.ts`; a frozen one reads and parses `frozen.json` and takes its title, description, date, and outcome as metadata, plus `frozenOn`; a folder with both throws, naming the command that finishes the operation. Skip `[x]`, `(x)`, and `_x` folders, since `[slug]` belongs to the shell. The loader's contract test then checks that every entry has a page or a valid record whose captures exist, never both.
 
-- The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists** — scaffold one annotated lab so the context is never empty.
+- The template-literal dynamic import works under Turbopack/webpack (it builds a context of matching modules) **but only if at least one `meta.ts` exists**. Scaffold one annotated lab so the context always has a module.
 - Optionally stat each lab dir's newest file mtime into `modified` for a "recently modified" sort. Guard the empty-folder case: `Math.max()` of no files is `-Infinity`, which throws when stamped into a Date.
-- The mtime sort is meaningful locally only — deploy checkouts flatten mtimes.
+- The mtime sort works only locally, because deploy checkouts flatten mtimes.
 
 ## The layout
 
@@ -117,7 +118,7 @@ export const metadata: Metadata = { title: "Lab", robots: { index: false, follow
 // LabShell > sidebar (header wordmark + nav + footer) > transparent content pane > children
 ```
 
-Adapt metadata and discovery to the chosen exposure. A direct-access lab normally stays out of the sitemap and main navigation. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), not a per-request check — request-time APIs in the layout would force every lab route dynamic.
+Adapt metadata and discovery to the chosen exposure. A direct-access lab normally stays out of the sitemap and main navigation. If a host link must appear only in some builds (a dev-only dashboard), gate it with a build-time constant (`process.env.NODE_ENV`), because request-time APIs in the layout force every lab route dynamic.
 
 ## Frozen lab routes
 

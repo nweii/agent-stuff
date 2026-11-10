@@ -4,11 +4,12 @@ Read this when one lab contains multiple structural or interaction directions th
 
 ## Choose the comparison layer
 
-Use the control panel's presets when every direction shares one implementation and differs only in parameter values. Use a variant picker when directions change layout, component structure, motion system, or interaction model. Keep each decision in one layer so the same choice never appears in both the picker and the control panel.
+Use the control panel's saved versions when every direction shares one implementation and differs only in parameter values. DialKit shows them as thumbnails and in a grid of every version. Use a variant picker when directions change layout, component structure, motion system, or interaction model. Keep each decision in one layer so the same choice never appears in both the picker and the control panel.
 
 ## Picker contract
 
 - Keep the set small: two to five named directions, each with a stated axis such as layout, density, personality, motion, or interaction.
+- When the subject exists in production, include it as a variant named `current`, so the user can compare each proposal with what ships.
 - Render one variant at full size in realistic context. Side-by-side thumbnails distort the spacing and scale being judged.
 - Switch the rendered variant instantly. The picker may animate its own active indicator, with a reduced-motion fallback, but the comparison itself stays immediate.
 - Store the selected direction in a stable named `?v=<name>` value so reloads and shared links preserve it.

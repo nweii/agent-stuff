@@ -24,8 +24,8 @@ Some guidance for filling it in:
 
 ## Where the artifact's files live
 
-- If production uses it, it stays in production and the lab imports it. Defaults flow from production, the same as a tuning lab.
-- If only the lab uses it, it lives in the lab folder. Freezing then removes it with the lab, and the pinned commit keeps it.
+- If production uses it, it stays in production and the lab imports it. Defaults flow from production, as in any lab whose subject is in production.
+- If only the lab uses it, it lives in the lab folder. Freezing then removes it with the lab, and the pinned commit keeps it. To ship it, promote it ([promotion.md](promotion.md)).
 
 ## What stays with the host
 
