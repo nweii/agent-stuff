@@ -18,6 +18,8 @@ The user tunes and decides in a lab. The agent builds it, sets starting points t
 
 Everything in this skill is a working default. Reshape its structure, tools, appearance, exposure, and lifecycle around the user's needs and the host codebase. Keep labs by default: record settled decisions in outcome metadata and freeze decided labs. Remove a lab only when the user or the host's lifecycle calls for it.
 
+How work divides into labs is the user's call. One lab can hold one decision about a subject or several. Help the user think it through when the question comes up, for instance when a second decision would crowd a lab's controls or its outcome.
+
 This skill is for **setup**: it installs the shell and writes the lab conventions into the project's agents file. Later sessions author labs from that section alone. If the project has no `app`-style routing or the user wants a standalone playground, the host can be a bare app whose only content is `/lab`; its labs hold their own starting values. If the host already has a lab section, start at step 5 to add canvases or step 6 to add freezing.
 
 ## The conventions

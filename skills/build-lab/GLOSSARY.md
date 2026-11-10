@@ -10,7 +10,7 @@ The terms this skill and a host's lab section use. Each has one meaning.
 - **Current**: the variant production ships. A subject that has not shipped has no current.
 - **Proposed variant**: a variant production does not ship.
 - **Values**: what the control panel's controls are set to. A saved version is a set of values the user kept to compare.
-- **Condition**: something the subject is shown under, such as an interaction state, a theme, a content extreme, or a width.
+- **Condition**: something the subject is shown under, such as an interaction state, a theme, a content extreme, or a width. What counts as a condition depends on the decision. A small size is a condition when the user checks that a button holds up, and a value being chosen when the user decides which size a toolbar uses.
 - **Canvas**: the frame a lab renders inside.
 - **Layout**: one of the canvas's arrangements. A host starts with stage, board, and full bleed.
 - **Control panel**: the controls a lab shows for changing values.
