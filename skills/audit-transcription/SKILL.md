@@ -1,6 +1,6 @@
 ---
 name: audit-transcription
-description: "Audit an existing transcript for likely mistranscriptions. Apply or propose vocabulary repairs, walk the user through uncertain passages one at a time, and flag unrecoverable ones."
+description: "Audit an existing transcript for likely mistranscriptions. Apply or propose vocabulary repairs, walk the user through uncertain passages one at a time, flag unrecoverable ones, or resume pending items from an earlier audit."
 metadata:
   author: nweii
   version: "1.2.0"
@@ -40,13 +40,13 @@ If a transcribed proper noun doesn't match anything in their documented vocabula
 
 ### 4. Settle the high tier
 
-If the user has already authorized applying high-confidence edits, apply them (step 6) and report what changed in a short list. Otherwise show the high-tier list and wait for their pass.
+If the user has already authorized applying high-confidence edits, apply them (step 6) and report what changed in a short list. Otherwise show the high-tier list and wait for their pass. Authorization covers the high tier only; medium and low readings wait for the walkthrough.
 
-Treat each correction the user gives as a context update: apply it across the rest of the transcript before continuing.
+Treat every correction the user gives, here or in the walkthrough, as a context update: apply it across the rest of the transcript before continuing.
 
 ### 5. Walk through the medium and low tiers
 
-Assume the user does not have the note open and does not remember the passage. Say how many medium and low items remain and ask whether to walk through them now or set them aside. If they set them aside, go to step 7.
+Write for a user who has neither the note open nor the passage in memory. Say how many medium and low items remain and ask whether to walk through them now or set them aside. If they set them aside, go to step 7.
 
 In the walkthrough, send one item per message. Each message stands alone and carries:
 
@@ -55,7 +55,7 @@ In the walkthrough, send one item per message. Each message stands alone and car
 - **Your reading:** for a medium item, your interpretation and the evidence for it. For a low item, say that nothing in the transcript or the user's notes recovers it.
 - **The question:** answerable in a word or two. Offer the choices: confirm your reading, give the right one, leave it as transcribed, or delete it.
 
-Apply each answer before sending the next item, and let it update the readings of items still ahead. "Skip" leaves an item pending. "Stop" ends the walkthrough; the remaining items stay pending.
+Apply each answer before sending the next item. "Skip" leaves an item pending. "Stop" ends the walkthrough; the remaining items stay pending.
 
 The walkthrough is done when every item has an answer or the user has stopped it.
 
@@ -89,11 +89,12 @@ When nothing is pending, fold the section's body into a collapsed callout (`> [!
 
 Update the frontmatter `description` to mention auto-transcription, the notes section, and whether items remain pending.
 
+The audit is recorded when the notes section sits after the transcript and every item reads as applied, confirmed, rejected, deleted, or pending.
+
 ## Anti-patterns
 
 - **Don't guess at proper nouns from your own knowledge.** A name that sounds plausible to you may be invented. Flag, ask.
 - **Don't rewrite garbled sentences with confident prose.** Even when you think you know what was said, write the gist as a hypothesis in a callout, not as edited dialogue.
-- **Don't apply medium or low readings without the user's answer.** Authorization for the high tier covers vocabulary repairs only; interpretive judgments still go through the walkthrough.
 - **Don't keep pushing a guess after the user corrects you.** The correction itself is information about how they think — incorporate it into how you flag the rest.
 - **Don't claim you've recovered something you haven't.** If a clause is gone, mark it `[transcription unintelligible]` rather than fabricating.
 
