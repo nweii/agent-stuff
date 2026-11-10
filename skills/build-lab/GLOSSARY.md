@@ -10,7 +10,7 @@ The terms this skill and a host's lab section use. Each has one meaning.
 - **Current**: the variant production ships. A subject that has not shipped has no current.
 - **Proposed variant**: a variant production does not ship.
 - **Values**: what the control panel's controls are set to. A saved version is a set of values the user kept to compare.
-- **Case**: a condition the subject is shown under, such as an interaction state, a theme, a content extreme, or a width.
+- **Condition**: something the subject is shown under, such as an interaction state, a theme, a content extreme, or a width.
 - **Canvas**: the frame a lab renders inside.
 - **Layout**: one of the canvas's arrangements. A host starts with stage, board, and full bleed.
 - **Control panel**: the controls a lab shows for changing values.
@@ -19,6 +19,6 @@ The terms this skill and a host's lab section use. Each has one meaning.
 - **Promote**: put a proposed variant into production, in place of current when there is one.
 - **Live**: a lab that runs on the site's present code.
 - **Frozen**: a lab whose code is removed and whose outcome and captures remain at its URL.
-- **State**: whether a lab is live or frozen. A component's hover or disabled state is a case.
+- **State**: whether a lab is live or frozen. A component's hover or disabled state is a condition.
 
 [references/freezing.md](references/freezing.md) defines record, capture, snapshot, visit, and thaw.

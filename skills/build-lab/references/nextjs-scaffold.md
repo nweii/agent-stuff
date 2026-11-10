@@ -13,7 +13,7 @@ app/lab/
 ├── entries.ts        # fs loader: lab dirs + optional meta modules → LabEntry[]
 ├── LabNav.tsx        # client nav: active-state highlight (usePathname), optional sorting
 ├── InsetTrigger.tsx  # client: floating open-sidebar button, shown when collapsed
-├── _canvas/          # canvas layouts and the cases board, imported by labs only (see canvases.md)
+├── _canvas/          # canvas layouts and the conditions board, imported by labs only (see canvases.md)
 ├── [slug]/           # frozen labs: one record page for every frozen folder
 │   ├── page.tsx
 │   └── captures/[file]/route.ts   # serves captures from the lab folder

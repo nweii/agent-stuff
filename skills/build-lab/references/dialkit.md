@@ -26,7 +26,7 @@ Use a DialKit feature where one covers the need, so the user works the same pane
 - **Comparing values.** Saved versions cover directions that differ only in values. Add a variant picker ([variant-comparison.md](variant-comparison.md)) when directions differ in structure.
 - **Playback.** A lab tuned through a timeline uses the dock's transport. A lab with another animation loop exposes replay as an action control.
 - **Accepting values.** The user presses **Copy** and pastes the result to the agent, who applies it to the production source.
-- **One panel for many copies.** A cases board ([canvases.md](canvases.md)) reads one panel's values and passes them to every entry.
+- **One panel for many copies.** A conditions board ([canvases.md](canvases.md)) reads one panel's values and passes them to every entry.
 - **Driving the panel from the lab.** A picker or toggle that must change panel values uses the controller.
 
 ## Starting points

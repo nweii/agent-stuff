@@ -14,7 +14,7 @@ When the subject has a current, keep it as a variant named `current`. A redesign
 
 A lab renders the subject outside its destination, and the two differ in two ways.
 
-- **Deliberate differences** are part of the experiment: forced cases, fixtures, an isolated stage. The lab's code already shows them.
+- **Deliberate differences** are part of the experiment: forced conditions, fixtures, an isolated stage. The lab's code already shows them.
 - **Accidental differences** come from what the subject reads from its surroundings. For instance, the canvas pane is smaller than the window, so `vh`, `vw`, media queries, and `fixed` positioning resolve against the wrong box. Anything else the destination supplies can differ the same way, for example a parent's width, a provider, global styles, or live data.
 
 Find an accidental difference by comparing the subject in the lab and in the destination under the same conditions, such as the same width. Compare when the result could depend on the subject's surroundings. A layout decision usually can, and a color or a duration usually cannot. Tell the user what differs before changing the subject. Fix it in the subject when the subject can stop reading the surroundings that differ. For instance, a subject sized from its container (`cqw`, `cqh`, `@container`) renders the same in the pane and in the window. Fix it in the lab when the lab supplied the wrong surroundings. When neither fix is possible, state the difference in the lab's description.
@@ -25,7 +25,7 @@ When a host finds another kind of accidental difference, offer to record it and 
 
 The user decides better when they see a variant where it ships. For a change to an existing page, render the destination's surrounding section in the lab with the variant in place. The variant then reads the surroundings it ships into. When the section cannot take the variant without a production change, propose that change, or tell the user the decision is being made outside the destination.
 
-Render the subject alone on a stage when isolation helps the decision, for instance when checking cases, tuning a component used in many places, or designing something that has no destination yet.
+Render the subject alone on a stage when isolation helps the decision, for instance when checking conditions, tuning a component used in many places, or designing something that has no destination yet.
 
 ## Promote a proposed variant
 
