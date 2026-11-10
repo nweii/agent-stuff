@@ -12,7 +12,7 @@ metadata:
 
 Auto-transcribed text is noisy in domain-specific ways. The user almost always knows what they actually said; you don't. **Your job is to flag, not to correct.** Every interpretation is a hypothesis until the user confirms it.
 
-You will be wrong about some flags even when you're well-grounded in context. That's fine — it's expected. What's not fine is silently applying corrections the user hasn't seen.
+Expect some flags to be wrong. Apply only corrections the user has seen or authorized.
 
 ## Workflow
 
