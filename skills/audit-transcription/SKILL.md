@@ -42,7 +42,7 @@ Treat every correction the user gives, here or in the walkthrough, as a context 
 
 Write for a user who has neither the note open nor the passage in memory. Say how many medium and low items remain and ask whether to walk through them now or set them aside. If they set them aside, go to step 7.
 
-In the walkthrough, send one item per message. Each message stands alone and carries:
+Size each message to the pile: one item at a time for a few, small batches of related items for a long pile, all at once when every item is quick. Each item stands alone and carries:
 
 - **Where it falls:** who is speaking and what the conversation is about at that point, in a sentence.
 - **The passage:** the original span, quoted with the line before and after it.
