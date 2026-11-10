@@ -1,6 +1,6 @@
 ---
 name: audit-transcription
-description: "Audit an existing transcript for likely mistranscriptions. Apply or propose vocabulary repairs, walk the user through uncertain passages one at a time, flag unrecoverable ones, or resume pending items from an earlier audit."
+description: "Audit auto-generated transcripts for mistranscriptions. Use when the user asks to audit or clean up a Granola, Whisper, or other machine transcript, or to resume pending items in a note's transcription notes."
 metadata:
   author: nweii
   version: "1.2.0"
