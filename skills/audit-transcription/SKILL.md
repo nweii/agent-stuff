@@ -1,9 +1,9 @@
 ---
 name: audit-transcription
-description: "Audit an existing transcript for likely mistranscriptions. Propose vocabulary repairs or interpretations for review before editing, and flag unrecoverable passages."
+description: "Audit an existing transcript for likely mistranscriptions. Apply or propose vocabulary repairs, walk the user through uncertain passages one at a time, and flag unrecoverable ones."
 metadata:
   author: nweii
-  version: "1.1.1"
+  version: "1.2.0"
 ---
 
 # Audit transcription
@@ -38,44 +38,62 @@ If a transcribed proper noun doesn't match anything in their documented vocabula
 | **Medium — sentence-level gist** | A garbled clause whose meaning is recoverable from context | Propose your interpretation **as a question**: "I think you were saying X here — does that match?" |
 | **Low — unrecoverable** | A sentence where multiple consecutive words are nonsense and the surrounding context doesn't pin down what was being said | Flag as garbled. Do not reconstruct. |
 
-### 4. Surface flags as a list, not as edits
+### 4. Settle the high tier
 
-Show the user the triage grouped by tier. Wait for their pass:
-- They will confirm some, correct others, and reject a few entirely.
-- Treat each correction as a context update — apply it across the rest of the transcript before continuing.
-- Don't argue. If the user says "that's not a word we use" about one of your guesses, drop it and don't relitigate.
+If the user has already authorized applying high-confidence edits, apply them (step 6) and report what changed in a short list. Otherwise show the high-tier list and wait for their pass.
 
-### 5. Apply edits in-place only after confirmation
+Treat each correction the user gives as a context update: apply it across the rest of the transcript before continuing.
 
-For high-confidence vocabulary: inline find/replace.
+### 5. Walk through the medium and low tiers
 
-For medium/low-confidence stretches: wrap with a callout that preserves the original beneath the gist.
+Assume the user does not have the note open and does not remember the passage. Say how many medium and low items remain and ask whether to walk through them now or set them aside. If they set them aside, go to step 7.
+
+In the walkthrough, send one item per message. Each message stands alone and carries:
+
+- **Where it falls:** who is speaking and what the conversation is about at that point, in a sentence.
+- **The passage:** the original span, quoted with the line before and after it.
+- **Your reading:** for a medium item, your interpretation and the evidence for it. For a low item, say that nothing in the transcript or the user's notes recovers it.
+- **The question:** answerable in a word or two. Offer the choices: confirm your reading, give the right one, leave it as transcribed, or delete it.
+
+Apply each answer before sending the next item, and let it update the readings of items still ahead. "Skip" leaves an item pending. "Stop" ends the walkthrough; the remaining items stay pending.
+
+The walkthrough is done when every item has an answer or the user has stopped it.
+
+### 6. Apply edits
+
+- **High tier and confirmed vocabulary:** inline find/replace.
+- **Confirmed sentence-level readings:** a callout above the passage, with the original kept intact beneath it:
 
 ```markdown
-> [!warning] Transcription note (Garbled)  
-> gist: <one-paragraph reconstruction of what was being discussed>
+> [!warning] Transcription note (Garbled)
+> gist: <the confirmed reading of what was being said>
 
-<original garbled text left intact>
+<original text left intact>
 ```
 
-Never strip the raw transcript. The audit makes a noisy record readable; it doesn't replace it.
+- **Deletions:** only where the user asked for one.
 
-### 6. Annotate the file at the top
+Pending items stay as transcribed. Never strip the raw transcript. The audit makes a noisy record readable; it doesn't replace it.
 
-After edits, add a `## Transcription notes` section above the transcript with:
+### 7. Record the audit after the transcript
+
+Add a `## Transcription notes` section **after** the transcript, so the transcript is the first thing a reader meets. It holds:
 
 - A note that the transcript is auto-generated
-- The recurring-vocab glossary (so future readers and agents don't re-derive it)
-- Single-occurrence corrections that surprised you or that the user explicitly confirmed
-- A pointer to the callout format used for unrecoverable passages
+- The recurring-vocab glossary, so future readers and agents don't re-derive it
+- Each applied correction, with its original span
+- Each pending item, with its original span, proposed reading, and the evidence, so a later session can resume the walkthrough without re-auditing
+- A pointer to the callout format used for confirmed readings
 
-Update the frontmatter `description` to mention auto-transcription and the notes section.
+When nothing is pending, fold the section's body into a collapsed callout (`> [!note]- Transcription audit record`). If the note already has a notes section above the transcript, move it below.
+
+Update the frontmatter `description` to mention auto-transcription, the notes section, and whether items remain pending.
 
 ## Anti-patterns
 
 - **Don't guess at proper nouns from your own knowledge.** A name that sounds plausible to you may be invented. Flag, ask.
 - **Don't rewrite garbled sentences with confident prose.** Even when you think you know what was said, write the gist as a hypothesis in a callout, not as edited dialogue.
-- **Don't batch corrections without showing the user first.** Auto-mode does not override "wait for user confirmation on interpretive judgments."
+- **Don't apply medium or low readings without the user's answer.** Authorization for the high tier covers vocabulary repairs only; interpretive judgments still go through the walkthrough.
 - **Don't keep pushing a guess after the user corrects you.** The correction itself is information about how they think — incorporate it into how you flag the rest.
 - **Don't claim you've recovered something you haven't.** If a clause is gone, mark it `[transcription unintelligible]` rather than fabricating.
 
