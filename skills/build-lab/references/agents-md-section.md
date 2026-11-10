@@ -1,44 +1,48 @@
 # Agents-file section template
 
-Merge this into the host project's `AGENTS.md` / `CLAUDE.md` during scaffolding, adapted to the paths, libraries, and shell actually built. Its job is to make future agent sessions understand "lab" the way the user means it — without this, the scaffold is a one-session trick.
+Merge this into the host project's `AGENTS.md` / `CLAUDE.md` during scaffolding, adapted to the paths, libraries, and shell that were built. Later sessions author labs from this section alone, so it must define "lab" the way the user means it.
 
-Replace bracketed placeholders; drop lines that don't apply.
+Replace bracketed placeholders, and drop lines that don't apply.
 
 ```markdown
 ### Labs (`/lab`)
 
-`[app/lab/<slug>/]` holds this site's experiment surfaces: tuning panels wired to production components and design explorations. Retain labs by default so they remain available for retuning and as design history. Record settled decisions in outcome notes and freeze decided labs; remove labs only when the user or this host's lifecycle calls for cleanup.
+`[app/lab/<slug>/]` holds this site's labs. A lab is a page where the user decides something about a subject, such as a component, a section, or a motion, by watching it run and changing it. Keep labs by default, for retuning and as design history. Record settled decisions in outcome notes and freeze decided labs. Remove a lab only when the user or this host's lifecycle calls for cleanup.
 
-[State the chosen exposure: public direct-access, protected by the host's existing mechanism, or another deliberate posture.] Apply protection once at `[the lab section boundary]`. The section is `[noindex and omitted from the sitemap and main navigation / intentionally discoverable]`; `noindex` is metadata, not access control.
+[State the chosen exposure: public direct-access, protected by the host's existing mechanism, or another deliberate posture.] Apply protection once at `[the lab section boundary]`. The section is `[noindex and omitted from the sitemap and main navigation / intentionally discoverable]`. `noindex` only asks crawlers to skip the section, so protect a private lab with access control.
 
-The lab should feel like a natural extension of this site's design language. Reuse its tokens, components, typography, and interaction patterns when available; diverge when that difference is part of the experiment. The shared shell receives production fit-and-finish even when an experiment remains unfinished. Keep it visually quiet and unframed. Standard lab headers use the shell's title-line height and inset across wide, narrow, expanded, and collapsed states.
+Build the lab section from this site's design language: reuse its tokens, components, typography, and interaction patterns, and diverge when that difference is part of the experiment. Give the shared shell production fit-and-finish even when an experiment is unfinished, at lower emphasis than lab content. Standard lab headers use the shell's title-line height and inset across wide, narrow, expanded, and collapsed states.
 
 Conventions:
 
-- **Folder = lab.** A new folder with a `[page.tsx]` appears in the sidebar automatically; no registration.
+- **Folder = lab.** The sidebar lists every folder that has a `[page.tsx]`. A new lab needs only its folder.
 - **File split**: `[page.tsx]` (thin server wrapper) + `[lab.tsx]` (client component with the controls).
-- **Optional `[meta.ts]`**: default-exports a `[LabMeta]` from `[lib/lab-registry.ts]` with title, description, date, and outcome (a short note on what the lab decided). Absent metadata falls back to the folder slug.
-- **Defaults flow from production.** A tuning lab imports defaults from the module it tunes; accepted values travel back through `[the control panel's export mechanism]`, applied by an agent.
+- **Optional `[meta.ts]`**: default-exports a `[LabMeta]` from `[lib/lab-registry.ts]` with title, description, date, and outcome (a short note on what the lab decided). A lab without metadata takes its title from the folder slug.
+- **Defaults come from production.** A lab whose subject is in production imports its defaults from the production module. The user accepts values by copying them from the control panel and handing them to the agent, who applies them to the production source.
 - **Harmonize with the destination.** For changes to an existing page, section, or component, use its surrounding content, layout, hierarchy, and interface patterns as the starting point. Depart when that is part of the experiment.
-- **The control panel is part of the lab interface.** Use `[the project's control-panel library or native control surface]`. Order controls in the sequence someone tunes the result, group them by concept, keep high-leverage choices visible, and collapse secondary calibration. Use clear labels, useful ranges, and intentional defaults. Its appearance follows the lab by default; a separate appearance is deliberate.
-- **Labs host other work through an adapter.** When a lab holds another skill's or tool's artifact (a state machine, a model, a variant round), that skill owns the artifact and its rules. The lab records four mappings in the artifact's terms: what the page renders, what the controls change, how the outcome reads, and what a capture keeps. [Kinds of work this project allows in the lab, and what each must state.]
-- **Labs stay independent of shell components.** The shell (`[app/lab/layout.tsx]`, `[LabNav.tsx]`, `[entries.ts]`, `[app/lab/[slug]/]`) depends on labs' metadata, never the reverse. Production code never imports from a lab.
+- **A lab differs from the destination.** Deliberate differences, such as forced cases, fixtures, or an isolated stage, are part of the experiment. Accidental ones come from what the subject reads from its surroundings. For instance, viewport units resolve against the window while the subject sits in a smaller pane, and a subject sized from its container avoids that. Find accidental differences by comparing the subject in the lab and in the destination under the same conditions, such as the same width, before the user decides. Compare when the result could depend on the subject's surroundings. A layout decision usually can, and a color or a duration usually cannot. For a change to an existing page, a lab can render the surrounding section with the variant in place, so the user judges it where it ships. [Accidental differences this host has found, and their fixes.]
+- **Code ships by promotion.** The variant production ships is current, and the lab imports it. A proposed variant lives in the lab folder. When the subject has a current, keep it as a variant named `current`, so the user can compare a proposal with what ships. When the user decides to ship a proposed variant, move it into production with history-preserving renames in place of current, point the lab's `current` at the production module, and confirm the destination shows what the lab showed. When a production subject renders only inside its page, propose extracting the part under study into its own production module.
+- **Taste has two sources.** Follow `[this project's design docs and tokens]` first. Where they are silent, follow the user's own taste, wherever they keep it. Read both before building. When the user corrects a lab's look, offer to record the rule in whichever source it belongs to.
+- **Labs share a canvas.** Render each lab in a layout from `[the canvas module]`: stage (one subject, centered), board (several items on one grid), or full bleed (the lab fills the pane). Write only the lab's content. When no layout fits, add one to the canvas module. A stage lab can give the user a switch to a board of its subject's cases. A case is a condition the subject is shown under, such as an interaction state, a theme, a content extreme, or a width. The board reads the same controls. [How this host forces cases and holds pseudo-classes.]
+- **The control panel is part of the lab interface.** Use `[DialKit, or the project's own control-panel library]`. Order controls in the sequence someone tunes the result, group them by concept, keep high-leverage choices visible, and collapse secondary calibration. Use clear labels, useful ranges, and intentional defaults. The panel takes the lab's appearance by default; give it its own only as a deliberate choice.
+- **Labs host other work through an adapter.** When a lab holds another skill's or tool's artifact (a state machine, a model, a variant round), that skill owns the artifact and its rules. The lab records four mappings in the artifact's terms: what the page renders, what the controls change, how to state the outcome, and what a capture keeps. [Kinds of work this project allows in the lab, and what each must state.]
+- **Dependencies point one way.** The shell (`[app/lab/layout.tsx]`, `[LabNav.tsx]`, `[entries.ts]`, `[app/lab/[slug]/]`) imports only labs' metadata. Labs import `[the canvas module]` and nothing from the shell. Production code imports nothing from a lab.
 
-The registry (`[lib/lab-registry.ts]`) is a pure, tested module — keep its test suite green after changes. Parameter snapshots belong in the control panel's presets. Structural or interaction variants use a named `?v=` value, render one direction full-size at a time, and switch instantly; add a visible picker only when rapid comparison helps. Retain unadopted variants by default unless the user or this host's lifecycle calls for cleanup.
+The registry (`[lib/lab-registry.ts]`) is a pure, tested module, so keep its test suite green after changes. Keep parameter snapshots in the control panel's saved versions. Structural or interaction variants use a named `?v=` value, render one direction full-size at a time, and switch instantly. Add a visible picker only when rapid comparison helps. Retain unadopted variants by default unless the user or this host's lifecycle calls for cleanup.
 
-Authoring a new lab: create the folder and file split, import production defaults when the lab tunes production, and wire the controls. Prefer a floating panel when the control library supports it and preserving the canvas matters; use an inline panel when persistent side-by-side comparison serves the experiment. Smoke-test unusual wiring such as actions, text fields, manual render loops, and paused states. Animated labs keep play/pause within easy reach, bind Space outside editable controls, and mirror the action in the control panel when its public API supports actions.
+To author a new lab, create the folder and file split, pick a canvas layout, import production defaults when the subject is in production, and wire the controls. Start the control panel where it covers nothing the user is judging. The user can move it from there. It usually floats over a stage or full bleed lab and docks beside a board. Use the panel's own features, such as saved versions and copy, before building a lab equivalent. Smoke-test unusual wiring such as actions, text fields, manual render loops, and paused states.
 
-When a lab settles a decision, apply the accepted values to the production source, then record the decision as the outcome note in `[meta.ts]`. The lab should then display production's accepted defaults.
+When the user settles a decision in a lab, apply the accepted values to the production source and reload the lab to confirm it starts from them. Then record the decision as the outcome note in `[meta.ts]`.
 
 #### Live and frozen labs
 
-A lab imports live production code, so a decided lab keeps getting dragged along by production changes. Freezing ends that. A lab's state comes from its files:
+A lab imports live production code, so later production changes break a decided lab or alter what it shows. Freezing a decided lab prevents that. A lab's state comes from its files:
 
 - **Live**: the folder has `[page.tsx]`. It runs on today's code.
 - **Frozen**: the folder has only `frozen.json` (the record) and `capture-*` files (screenshots or clips of it running). The record holds the outcome and pins the main-branch commit the lab ran at; that commit keeps the lab's code, the production modules it imported, and its packages. `[app/lab/[slug]/]` renders the record at the lab's old URL.
 - A folder with both is a freeze or thaw that stopped partway. The build fails and names the command that finishes it.
 
-`[bun run lab]` (`[scripts/lab.ts]`) moves labs between states. It never commits; review its diff and commit it.
+`[bun run lab]` (`[scripts/lab.ts]`) moves labs between live and frozen. It never commits; review its diff and commit it.
 
 - `status`: labs by state, plus freeze and snapshot suggestions.
 - `freeze <slug> --capture <file>`: write the record, keep captures, drop packages only it imported, delete the code.
