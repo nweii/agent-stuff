@@ -7,7 +7,7 @@ Replace bracketed placeholders, and drop lines that don't apply.
 ```markdown
 ### Labs (`/lab`)
 
-`[app/lab/<slug>/]` holds this site's labs. A lab is a page where the user decides something about a subject, such as a component, a section, or a motion, by watching it run and changing it. Keep labs by default, for retuning and as design history. Record settled decisions in outcome notes and freeze decided labs. Remove a lab only when the user or this host's lifecycle calls for cleanup.
+`[app/lab/<slug>/]` holds this site's labs. A lab is a page where the user decides something about a subject, such as a component, a section, or a motion, by watching it run and changing it. Keep labs by default, for retuning and as design history. Record settled decisions in outcome notes and freeze decided labs. Remove a lab only when the user or this host's lifecycle calls for cleanup. How work divides into labs is the user's call, and one lab can hold one decision or several.
 
 [State the chosen exposure: public direct-access, protected by the host's existing mechanism, or another deliberate posture.] Apply protection once at `[the lab section boundary]`. The section is `[noindex and omitted from the sitemap and main navigation / intentionally discoverable]`. `noindex` only asks crawlers to skip the section, so protect a private lab with access control.
 

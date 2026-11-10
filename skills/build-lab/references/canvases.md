@@ -9,7 +9,7 @@ In production a subject renders in the window. In a lab it renders in the canvas
 Start the canvas module with three layouts, sized from the host's tokens:
 
 - **Stage**: one subject, centered, at full size. The default.
-- **Board**: several items on one grid, all visible at once, with one gap and one label style. The items are several subjects that share controls, or one subject under several conditions.
+- **Board**: several items on one grid, all visible at once, with one gap and one label style. The items are several places one subject shows, such as the components a spacing scale applies to, or one subject under several conditions.
 - **Full bleed**: the lab fills the pane and sets its own inset and background.
 
 Start the control panel where it covers nothing the user is judging. A panel usually floats over a stage or full bleed lab and docks beside a board, where a floating panel would cover grid items. The user can move it from there. A variant picker ([variant-comparison.md](variant-comparison.md)) can sit over any layout, because it swaps what the lab renders.
