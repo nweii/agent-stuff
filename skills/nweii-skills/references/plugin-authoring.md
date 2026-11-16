@@ -33,3 +33,5 @@ Maintain shared metadata once and generate the client adapters. In Nathan’s re
 Portable MCP uses root `mcp.json`; Claude uses `.mcp.json`. Nathan’s generator accepts remote endpoints once and emits portable `streamable-http` and Claude `http` configurations. Document client omissions through `skipFor` and keep credentials in client-managed authentication.
 
 For an existing registered OpenAI connection, use an `apps` mapping and confirm it supplies the intended tools. For local MCP, hooks, agents, or other capabilities beyond the generator’s subset, read the relevant client documentation and extend generation and validation together. Test the affected workflow on each target client.
+
+For authorized account-level plugin releases, use Plugin Creator's create or update workflow.
