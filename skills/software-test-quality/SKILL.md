@@ -3,7 +3,7 @@ name: software-test-quality
 description: "Audit software tests for assertion, fixture, mock, or flakiness problems; choose the test level for a risk; or add meaningful regression coverage for recent changes."
 metadata:
   author: nweii
-  version: "1.1.1"
+  version: "1.1.2"
   credit: "Uses Kent Beck's Test Desiderata (testdesiderata.com) via Lex-Inc/roughdraft and benomahony/testdesiderata."
 ---
 
@@ -42,7 +42,7 @@ Then inspect the failure modes that a structural review can miss:
 - Fixtures that do not represent production inputs.
 - Risky paths that the suite never exercises.
 - Names that disagree with the behavior asserted.
-- Mocks that encode assumptions the real collaborator does not satisfy.
+- Mocks that encode assumptions the real collaborator does not satisfy. Exercise the real function under test; mock only its dependencies.
 - Tautological expectations derived through the same logic as the implementation.
 
 When a test's sensitivity is uncertain and a controlled check is cheap, break the protected behavior minimally and confirm that the test fails for the expected reason. Restore the behavior before continuing.
